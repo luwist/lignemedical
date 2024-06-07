@@ -1,0 +1,8 @@
+<button
+  type="button"
+  class="w-28 h-28 border border-[#F4F6FF] rounded-xl flex flex-col items-center justify-center gap-2 text-sm text-[#CBD1E1] font-medium capitalize"
+  [ngClass]="!selected ? 'bg-[#F8F9FC]' : 'bg-[#F1F3F9]'"
+>
+  <img src="assets/{{ image }}" alt="" class="w-12 h-12 rounded-full" />
+  {{ role }}
+</button>
