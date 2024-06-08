@@ -1,0 +1,89 @@
+<app-toast />
+
+<main class="min-h-screen flex">
+  <div
+    class="w-7/12 h-screen bg-primary-foreground px-24 flex flex-col justify-center items-center gap-32"
+  >
+    <img src="assets/illustrations/illustration.png" alt="" class="w-[600px]" />
+
+    <div class="self-start">
+      <p
+        class="text-[28px] 2xl:text-[32px] 2xl:w-[580px] leading-10 text-white"
+      >
+        {{ phrase }}
+      </p>
+
+      <div class="flex gap-2 mt-4">
+        <span class="w-2 h-2 rounded-full bg-white"></span>
+        <span class="w-10 h-2 rounded-full bg-white"></span>
+        <span class="w-2 h-2 rounded-full bg-white"></span>
+      </div>
+    </div>
+  </div>
+  <div class="w-5/12 h-screen flex items-center justify-center">
+    <form class="w-96 bg-white" [formGroup]="loginForm" (submit)="onLogin()">
+      <h1
+        class="text-center text-2xl text-primary-foreground font-extrabold mb-10"
+      >
+        ¡Bienvenido de nuevo!
+      </h1>
+
+      <div class="flex gap-5">
+        @for (account of accounts; track $index) {
+        <app-account-card
+          image="{{ account.imageSrc }}"
+          role="{{ account.role }}"
+          [selected]="selectedOption === account.id"
+          (click)="onSelect(account)"
+        />
+        }
+      </div>
+
+      <!-- Crear un componente para el divider -->
+      <div class="flex items-center my-7 text-muted-foreground gap-4">
+        <span class="flex-grow h-[1px] bg-muted-foreground"></span>
+        <span class="text-sm whitespace-nowrap">
+          o registrese con su correo electrónico
+        </span>
+        <span class="flex-grow h-[1px] bg-muted-foreground"></span>
+      </div>
+
+      <div class="mb-4">
+        <label hlmLabel
+          >Correo Electronico
+          <input
+            class="w-full"
+            hlmInput
+            type="email"
+            placeholder="Correo Electronico"
+            formControlName="email"
+          />
+        </label>
+      </div>
+
+      <label hlmLabel
+        >Contraseña
+        <input
+          class="w-full"
+          hlmInput
+          type="password"
+          placeholder="Contraseña"
+          formControlName="password"
+        />
+      </label>
+
+      <button
+        class="w-full mt-8"
+        [disabled]="(loginForm.statusChanges | async) !== 'VALID'"
+        hlmBtn
+      >
+        Iniciar sesion
+      </button>
+
+      <p class="text-sm font-medium text-primary-foreground text-center mt-5">
+        ¿No tienes una cuenta?
+        <a routerLink="/onboarding" class="underline">Registrate</a>
+      </p>
+    </form>
+  </div>
+</main>

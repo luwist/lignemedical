@@ -39,6 +39,11 @@ import {
 })
 export class LoginComponent {
   selectedOption!: number;
+  phrases: string[] = [
+    'Vea toda la información sobre su paciente en un solo lugar',
+    'Mantenga toda la información de salud organizada y accesible al instante',
+  ];
+  phrase: string = 'Vea toda la información sobre su paciente en un solo lugar';
 
   accounts: Account[] = [
     {
@@ -58,9 +63,9 @@ export class LoginComponent {
     {
       id: 3,
       imageSrc: 'images/boy.png',
-      role: 'usuario',
-      email: 'usuario@usuario.com',
-      password: 'usuario',
+      role: 'paciente',
+      email: 'paciente@paciente.com',
+      password: 'paciente',
     },
   ];
 
