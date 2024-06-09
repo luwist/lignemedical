@@ -21,11 +21,19 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'register',
-    title: 'Registrarse',
+    path: 'join-specialist',
+    title: 'Unete como un especialista',
     loadComponent: () =>
-      import('./pages/register/register.component').then(
-        (m) => m.RegisterComponent
+      import('./pages/join-specialist/join-specialist.component').then(
+        (m) => m.JoinSpecialistComponent
+      ),
+  },
+  {
+    path: 'join-patient',
+    title: 'Unete como un paciente',
+    loadComponent: () =>
+      import('./pages/join-patient/join-patient.component').then(
+        (m) => m.JoinPatientComponent
       ),
   },
 ];

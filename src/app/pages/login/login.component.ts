@@ -14,6 +14,7 @@ import { Account } from './account.interface';
 import { AuthService } from '@app/services';
 import {
   AccountCardComponent,
+  InputErrorComponent,
   MessageService,
   ToastComponent,
 } from '@app/components';
@@ -31,6 +32,7 @@ import {
 
     AccountCardComponent,
     ToastComponent,
+    InputErrorComponent,
 
     ReactiveFormsModule,
   ],
@@ -79,6 +81,14 @@ export class LoginComponent {
     private _messageService: MessageService,
     private _router: Router
   ) {}
+
+  get emailControl(): FormControl {
+    return this.loginForm.get('email') as FormControl;
+  }
+
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
 
   onSelect(account: Account): void {
     this.selectedOption = account.id;
