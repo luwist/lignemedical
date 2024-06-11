@@ -5,25 +5,33 @@ import {
   QueryList,
 } from '@angular/core';
 import { StepComponent } from './step/step.component';
+import { CommonModule } from '@angular/common';
+import { StepHeaderComponent } from './step-header/step-header.component';
 
 @Component({
   selector: 'app-stepper',
   standalone: true,
-  imports: [StepComponent],
+  imports: [CommonModule, StepComponent, StepHeaderComponent],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
 })
 export class StepperComponent implements AfterContentInit {
-  @ContentChildren(StepComponent) stepperPanels!: QueryList<StepComponent>;
+  @ContentChildren(StepComponent, { descendants: true })
+  private _steps!: QueryList<StepComponent>;
 
-  activeStep: number = 0;
-  panels!: StepComponent[];
+  steps: QueryList<StepComponent> = new QueryList<StepComponent>();
+
+  selectedIndex: number = 0;
 
   ngAfterContentInit(): void {
-    this.panels = this.stepperPanels.toArray();
+    this.steps = this._steps;
+  }
 
-    this.stepperPanels.forEach((item) => {
-      console.log(item);
-    });
+  next(): void {
+    this.selectedIndex += 1;
+  }
+
+  previous(): void {
+    this.selectedIndex -= 1;
   }
 }

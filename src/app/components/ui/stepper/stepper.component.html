@@ -1,3 +1,24 @@
-@for (panel of panels; track $index) {
-<app-step />
-}
+<div class="flex">
+  <div>
+    @for (step of steps; track step; let i = $index) {
+    <ng-container
+      [ngTemplateOutlet]="stepTemplate"
+      [ngTemplateOutletContext]="{ step: step, i: i }"
+    ></ng-container>
+    }
+  </div>
+
+  <div>
+    @for (step of steps; track step; let i = $index) { @if (selectedIndex !== i)
+    {
+    <ng-container [ngTemplateOutlet]="step.content"></ng-container>
+    } }
+
+    <button type="button" (click)="previous()">Volver</button>
+    <button type="button" (click)="next()">Siguiente</button>
+  </div>
+
+  <ng-template let-step="step" let-i="i" #stepTemplate>
+    <app-step-header [index]="i" [label]="step.label" />
+  </ng-template>
+</div>
