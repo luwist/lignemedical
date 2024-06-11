@@ -52,9 +52,56 @@
           >Obra social
           <input class="w-full" hlmInput type="text" />
         </label>
+
+        <div class="w-full mt-16 flex items-center justify-between">
+          <p class="text-sm font-medium text-muted-foreground text-center">
+            ¿Ya tienes una cuenta?
+            <a routerLink="/login" class="underline">Inicia sesion</a>
+          </p>
+
+          <!-- <button
+            type="button"
+            hlmBtn
+            variant="secondary"
+            size="lg"
+            (click)="stepper.next()"
+          >
+            Siguiente
+          </button> -->
+        </div>
       </app-step>
-      <app-step label="Paso 2">
-        <p>Paso 2222</p>
+
+      <app-step label="Informacion de contacto">
+        <h2 class="text-2xl font-semibold text-primary-foreground mb-5">
+          Informacion de contacto
+        </h2>
+
+        <div class="mb-5">
+          <label hlmLabel
+            >Correo Electronico
+            <input class="w-full" hlmInput type="text" />
+          </label>
+        </div>
+        <label hlmLabel
+          >Contraseña
+          <input class="w-full" hlmInput type="password" />
+        </label>
+
+        <div class="w-full mt-16 flex items-center justify-between">
+          <p class="text-sm font-medium text-muted-foreground text-center">
+            ¿Ya tienes una cuenta?
+            <a routerLink="/login" class="underline">Inicia sesion</a>
+          </p>
+
+          <div>
+            <button type="button" hlmBtn variant="ghost" size="lg">
+              Volver
+            </button>
+            <button type="button" hlmBtn variant="secondary" size="lg">
+              Siguiente
+            </button>
+          </div>
+        </div>
       </app-step>
     </app-stepper>
   </div>

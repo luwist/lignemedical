@@ -1,0 +1,36 @@
+<header class="w-full h-20 px-9 flex items-center justify-between">
+  <div class="flex items-center gap-8">
+    <a routerLink="/">
+      <img src="assets/logo.svg" alt="Logo" />
+    </a>
+
+    <ul class="flex">
+      <li>
+        <a
+          class="menu-link"
+          routerLink="/dashboard"
+          routerLinkActive="menu-link--active"
+          >Dashboard</a
+        >
+      </li>
+      <li>
+        <a
+          class="menu-link"
+          routerLink="/appointment"
+          routerLinkActive="menu-link--active"
+          >Citas</a
+        >
+      </li>
+      <li>
+        <a
+          class="menu-link"
+          routerLink="/patient"
+          routerLinkActive="menu-link--active"
+          >Pacientes</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <app-profile-menu />
+</header>

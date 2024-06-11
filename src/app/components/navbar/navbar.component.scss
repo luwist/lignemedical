@@ -1,0 +1,22 @@
+ .menu-link {
+     width: 100%;
+     height: 48px;
+     padding: 0 24px;
+
+     display: flex;
+     align-items: center;
+     gap: 16px;
+
+     font-size: 14px;
+     font-weight: 500;
+     color: #1b1e27;
+
+     border-radius: 50px;
+
+     cursor: pointer;
+
+     &.menu-link--active {
+         background-color: #1b1e27;
+         color: white;
+     }
+ }
