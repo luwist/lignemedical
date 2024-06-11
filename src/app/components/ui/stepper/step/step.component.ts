@@ -1,4 +1,11 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  TemplateRef,
+  ViewChild,
+  forwardRef,
+} from '@angular/core';
 import { StepperComponent } from '../stepper.component';
 
 @Component({
@@ -16,5 +23,7 @@ export class StepComponent {
 
   @ViewChild(TemplateRef, { static: true }) content!: TemplateRef<any>;
 
-  constructor(public stepper: StepperComponent) {}
+  constructor(
+    @Inject(forwardRef(() => StepperComponent)) public stepper: StepperComponent
+  ) {}
 }

@@ -5,9 +5,26 @@
 </div>
 <ng-template #menu>
   <hlm-menu class="w-56">
-    <hlm-menu-label>My Account</hlm-menu-label>
-    <button hlmMenuItem>
-      <span>Profile</span>
-    </button>
+    <hlm-menu-label>
+      <div class="flex items-center gap-3">
+        <img
+          src="assets/images/person.png"
+          class="w-12 h-12"
+          alt="Avatar User"
+        />
+        <div>
+          <p class="text-primary-foreground text-sm font-medium">Jhoe Doe</p>
+          <p class="text-muted-foreground text-sm font-medium">Administrador</p>
+        </div>
+      </div>
+    </hlm-menu-label>
+
+    <hlm-menu-separator />
+
+    <hlm-menu-group>
+      <button hlmMenuItem (click)="onLogout()">
+        <span>Cerrar sesion</span>
+      </button>
+    </hlm-menu-group>
   </hlm-menu>
 </ng-template>
