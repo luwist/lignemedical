@@ -1,12 +1,5 @@
-import {
-  Component,
-  Inject,
-  Input,
-  TemplateRef,
-  ViewChild,
-  forwardRef,
-} from '@angular/core';
-import { StepperComponent } from '../stepper.component';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-step',
@@ -20,10 +13,7 @@ import { StepperComponent } from '../stepper.component';
 })
 export class StepComponent {
   @Input() label!: string;
+  @Input() stepControl!: AbstractControl;
 
   @ViewChild(TemplateRef, { static: true }) content!: TemplateRef<any>;
-
-  constructor(
-    @Inject(forwardRef(() => StepperComponent)) public stepper: StepperComponent
-  ) {}
 }

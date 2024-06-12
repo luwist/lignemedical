@@ -21,7 +21,18 @@ export class StepperComponent implements AfterContentInit {
 
   steps: QueryList<StepComponent> = new QueryList<StepComponent>();
 
-  selectedIndex: number = 0;
+  private _selectedIndex = 0;
+
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
+  set selectedIndex(index: number) {
+    // if (this._anyControlsInvalidOrPending(index)) {
+    //   this._selectedIndex = index;
+    // }
+
+    this._selectedIndex = index;
+  }
 
   ngAfterContentInit(): void {
     this.steps = this._steps;
@@ -33,5 +44,16 @@ export class StepperComponent implements AfterContentInit {
 
   previous(): void {
     this.selectedIndex -= 1;
+  }
+
+  private _anyControlsInvalidOrPending(index: number): boolean {
+    return this.steps
+      .toArray()
+      .slice(0, index)
+      .some((step) => {
+        const control = step.stepControl;
+
+        return control.invalid || control.pending;
+      });
   }
 }

@@ -26,83 +26,118 @@
       Crea tu cuenta
     </h1>
 
-    <app-stepper>
-      <app-step label="Datos personales">
-        <h2 class="text-2xl font-semibold text-primary-foreground mb-5">
-          Tu informacion personal
-        </h2>
+    <form [formGroup]="register">
+      <app-stepper>
+        <app-step
+          label="Datos personales"
+          [stepControl]="personalInformationControlform"
+        >
+          <h2 class="text-2xl font-semibold text-primary-foreground mb-5">
+            Tu informacion personal
+          </h2>
 
-        <div class="flex gap-5 mb-5">
-          <label hlmLabel
-            >Nombre
-            <input class="w-full" hlmInput type="text" />
-          </label>
-          <label hlmLabel
-            >Apellido
-            <input class="w-full" hlmInput type="text" />
-          </label>
-        </div>
-        <div class="mb-5">
-          <label hlmLabel
-            >DNI
-            <input class="w-full" hlmInput type="number" [maxLength]="8" />
-          </label>
-        </div>
-        <label hlmLabel
-          >Obra social
-          <input class="w-full" hlmInput type="text" />
-        </label>
+          <div formGroupName="personalInformation">
+            <div class="w-full flex gap-5 mb-5">
+              <label hlmLabel
+                >Nombre
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="firstName"
+                />
+              </label>
+              <label hlmLabel
+                >Apellido
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="lastName"
+                />
+              </label>
+            </div>
+            <div class="mb-5">
+              <label hlmLabel
+                >DNI
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="number"
+                  [maxLength]="8"
+                  formControlName="dni"
+                />
+              </label>
+            </div>
+            <label hlmLabel
+              >Obra social
+              <input class="w-full" hlmInput type="text" />
+            </label>
+          </div>
 
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm font-medium text-muted-foreground text-center">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm font-medium text-muted-foreground text-center">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
 
-          <!-- <button
-            type="button"
-            hlmBtn
-            variant="secondary"
-            size="lg"
-            (click)="stepper.next()"
-          >
-            Siguiente
-          </button> -->
-        </div>
-      </app-step>
-
-      <app-step label="Informacion de contacto">
-        <h2 class="text-2xl font-semibold text-primary-foreground mb-5">
-          Informacion de contacto
-        </h2>
-
-        <div class="mb-5">
-          <label hlmLabel
-            >Correo Electronico
-            <input class="w-full" hlmInput type="text" />
-          </label>
-        </div>
-        <label hlmLabel
-          >Contraseña
-          <input class="w-full" hlmInput type="password" />
-        </label>
-
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm font-medium text-muted-foreground text-center">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
-
-          <div>
-            <button type="button" hlmBtn variant="ghost" size="lg">
-              Volver
-            </button>
-            <button type="button" hlmBtn variant="secondary" size="lg">
+            <button
+              type="button"
+              hlmBtn
+              variant="secondary"
+              size="lg"
+              appStepperNext
+            >
               Siguiente
             </button>
           </div>
-        </div>
-      </app-step>
-    </app-stepper>
+        </app-step>
+
+        <app-step label="Informacion de contacto">
+          <h2 class="text-2xl font-semibold text-primary-foreground mb-5">
+            Informacion de contacto
+          </h2>
+
+          <div class="w-full mb-5">
+            <label hlmLabel
+              >Correo Electronico
+              <input class="w-full" hlmInput type="text" />
+            </label>
+          </div>
+          <label hlmLabel
+            >Contraseña
+            <input class="w-full" hlmInput type="password" />
+          </label>
+
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm font-medium text-muted-foreground text-center">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
+
+            <div>
+              <button
+                type="button"
+                hlmBtn
+                variant="ghost"
+                size="lg"
+                appStepperPrevious
+              >
+                Volver
+              </button>
+              <button
+                type="button"
+                hlmBtn
+                variant="secondary"
+                size="lg"
+                appStepperNext
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </app-step>
+      </app-stepper>
+    </form>
   </div>
 </main>
