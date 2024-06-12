@@ -7,6 +7,7 @@ import {
 import { StepComponent } from './step/step.component';
 import { CommonModule } from '@angular/common';
 import { StepHeaderComponent } from './step-header/step-header.component';
+import { StepState } from './step/step-status.type';
 
 @Component({
   selector: 'app-stepper',
@@ -27,11 +28,9 @@ export class StepperComponent implements AfterContentInit {
     return this._selectedIndex;
   }
   set selectedIndex(index: number) {
-    // if (this._anyControlsInvalidOrPending(index)) {
-    //   this._selectedIndex = index;
-    // }
-
-    this._selectedIndex = index;
+    if (!this._anyControlsInvalidOrPending(index)) {
+      this._selectedIndex = index;
+    }
   }
 
   ngAfterContentInit(): void {
@@ -39,11 +38,29 @@ export class StepperComponent implements AfterContentInit {
   }
 
   next(): void {
-    this.selectedIndex += 1;
+    this.selectedIndex = Math.min(
+      this._selectedIndex + 1,
+      this.steps.length - 1
+    );
   }
 
   previous(): void {
-    this.selectedIndex -= 1;
+    this.selectedIndex = Math.max(this._selectedIndex - 1, 0);
+  }
+
+  getIndicatorType(index: number, state: StepState): string {
+    const step = this.steps.toArray()[index];
+    const isCurrentStep = this._isCurrentStep(index);
+
+    return step.completed && !isCurrentStep ? 'done' : 'uncompleted';
+  }
+
+  stepIsNavigable(index: number, step: any): boolean {
+    return this.selectedIndex === index || step.completed;
+  }
+
+  private _isCurrentStep(index: number): boolean {
+    return this._selectedIndex === index;
   }
 
   private _anyControlsInvalidOrPending(index: number): boolean {

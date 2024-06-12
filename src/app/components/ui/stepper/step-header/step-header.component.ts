@@ -11,5 +11,6 @@ import { Component, Input } from '@angular/core';
 export class StepHeaderComponent {
   @Input() index!: number;
   @Input() label!: string;
+  @Input() status!: string;
   @Input() active!: boolean;
 }

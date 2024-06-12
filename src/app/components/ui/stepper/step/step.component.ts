@@ -1,4 +1,10 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+  booleanAttribute,
+} from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -16,4 +22,20 @@ export class StepComponent {
   @Input() stepControl!: AbstractControl;
 
   @ViewChild(TemplateRef, { static: true }) content!: TemplateRef<any>;
+
+  private _completedOverride: boolean | null = null;
+
+  @Input({ transform: booleanAttribute })
+  get completed(): boolean {
+    return this._completedOverride == null
+      ? this._getDefaultCompleted()
+      : this._completedOverride;
+  }
+  set completed(value: boolean) {
+    this._completedOverride = value;
+  }
+
+  private _getDefaultCompleted(): boolean {
+    return this.stepControl.valid;
+  }
 }

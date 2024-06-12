@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormControl,
@@ -5,7 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { InputErrorComponent } from '@app/components';
 import { StepComponent, StepperComponent } from '@app/components/ui/stepper';
 import { StepperNextDirective } from '@app/components/ui/stepper/stepper-next/stepper-next.directive';
 import { StepperPreviousDirective } from '@app/components/ui/stepper/stepper-previous/stepper-previous.directive';
@@ -17,6 +19,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
   selector: 'app-join-specialist',
   standalone: true,
   imports: [
+    CommonModule,
     RouterLink,
 
     HlmButtonDirective,
@@ -30,6 +33,8 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
     StepperPreviousDirective,
 
     ReactiveFormsModule,
+
+    InputErrorComponent,
   ],
   templateUrl: './join-specialist.component.html',
   styleUrl: './join-specialist.component.scss',
@@ -45,9 +50,57 @@ export class JoinSpecialistComponent {
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     }),
+    profilePicture: new FormGroup({
+      file: new FormControl(null, Validators.required),
+    }),
   });
+
+  imageSrc: any;
+
+  constructor(private _router: Router) {}
 
   get personalInformationControlform() {
     return this.register.get('personalInformation') as FormGroup;
+  }
+
+  get firstNameControl() {
+    const personalInformation = this.register.get(
+      'personalInformation'
+    ) as FormGroup;
+
+    return personalInformation.get('firstName') as FormGroup;
+  }
+
+  get contactInformationControlform() {
+    return this.register.get('contactInformation') as FormGroup;
+  }
+
+  get profilePictureControlform() {
+    return this.register.get('profilePicture') as FormGroup;
+  }
+
+  onPreviewImage(e: any): void {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imageSrc = reader.result);
+
+      reader.readAsDataURL(file);
+
+      if (file) {
+        this.profilePictureControlform.patchValue({
+          file: file,
+        });
+      }
+    }
+  }
+
+  onRegister(): void {
+    const credentials = this.register.getRawValue();
+
+    console.log(credentials);
+
+    this._router.navigateByUrl('/verify-email');
   }
 }

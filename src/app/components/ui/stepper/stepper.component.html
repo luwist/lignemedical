@@ -19,7 +19,8 @@
     <app-step-header
       [index]="i"
       [label]="step.label"
-      [active]="selectedIndex === i"
+      [status]="getIndicatorType(i, step.status)"
+      [active]="stepIsNavigable(i, step)"
     />
   </ng-template>
 </div>
