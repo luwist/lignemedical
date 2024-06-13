@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-join',
+  selector: 'app-register',
   standalone: true,
   imports: [RouterOutlet, RouterLink],
-  templateUrl: './join.component.html',
-  styleUrl: './join.component.scss',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class JoinComponent {}
+export class RegisterComponent {
+
+}

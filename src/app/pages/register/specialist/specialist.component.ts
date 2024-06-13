@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { InputErrorComponent } from '@app/components';
 import { StepComponent, StepperComponent } from '@app/components/ui/stepper';
 import { StepperNextDirective } from '@app/components/ui/stepper/stepper-next/stepper-next.directive';
@@ -16,11 +16,10 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
 @Component({
-  selector: 'app-join-specialist',
+  selector: 'app-specialist',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
 
     HlmButtonDirective,
     HlmInputDirective,
@@ -36,10 +35,10 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
     InputErrorComponent,
   ],
-  templateUrl: './join-specialist.component.html',
-  styleUrl: './join-specialist.component.scss',
+  templateUrl: './specialist.component.html',
+  styleUrl: './specialist.component.scss',
 })
-export class JoinSpecialistComponent {
+export class SpecialistComponent {
   register = new FormGroup({
     personalInformation: new FormGroup({
       firstName: new FormControl('', Validators.required),

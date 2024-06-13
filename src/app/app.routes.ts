@@ -7,8 +7,22 @@ export const routes: Routes = [
       import('./pages/layout/layout.routes').then((m) => m.routes),
   },
   {
-    path: 'auth',
+    path: 'login',
+    title: 'Iniciar sesion',
+    loadComponent: () =>
+      import('./pages/login/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'onboarding',
+    title: 'Elige tu cuenta',
+    loadComponent: () =>
+      import('./pages/onboarding/onboarding.component').then(
+        (m) => m.OnboardingComponent
+      ),
+  },
+  {
+    path: 'join',
     loadChildren: () =>
-      import('./pages/auth/auth.routes').then((m) => m.routes),
+      import('./pages/register/register.routes').then((m) => m.routes),
   },
 ];
