@@ -1,10 +1,17 @@
 import { Routes } from '@angular/router';
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
 export const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.routes),
+    canActivate: [AuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
   },
   {
     path: 'login',
@@ -18,6 +25,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/onboarding/onboarding.component').then(
         (m) => m.OnboardingComponent
+      ),
+  },
+  {
+    path: 'verify-email',
+    title: 'Verifica tu cuenta',
+    loadComponent: () =>
+      import('./pages/verify-email/verify-email.component').then(
+        (m) => m.VerifyEmailComponent
       ),
   },
   {

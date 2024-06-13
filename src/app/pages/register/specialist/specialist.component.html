@@ -1,10 +1,10 @@
 <main class="h-[calc(100vh-80px)] flex items-center justify-center">
-  <div class="h-[546px] flex flex-col">
+  <div class="w-[875px] h-[512px] flex flex-col">
     <h1 class="text-2xl font-extrabold text-primary-foreground mb-5">
       Crea tu cuenta
     </h1>
 
-    <form [formGroup]="register" (submit)="onRegister()">
+    <form [formGroup]="registerForm" (submit)="onRegister()">
       <app-stepper>
         <app-step
           label="Datos personales"
@@ -16,7 +16,7 @@
 
           <div formGroupName="personalInformation">
             <div class="w-full flex gap-5 mb-5">
-              <div>
+              <div class="w-full">
                 <label hlmLabel
                   >Nombre
                   <input
@@ -29,32 +29,52 @@
 
                 <app-input-error [control]="firstNameControl" />
               </div>
-              <label hlmLabel
-                >Apellido
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  formControlName="lastName"
-                />
-              </label>
+
+              <div class="w-full">
+                <label hlmLabel
+                  >Apellido
+                  <input
+                    class="w-full"
+                    hlmInput
+                    type="text"
+                    formControlName="lastName"
+                  />
+                </label>
+
+                <app-input-error [control]="lastNameControl" />
+              </div>
             </div>
-            <div class="mb-5">
-              <label hlmLabel
-                >DNI
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="number"
-                  [maxLength]="8"
-                  formControlName="dni"
-                />
-              </label>
+
+            <div class="w-full flex gap-5 mb-5">
+              <div class="w-full">
+                <label hlmLabel
+                  >DNI
+                  <input
+                    class="w-full"
+                    hlmInput
+                    type="text"
+                    [maxLength]="8"
+                    formControlName="identityDocument"
+                  />
+                </label>
+
+                <app-input-error [control]="identityDocumentControl" />
+              </div>
+
+              <div class="w-full">
+                <label hlmLabel
+                  >Obra social
+                  <input
+                    class="w-full"
+                    hlmInput
+                    type="text"
+                    formControlName="healthInsurance"
+                  />
+                </label>
+
+                <app-input-error [control]="healthInsuranceControl" />
+              </div>
             </div>
-            <label hlmLabel
-              >Obra social
-              <input class="w-full" hlmInput type="text" />
-            </label>
           </div>
 
           <div class="w-full mt-16 flex items-center justify-between">
@@ -98,16 +118,23 @@
                   formControlName="email"
                 />
               </label>
+
+              <app-input-error [control]="emailControl" />
             </div>
-            <label hlmLabel
-              >Contraseña
-              <input
-                class="w-full"
-                hlmInput
-                type="password"
-                formControlName="password"
-              />
-            </label>
+
+            <div>
+              <label hlmLabel
+                >Contraseña
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="password"
+                  formControlName="password"
+                />
+              </label>
+
+              <app-input-error [control]="passwordControl" />
+            </div>
           </div>
 
           <div class="w-full mt-16 flex items-center justify-between">

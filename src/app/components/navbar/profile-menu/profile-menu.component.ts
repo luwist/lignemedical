@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/services';
 import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 import {
   HlmMenuComponent,
@@ -27,9 +28,11 @@ import {
   styleUrl: './profile-menu.component.scss',
 })
 export class ProfileMenuComponent {
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _authService: AuthService) {}
 
   onLogout(): void {
+    this._authService.logout();
+
     this._router.navigateByUrl('/login');
   }
 }
