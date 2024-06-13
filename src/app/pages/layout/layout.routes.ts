@@ -5,6 +5,13 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./layout.component').then((m) => m.LayoutComponent),
-    children: [],
+    children: [
+      {
+        path: 'users',
+        title: 'Usuarios',
+        loadComponent: () =>
+          import('./user/user.component').then((m) => m.UserComponent),
+      },
+    ],
   },
 ];

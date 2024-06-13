@@ -69,6 +69,10 @@
               variant="secondary"
               size="lg"
               appStepperNext
+              [disabled]="
+                (personalInformationControlform.statusChanges | async) !==
+                'VALID'
+              "
             >
               Siguiente
             </button>
@@ -145,27 +149,38 @@
 
           <div formGroupName="profilePicture">
             <div class="flex gap-10">
+              <!-- Crear componente -->
               <div
-                class="relative border rounded-3xl w-52 h-52 flex items-center justify-center"
+                class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
               >
-                <div>
+                <div class="flex flex-col items-center">
+                  <img src="assets/icons/gallery.svg" alt="" class="w-10" />
                   <p
-                    class="text-sm font-semibold text-primary-foreground text-center"
+                    class="text-base font-semibold text-primary-foreground text-center"
                   >
                     Subir imagen de perfil
                   </p>
                   <p
-                    class="text-xs font-semibold text-muted-foreground text-center"
+                    class="text-sm font-semibold text-muted-foreground text-center"
                   >
                     JPEG, JPG, PNG
                   </p>
                 </div>
-                <input
-                  type="file"
-                  class="absolute top-0 left-0 w-full h-full opacity-0"
-                  accept=".jpg, .jpeg, .png"
-                  (change)="onPreviewImage($event)"
-                />
+
+                <button
+                  hlmBtn
+                  size="lg"
+                  [variant]="'secondary'"
+                  class="relative w-full"
+                >
+                  <input
+                    type="file"
+                    class="absolute top-0 left-0 w-full h-full opacity-0"
+                    accept=".jpg, .jpeg, .png"
+                    (change)="onPreviewImage($event)"
+                  />
+                  Elegir foto
+                </button>
                 <img
                   [src]="imageSrc"
                   alt=""
@@ -173,7 +188,46 @@
                   [ngClass]="{ 'w-full h-full': imageSrc }"
                 />
               </div>
-              <div class="border rounded-3xl w-52 h-52"></div>
+
+              <!-- Crear componente -->
+              <div
+                class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
+              >
+                <div class="flex flex-col items-center">
+                  <img src="assets/icons/gallery.svg" alt="" class="w-10" />
+                  <p
+                    class="text-base font-semibold text-primary-foreground text-center"
+                  >
+                    Subir imagen de perfil
+                  </p>
+                  <p
+                    class="text-sm font-semibold text-muted-foreground text-center"
+                  >
+                    JPEG, JPG, PNG
+                  </p>
+                </div>
+
+                <button
+                  hlmBtn
+                  size="lg"
+                  [variant]="'secondary'"
+                  class="relative w-full"
+                >
+                  <input
+                    type="file"
+                    class="absolute top-0 left-0 w-full h-full opacity-0"
+                    accept=".jpg, .jpeg, .png"
+                    (change)="onPreviewImage($event)"
+                  />
+                  Elegir foto
+                </button>
+                <img
+                  [src]="imageSrc"
+                  alt=""
+                  class="absolute top-0 left-0 rounded-3xl object-cover"
+                  [ngClass]="{ 'w-full h-full': imageSrc }"
+                />
+              </div>
             </div>
           </div>
 

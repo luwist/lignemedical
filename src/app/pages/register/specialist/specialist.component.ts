@@ -95,6 +95,12 @@ export class SpecialistComponent {
     }
   }
 
+  onCheckForm(): void {
+    if (this.register.invalid) {
+      this.register.markAllAsTouched();
+    }
+  }
+
   onRegister(): void {
     const credentials = this.register.getRawValue();
 
