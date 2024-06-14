@@ -12,13 +12,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { InputErrorComponent } from '@app/components';
 import {
-  InputErrorComponent,
   StepComponent,
   StepperComponent,
   StepperNextDirective,
   StepperPreviousDirective,
-} from '@app/components';
+} from '@app/components/ui/stepper';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';

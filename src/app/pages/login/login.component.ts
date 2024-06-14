@@ -12,13 +12,9 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { Account } from './account.interface';
 import { AuthService } from '@app/services';
-import {
-  AccountCardComponent,
-  InputErrorComponent,
-  MessageService,
-  ToastComponent,
-} from '@app/components';
+import { AccountCardComponent, InputErrorComponent } from '@app/components';
 import { LoginRequest } from '@app/requests';
+import { MessageService, ToastComponent } from '@app/components/ui/toast';
 
 @Component({
   selector: 'app-login',
