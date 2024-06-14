@@ -18,6 +18,7 @@ import {
   MessageService,
   ToastComponent,
 } from '@app/components';
+import { LoginRequest } from '@app/requests';
 
 @Component({
   selector: 'app-login',
@@ -101,7 +102,7 @@ export class LoginComponent {
 
   async onLogin(): Promise<void> {
     try {
-      const credentials = this.loginForm.getRawValue();
+      const credentials = this.loginForm.getRawValue() as LoginRequest;
 
       this.loginForm.markAsPending();
 
