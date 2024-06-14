@@ -1,0 +1,24 @@
+<div
+  class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
+>
+  @if (imageSrc) {
+  <img
+    [src]="imageSrc"
+    alt=""
+    class="absolute top-0 left-0 rounded-3xl object-cover"
+    [ngClass]="{ 'w-full h-full': imageSrc }"
+  />
+  } @else {
+  <img src="assets/icons/gallery.svg" alt="" class="w-24" />
+
+  <button hlmBtn size="lg" [variant]="'secondary'" class="relative w-full">
+    <input
+      type="file"
+      class="absolute top-0 left-0 w-full h-full opacity-0"
+      accept=".jpg, .jpeg, .png"
+      (change)="onPreviewImage($event)"
+    />
+    Elegir foto
+  </button>
+  }
+</div>

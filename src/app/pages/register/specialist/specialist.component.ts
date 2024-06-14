@@ -12,10 +12,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { InputErrorComponent } from '@app/components';
-import { StepComponent, StepperComponent } from '@app/components/ui/stepper';
-import { StepperNextDirective } from '@app/components/ui/stepper/stepper-next/stepper-next.directive';
-import { StepperPreviousDirective } from '@app/components/ui/stepper/stepper-previous/stepper-previous.directive';
+import {
+  InputErrorComponent,
+  StepComponent,
+  StepperComponent,
+  StepperNextDirective,
+  StepperPreviousDirective,
+} from '@app/components';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
@@ -80,8 +83,12 @@ export class SpecialistComponent {
 
   constructor(private _router: Router, private _auth: Auth) {}
 
-  get personalInformationControlform() {
+  get personalInformationControlform(): FormGroup {
     return this.registerForm.get('personalInformation') as FormGroup;
+  }
+
+  get profilePictureGroup(): FormGroup {
+    return this.registerForm.get('profilePicture') as FormGroup;
   }
 
   get firstNameControl(): FormControl {

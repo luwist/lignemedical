@@ -6,6 +6,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from '@angular/fire/auth';
+import { LoginRequest } from '@app/requests';
+import { FirestoreService } from '../firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -13,21 +15,27 @@ import {
 export class AuthService {
   authState$ = authState(this._auth);
 
-  constructor(private _auth: Auth) {}
+  constructor(private _auth: Auth, private _firestore: FirestoreService) {}
 
-  async login(credential: any): Promise<void> {
+  async login(loginRequest: LoginRequest): Promise<void> {
     await signInWithEmailAndPassword(
       this._auth,
-      credential.email,
-      credential.password
+      loginRequest.email,
+      loginRequest.password
     );
   }
 
-  async register(user: any): Promise<void> {
-    await createUserWithEmailAndPassword(this._auth, user.email, user.password);
+  async register(registerRequest: any): Promise<void> {
+    await createUserWithEmailAndPassword(
+      this._auth,
+      registerRequest.email,
+      registerRequest.password
+    );
+
+    await this._firestore.addDocument('users', registerRequest);
   }
 
-  logout(): void {
-    signOut(this._auth);
+  async logout(): Promise<void> {
+    await signOut(this._auth);
   }
 }

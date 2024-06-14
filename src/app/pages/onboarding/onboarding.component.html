@@ -1,4 +1,5 @@
-<header class="h-20 flex items-center px-9">
+<!-- Crear un componente -->
+<header class="absolute top-0 left-0 w-full h-20 flex items-center px-9">
   <a routerLink="/login" class="flex items-center gap-2">
     <svg
       width="14"
@@ -20,15 +21,13 @@
   </a>
 </header>
 
-<main class="flex flex-col items-center gap-12">
-  <div class="flex flex-col items-center">
-    <img src="assets/logo.svg" alt="" class="my-7" />
-    <h1 class="text-2xl font-semibold text-center text-primary-foreground">
-      Eliga el tipo de cuenta
-    </h1>
-  </div>
+<main class="h-screen flex flex-col items-center justify-center gap-12">
+  <h1 class="text-2xl font-semibold text-center text-primary-foreground">
+    Eliga el tipo de cuenta
+  </h1>
 
   <div class="flex gap-16">
+    <!-- Crear componente panel -->
     <div class="w-72 h-64 flex flex-col justify-between items-center">
       <img src="assets/illustrations/doctor.svg" alt="" />
 
@@ -37,6 +36,7 @@
       >
     </div>
 
+    <!-- Crear componente panel -->
     <div class="w-72 h-64 flex flex-col justify-between items-center">
       <img src="assets/illustrations/person.svg" alt="" />
 
