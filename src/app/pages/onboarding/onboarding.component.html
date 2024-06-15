@@ -21,28 +21,24 @@
   </a>
 </header>
 
-<main class="h-screen flex flex-col items-center justify-center gap-12">
+<main class="h-screen flex flex-col items-center justify-center gap-10">
   <h1 class="text-2xl font-semibold text-center text-primary-foreground">
-    Eliga el tipo de cuenta
+    Elige tu tipo de cuenta
   </h1>
 
-  <div class="flex gap-16">
-    <!-- Crear componente panel -->
-    <div class="w-72 h-64 flex flex-col justify-between items-center">
-      <img src="assets/illustrations/doctor.svg" alt="" />
+  <div class="flex gap-10">
+    <app-panel
+      imageSrc="assets/images/boy.png"
+      title="Paciente"
+      description="Accede a tus registros médicos, programa citas y mantén un seguimiento de tu salud."
+      routerLink="/join/patient"
+    />
 
-      <a routerLink="/join/specialist" hlmBtn class="flex w-full"
-        >Soy un especialista</a
-      >
-    </div>
-
-    <!-- Crear componente panel -->
-    <div class="w-72 h-64 flex flex-col justify-between items-center">
-      <img src="assets/illustrations/person.svg" alt="" />
-
-      <a routerLink="/join/patient" hlmBtn class="flex w-full"
-        >Soy un paciente</a
-      >
-    </div>
+    <app-panel
+      imageSrc="assets/images/nurse.png"
+      title="Especialista"
+      description="Gestiona tus pacientes, organiza consultas y accede a tus herramientas profesionales."
+      routerLink="/join/specialist"
+    />
   </div>
 </main>

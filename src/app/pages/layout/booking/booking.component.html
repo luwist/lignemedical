@@ -1,1 +1,63 @@
-<p>booking works!</p>
+<main class="flex justify-between p-9">
+  <div>
+    <h1 class="text-lg font-semibold text-primary-foreground mb-6">
+      Reservar turno
+    </h1>
+
+    <div class="mb-6">
+      <h2 class="text-muted-foreground font-medium text-sm mb-2">
+        Eliga la especialidad
+      </h2>
+      <div class="flex flex-wrap gap-6">
+        @for (specialty of specialties; track $index) {
+        <button
+          type="button"
+          class="px-8 h-12 text-sm border text-primary-foreground bg-white rounded-full font-semibold"
+          [ngClass]="{ 'border-primary': indexSelected === $index }"
+          (click)="onSelect($index)"
+        >
+          {{ specialty }}
+        </button>
+        }
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="text-muted-foreground font-medium text-sm mb-2">
+        Eliga el especialista medico
+      </h2>
+
+      <div class="flex flex-wrap gap-6">
+        @for (doctor of doctors; track $index) {
+        <button
+          type="button"
+          class="p-4 w-52 text-sm border text-primary-foreground bg-white rounded-2xl font-semibold flex items-center gap-2"
+          [ngClass]="{ 'border-primary': indexSelected === $index }"
+          (click)="onSelect($index)"
+        >
+          <img [src]="doctor.imageSrc" alt="" class="w-12 h-12 rounded-full" />
+          <div>
+            <h2 class="text-primary-foreground text-sm font-medium text-left">
+              {{ doctor.name }}
+            </h2>
+            <h2 class="text-muted-foreground text-sm font-medium text-left">
+              {{ doctor.specialty }}
+            </h2>
+          </div>
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-96 min-h-[500px] p-8 bg-white rounded-3xl flex flex-col justify-between"
+  >
+    <h1 class="text-lg font-semibold text-primary-foreground">Mi turno</h1>
+    <div>
+      <p class="text-sm text-muted-foreground font-medium text-center">
+        Reserva tu turno ahora
+      </p>
+    </div>
+    <button type="button" hlmBtn class="w-full">Reservar turno</button>
+  </div>
+</main>
