@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 import {
   FormControl,
   FormGroup,
@@ -60,76 +56,48 @@ export class PatientComponent {
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
-      file: new FormControl(null, Validators.required),
+      profilePicture: new FormControl(null, Validators.required),
+      image: new FormControl(null, Validators.required),
     }),
   });
 
+  imageSrc!: string | ArrayBuffer | null;
+
   constructor(private _router: Router, private _auth: Auth) {}
 
-  get personalInformationControlform() {
+  get personalInformationGroup(): FormGroup {
     return this.form.get('personalInformation') as FormGroup;
+  }
+
+  get contactInformationGroup(): FormGroup {
+    return this.form.get('contactInformation') as FormGroup;
   }
 
   get profilePictureGroup(): FormGroup {
     return this.form.get('profilePicture') as FormGroup;
   }
 
-  get firstNameControl(): FormControl {
-    const personalInformation = this.personalInformationControlform;
-
-    return personalInformation.get('firstName') as FormControl;
+  getControl(formGroup: FormGroup, controlName: string): FormControl {
+    return formGroup.get(controlName) as FormControl;
   }
 
-  get lastNameControl(): FormControl {
-    const personalInformation = this.personalInformationControlform;
+  onImagePicked(e: Event, controlName: string) {
+    const inputElement = e.target as HTMLInputElement;
 
-    return personalInformation.get('lastName') as FormControl;
-  }
+    if (inputElement.files && inputElement.files[0]) {
+      const file = inputElement.files[0];
 
-  get ageControl(): FormControl {
-    const personalInformation = this.personalInformationControlform;
+      const reader = new FileReader();
+      reader.onload = () => (this.imageSrc = reader.result);
 
-    return personalInformation.get('age') as FormControl;
-  }
+      reader.readAsDataURL(file);
 
-  get identityDocumentControl(): FormControl {
-    const personalInformation = this.personalInformationControlform;
-
-    return personalInformation.get('identityDocument') as FormControl;
-  }
-
-  get healthInsuranceControl(): FormControl {
-    const personalInformation = this.personalInformationControlform;
-
-    return personalInformation.get('healthInsurance') as FormControl;
-  }
-
-  get contactInformationControlform() {
-    return this.form.get('contactInformation') as FormGroup;
-  }
-
-  get emailControl(): FormControl {
-    const personalInformation = this.contactInformationControlform;
-
-    return personalInformation.get('email') as FormControl;
-  }
-
-  get passwordControl(): FormControl {
-    const personalInformation = this.contactInformationControlform;
-
-    return personalInformation.get('password') as FormControl;
-  }
-
-  get profilePictureControlform() {
-    return this.form.get('profilePicture') as FormGroup;
-  }
-
-  onPathvalue(file: File): void {
-    console.log(file);
-
-    this.profilePictureControlform.patchValue({
-      file: file,
-    });
+      if (file) {
+        this.profilePictureGroup.patchValue({
+          [controlName]: file,
+        });
+      }
+    }
   }
 
   async onRegister(): Promise<void> {
@@ -137,14 +105,14 @@ export class PatientComponent {
 
     console.log(credentials);
 
-    const credentialRegister = await createUserWithEmailAndPassword(
-      this._auth,
-      credentials.contactInformation.email as string,
-      credentials.contactInformation.password as string
-    );
+    // const credentialRegister = await createUserWithEmailAndPassword(
+    //   this._auth,
+    //   credentials.contactInformation.email as string,
+    //   credentials.contactInformation.password as string
+    // );
 
-    await sendEmailVerification(credentialRegister.user);
+    // await sendEmailVerification(credentialRegister.user);
 
-    this._router.navigateByUrl('/verify-email');
+    // this._router.navigateByUrl('/verify-email');
   }
 }

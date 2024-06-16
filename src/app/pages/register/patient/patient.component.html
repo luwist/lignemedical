@@ -1,9 +1,9 @@
 <main class="h-screen flex items-center justify-center">
-  <form [formGroup]="form" (submit)="onRegister()">
+  <form [formGroup]="form" (ngSubmit)="onRegister()">
     <app-stepper>
       <app-step
         label="Datos personales"
-        [stepControl]="personalInformationControlform"
+        [stepControl]="personalInformationGroup"
       >
         <div class="mb-10">
           <p class="text-sm text-muted-foreground font-semibold">1/3</p>
@@ -11,12 +11,11 @@
             Datos personal
           </h2>
         </div>
-
         <div formGroupName="personalInformation">
           <div class="w-full flex gap-5 mb-5">
             <div class="w-full">
-              <label hlmLabel
-                >Nombre
+              <label hlmLabel>
+                Nombre
                 <input
                   class="w-full"
                   hlmInput
@@ -24,13 +23,13 @@
                   formControlName="firstName"
                 />
               </label>
-
-              <app-input-error [control]="firstNameControl" />
+              <app-input-error
+                [control]="getControl(personalInformationGroup, 'firstName')"
+              ></app-input-error>
             </div>
-
             <div class="w-full">
-              <label hlmLabel
-                >Apellido
+              <label hlmLabel>
+                Apellido
                 <input
                   class="w-full"
                   hlmInput
@@ -38,45 +37,49 @@
                   formControlName="lastName"
                 />
               </label>
-
-              <app-input-error [control]="lastNameControl" />
+              <app-input-error
+                [control]="getControl(personalInformationGroup, 'lastName')"
+              ></app-input-error>
             </div>
           </div>
-
           <div class="w-full flex gap-5">
             <div class="w-full">
-              <label hlmLabel
-                >Edad
+              <label hlmLabel>
+                DNI
                 <input
                   class="w-full"
                   hlmInput
                   type="text"
-                  [maxLength]="2"
+                  pattern="\d*"
+                  maxlength="8"
                   formControlName="identityDocument"
                 />
               </label>
-
-              <app-input-error [control]="identityDocumentControl" />
+              <app-input-error
+                [control]="
+                  getControl(personalInformationGroup, 'identityDocument')
+                "
+              ></app-input-error>
             </div>
-
             <div class="w-full">
-              <label hlmLabel
-                >DNI
+              <label hlmLabel>
+                Edad
                 <input
                   class="w-full"
                   hlmInput
                   type="text"
-                  [maxLength]="8"
+                  pattern="\d*"
+                  maxlength="2"
                   formControlName="age"
                 />
               </label>
-
-              <app-input-error [control]="ageControl" />
+              <app-input-error
+                [control]="getControl(personalInformationGroup, 'age')"
+              ></app-input-error>
             </div>
-
             <div class="w-full">
-              <label hlmLabel
-                >Obra social
+              <label hlmLabel>
+                Obra social
                 <input
                   class="w-full"
                   hlmInput
@@ -84,27 +87,26 @@
                   formControlName="healthInsurance"
                 />
               </label>
-
-              <app-input-error [control]="healthInsuranceControl" />
+              <app-input-error
+                [control]="
+                  getControl(personalInformationGroup, 'healthInsurance')
+                "
+              ></app-input-error>
             </div>
           </div>
         </div>
-
         <div class="w-full mt-16 flex items-center justify-between">
           <p class="text-sm font-medium text-primary-foreground text-center">
             ¿Ya tienes una cuenta?
             <a routerLink="/login" class="underline">Inicia sesion</a>
           </p>
-
           <button
             type="button"
             hlmBtn
             variant="secondary"
             size="lg"
             appStepperNext
-            [disabled]="
-              (personalInformationControlform.statusChanges | async) !== 'VALID'
-            "
+            [disabled]="personalInformationGroup.invalid"
           >
             Siguiente
           </button>
@@ -113,7 +115,7 @@
 
       <app-step
         label="Informacion de contacto"
-        [stepControl]="contactInformationControlform"
+        [stepControl]="contactInformationGroup"
       >
         <div class="mb-10">
           <p class="text-sm text-muted-foreground font-semibold">2/3</p>
@@ -121,11 +123,10 @@
             Informacion de contacto
           </h2>
         </div>
-
         <div formGroupName="contactInformation">
           <div class="w-full mb-5">
-            <label hlmLabel
-              >Correo Electronico
+            <label hlmLabel>
+              Correo Electronico
               <input
                 class="w-full"
                 hlmInput
@@ -133,12 +134,13 @@
                 formControlName="email"
               />
             </label>
-            <app-input-error [control]="emailControl" />
+            <app-input-error
+              [control]="getControl(contactInformationGroup, 'email')"
+            ></app-input-error>
           </div>
-
           <div class="w-full">
-            <label hlmLabel
-              >Contraseña
+            <label hlmLabel>
+              Contraseña
               <input
                 class="w-full"
                 hlmInput
@@ -146,16 +148,16 @@
                 formControlName="password"
               />
             </label>
-            <app-input-error [control]="passwordControl" />
+            <app-input-error
+              [control]="getControl(contactInformationGroup, 'password')"
+            ></app-input-error>
           </div>
         </div>
-
         <div class="w-full mt-16 flex items-center justify-between">
           <p class="text-sm font-medium text-primary-foreground text-center">
             ¿Ya tienes una cuenta?
             <a routerLink="/login" class="underline">Inicia sesion</a>
           </p>
-
           <div>
             <button
               type="button"
@@ -166,17 +168,13 @@
             >
               Volver
             </button>
-
             <button
               type="button"
               hlmBtn
               variant="secondary"
               size="lg"
               appStepperNext
-              [disabled]="
-                (personalInformationControlform.statusChanges | async) !==
-                'VALID'
-              "
+              [disabled]="contactInformationGroup.invalid"
             >
               Siguiente
             </button>
@@ -184,30 +182,100 @@
         </div>
       </app-step>
 
-      <app-step
-        label="Fotos de perfil"
-        [stepControl]="profilePictureControlform"
-      >
+      <app-step label="Fotos de perfil" [stepControl]="profilePictureGroup">
         <div class="mb-10">
           <p class="text-sm text-muted-foreground font-semibold">3/3</p>
           <h2 class="text-2xl font-semibold text-primary-foreground">
             Fotos de perfil
           </h2>
         </div>
-
         <div formGroupName="profilePicture">
           <div class="flex justify-between gap-10">
-            <app-dropzone (emitterFile)="onPathvalue($event)" />
-            <app-dropzone />
+            <div
+              class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
+            >
+              @if (imageSrc) {
+              <img
+                [src]="imageSrc"
+                alt=""
+                class="absolute top-0 left-0 rounded-3xl object-cover"
+                [ngClass]="{ 'w-full h-full': imageSrc }"
+              />
+              } @else {
+              <img src="assets/icons/gallery.svg" alt="" class="w-24" />
+
+              <button
+                hlmBtn
+                size="lg"
+                [variant]="'secondary'"
+                class="relative w-full"
+              >
+                <input
+                  type="file"
+                  class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                  accept=".jpg, .jpeg, .png"
+                  formControlName="image1"
+                />
+                Elegir foto
+              </button>
+              }
+            </div>
+
+            <div
+              class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
+            >
+              @if (imageSrc) {
+              <img
+                [src]="imageSrc"
+                alt=""
+                class="absolute top-0 left-0 rounded-3xl object-cover"
+                [ngClass]="{ 'w-full h-full': imageSrc }"
+              />
+              } @else {
+              <img src="assets/icons/gallery.svg" alt="" class="w-24" />
+
+              <button
+                hlmBtn
+                size="lg"
+                [variant]="'secondary'"
+                class="relative w-full"
+              >
+                <input
+                  type="file"
+                  class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                  accept=".jpg, .jpeg, .png"
+                  formControlName="image2"
+                />
+                Elegir foto
+              </button>
+              }
+            </div>
+
+            <!-- <input
+              type="file"
+              formControlName="image1"
+              (change)="onImagePicked1($event)"
+            />
+            <input
+              type="file"
+              formControlName="image2"
+              (change)="onImagePicked2($event)"
+            /> -->
+            <!-- <app-dropzone
+              [control]="getControl(profilePictureGroup, 'imagen1')"
+              (emitterFile)="onImagePicked($event, 'imagen1')"
+            ></app-dropzone>
+            <app-dropzone
+              [control]="getControl(profilePictureGroup, 'imagen2')"
+              (emitterFile)="onImagePicked($event, 'imagen2')"
+            ></app-dropzone> -->
           </div>
         </div>
-
         <div class="w-full mt-16 flex items-center justify-between">
           <p class="text-sm font-medium text-primary-foreground text-center">
             ¿Ya tienes una cuenta?
             <a routerLink="/login" class="underline">Inicia sesion</a>
           </p>
-
           <div>
             <button
               type="button"
@@ -218,7 +286,14 @@
             >
               Volver
             </button>
-            <button type="submit" hlmBtn size="lg">Crear una cuenta</button>
+            <button
+              type="submit"
+              hlmBtn
+              size="lg"
+              [disabled]="profilePictureGroup.invalid"
+            >
+              Crear una cuenta
+            </button>
           </div>
         </div>
       </app-step>

@@ -3,8 +3,11 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from '@angular/fire/auth';
 import { LoginRequest } from '@app/requests';
 import { FirestoreService } from '../firestore';
@@ -26,13 +29,18 @@ export class AuthService {
   }
 
   async register(registerRequest: any): Promise<void> {
-    await createUserWithEmailAndPassword(
+    const user = await createUserWithEmailAndPassword(
       this._auth,
       registerRequest.email,
       registerRequest.password
     );
 
-    await this._firestore.addDocument('users', registerRequest);
+    await sendEmailVerification(user.user);
+
+    updateProfile(user.user, {
+      displayName: registerRequest.name,
+      photoURL: '',
+    });
   }
 
   async logout(): Promise<void> {
