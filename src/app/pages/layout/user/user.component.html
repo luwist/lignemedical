@@ -1,117 +1,159 @@
-<div class="flex items-center justify-between mb-6">
-  <h2 class="text-xl font-semibold text-[#1B1E27]">Lista de usuarios</h2>
+<main class="p-9">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-semibold text-[#1B1E27]">Lista de usuarios</h2>
 
-  <div class="flex gap-4">
-    <!-- Crear un componente dentro de la carpeta para el modal -->
-    <hlm-dialog>
-      <button type="button" brnDialogTrigger hlmBtn size="lg" class="gap-2">
-        <img src="assets/icons/add.svg" alt="" />
-        Agregar nueva usuario
-      </button>
+    <div class="flex gap-4">
+      <!-- Crear un componente dentro de la carpeta para el modal -->
+      <hlm-dialog>
+        <button type="button" brnDialogTrigger hlmBtn size="lg" class="gap-2">
+          <img src="assets/icons/add.svg" alt="" />
+          Agregar nueva usuario
+        </button>
 
-      <hlm-dialog-content class="w-[425px]" *brnDialogContent="let ctx">
-        <hlm-dialog-header>
-          <h3 hlmDialogTitle>Agregar nueva usuario</h3>
-        </hlm-dialog-header>
-        <div>
-          <div class="flex flex-col items-center mb-5">
-            <span class="block w-20 h-20 rounded-full bg-slate-200"></span>
-          </div>
-
-          <div class="flex gap-5 mb-5">
-            <div>
-              <label hlmLabel for="name" class="text-right">Nombre</label>
-              <input hlmInput id="name" class="w-full" placeholder="Nombre" />
+        <hlm-dialog-content class="w-[425px]" *brnDialogContent="let ctx">
+          <hlm-dialog-header>
+            <h3 hlmDialogTitle>Agregar nueva usuario</h3>
+          </hlm-dialog-header>
+          <div>
+            <div class="flex flex-col items-center mb-5">
+              <span class="block w-20 h-20 rounded-full bg-slate-200"></span>
             </div>
 
-            <div>
-              <label hlmLabel for="name" class="text-right">Apellido</label>
-              <input hlmInput id="name" class="w-full" placeholder="Apellido" />
-            </div>
-          </div>
+            <div class="flex gap-5 mb-5">
+              <div>
+                <label hlmLabel for="name" class="text-right">Nombre</label>
+                <input hlmInput id="name" class="w-full" placeholder="Nombre" />
+              </div>
 
-          <div class="flex gap-5 mb-5">
-            <div>
-              <label hlmLabel for="name" class="text-right">DNI</label>
-              <input hlmInput id="name" class="w-full" placeholder="DNI" />
+              <div>
+                <label hlmLabel for="name" class="text-right">Apellido</label>
+                <input
+                  hlmInput
+                  id="name"
+                  class="w-full"
+                  placeholder="Apellido"
+                />
+              </div>
             </div>
 
-            <div>
-              <label hlmLabel for="name" class="text-right">Obra social</label>
+            <div class="flex gap-5 mb-5">
+              <div>
+                <label hlmLabel for="name" class="text-right">DNI</label>
+                <input hlmInput id="name" class="w-full" placeholder="DNI" />
+              </div>
+
+              <div>
+                <label hlmLabel for="name" class="text-right"
+                  >Obra social</label
+                >
+                <input
+                  hlmInput
+                  id="name"
+                  class="w-full"
+                  placeholder="Obra social"
+                />
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <label hlmLabel for="email" class="text-right"
+                >Correo electronico</label
+              >
               <input
                 hlmInput
-                id="name"
+                id="email"
                 class="w-full"
-                placeholder="Obra social"
+                placeholder="Correo electronico"
+              />
+            </div>
+
+            <div class="mb-5">
+              <label hlmLabel for="email" class="text-right">Contraseña</label>
+              <input
+                hlmInput
+                id="email"
+                class="w-full"
+                placeholder="Contraseña"
               />
             </div>
           </div>
-
-          <div class="mb-5">
-            <label hlmLabel for="email" class="text-right"
-              >Correo electronico</label
-            >
-            <input
-              hlmInput
-              id="email"
-              class="w-full"
-              placeholder="Correo electronico"
-            />
-          </div>
-
-          <div class="mb-5">
-            <label hlmLabel for="email" class="text-right">Contraseña</label>
-            <input
-              hlmInput
-              id="email"
-              class="w-full"
-              placeholder="Contraseña"
-            />
-          </div>
-        </div>
-        <hlm-dialog-footer>
-          <button hlmBtn type="submit" class="w-full" (click)="ctx.close()">
-            Agregar usuario
-          </button>
-        </hlm-dialog-footer>
-      </hlm-dialog-content>
-    </hlm-dialog>
+          <hlm-dialog-footer>
+            <button hlmBtn type="submit" class="w-full" (click)="ctx.close()">
+              Agregar usuario
+            </button>
+          </hlm-dialog-footer>
+        </hlm-dialog-content>
+      </hlm-dialog>
+    </div>
   </div>
-</div>
 
-<table
-  class="w-full text-sm font-medium text-left border-separate border-spacing-y-3"
->
-  <thead>
-    <tr class="text-[#CBD1E1]">
-      <th class="px-6 font-medium">Usuario</th>
-      <th class="px-6 font-medium">DNI</th>
-      <th class="px-6 font-medium">Role</th>
-      <th class="px-6 font-medium">Correo electronico</th>
-      <th class="px-6 font-medium">Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (item of items; track $index) {
-    <tr class="bg-white text-[#1B1E27]">
-      <td class="px-6 py-3 flex items-center gap-2">
-        <img
-          src="{{ item.profileImage }}"
-          alt=""
-          class="w-10 h-10 object-cover rounded-full"
-        />
-        <div>
+  <table
+    class="w-full text-sm font-medium text-left border-separate border-spacing-y-3"
+  >
+    <thead>
+      <tr class="text-[#CBD1E1]">
+        <th class="px-6 font-medium">Usuario</th>
+        <th class="px-6 font-medium">DNI</th>
+        <th class="px-6 font-medium">Correo electronico</th>
+        <th class="px-6 font-medium">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of items; track $index) {
+      <tr
+        class="bg-white text-[#1B1E27]"
+        [ngClass]="
+          !active && idSelected !== item.id ? 'opacity-20' : 'opacity-100'
+        "
+      >
+        <td class="px-6 py-3 flex items-center gap-2 rounded-l-2xl">
+          <img
+            src="{{ item.profileImage }}"
+            alt=""
+            class="w-10 h-10 object-cover rounded-full"
+          />
           <div>
-            {{ item.name }}
+            <div>
+              {{ item.name }}
+            </div>
+            <div class="text-[#CBD1E1]">{{ item.age }} años</div>
           </div>
-          <div class="text-[#CBD1E1]">{{ item.age }} años</div>
-        </div>
-      </td>
-      <td class="px-6 py-3">{{ item.dni }}</td>
-      <td class="px-6 py-3">{{ item.role }}</td>
-      <td class="px-6 py-3">{{ item.email }}</td>
-      <td class="px-6 py-3 rounded-r-2xl">Aca va un Switch</td>
-    </tr>
-    }
-  </tbody>
-</table>
+        </td>
+        <td class="px-6 py-3">{{ item.dni }}</td>
+        <td class="px-6 py-3 capitalize">{{ item.email }}</td>
+        <td class="px-6 py-3">{{ item.role }}</td>
+        <td class="px-6 py-3 rounded-r-2xl">
+          <hlm-switch (click)="onSelect(item.id)" />
+        </td>
+        <td class="px-6 py-3 rounded-r-2xl">
+          <button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.66666 12.6667C6.66666 13.4 7.26666 14 8 14C8.73333 14 9.33333 13.4 9.33333 12.6667C9.33333 11.9333 8.73333 11.3333 8 11.3333C7.26666 11.3333 6.66666 11.9333 6.66666 12.6667Z"
+                fill="#CBD1E1"
+                stroke="#CBD1E1"
+              />
+              <path
+                d="M6.66666 3.33332C6.66666 4.06666 7.26666 4.66666 8 4.66666C8.73333 4.66666 9.33333 4.06666 9.33333 3.33332C9.33333 2.59999 8.73333 1.99999 8 1.99999C7.26666 1.99999 6.66666 2.59999 6.66666 3.33332Z"
+                fill="#CBD1E1"
+                stroke="#CBD1E1"
+              />
+              <path
+                d="M6.66666 8.00001C6.66666 8.73334 7.26666 9.33334 8 9.33334C8.73333 9.33334 9.33333 8.73334 9.33333 8.00001C9.33333 7.26668 8.73333 6.66668 8 6.66668C7.26666 6.66668 6.66666 7.26668 6.66666 8.00001Z"
+                fill="#CBD1E1"
+                stroke="#CBD1E1"
+              />
+            </svg>
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</main>

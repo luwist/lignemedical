@@ -14,11 +14,15 @@ import {
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmSwitchComponent } from '@spartan-ng/ui-switch-helm';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
+    CommonModule,
+
     BrnDialogTriggerDirective,
     BrnDialogContentDirective,
 
@@ -32,6 +36,8 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
     HlmLabelDirective,
     HlmInputDirective,
     HlmButtonDirective,
+
+    HlmSwitchComponent,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -69,4 +75,13 @@ export class UserComponent {
       isActive: true,
     },
   ];
+
+  idSelected!: number;
+  active: boolean = false;
+
+  onSelect(id: number): void {
+    this.idSelected = id;
+
+    this.active = !this.active;
+  }
 }
