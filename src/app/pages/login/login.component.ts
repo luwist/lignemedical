@@ -38,11 +38,6 @@ import { MessageService, ToastComponent } from '@app/components/ui/toast';
 })
 export class LoginComponent {
   selectedOption!: number;
-  phrases: string[] = [
-    'Vea toda la información sobre su paciente en un solo lugar',
-    'Mantenga toda la información de salud organizada y accesible al instante',
-  ];
-  phrase: string = 'Vea toda la información sobre su paciente en un solo lugar';
 
   accounts: Account[] = [
     {
@@ -61,6 +56,27 @@ export class LoginComponent {
     },
     {
       id: 3,
+      imageSrc: 'images/nurse.png',
+      role: 'especialista',
+      email: 'especialista@especialista.com',
+      password: 'especialista',
+    },
+    {
+      id: 4,
+      imageSrc: 'images/boy.png',
+      role: 'paciente',
+      email: 'paciente@paciente.com',
+      password: 'paciente',
+    },
+    {
+      id: 5,
+      imageSrc: 'images/boy.png',
+      role: 'paciente',
+      email: 'paciente@paciente.com',
+      password: 'paciente',
+    },
+    {
+      id: 6,
       imageSrc: 'images/boy.png',
       role: 'paciente',
       email: 'paciente@paciente.com',

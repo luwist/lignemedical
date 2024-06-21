@@ -1,0 +1,24 @@
+<div [formGroup]="contactInformationGroup">
+  <div class="w-full mb-5">
+    <label hlmLabel
+      >Correo Electronico
+      <input class="w-full" hlmInput type="text" formControlName="email" />
+    </label>
+
+    <app-input-error [control]="emailControl" />
+  </div>
+
+  <div>
+    <label hlmLabel
+      >Contraseña
+      <input
+        class="w-full"
+        hlmInput
+        type="password"
+        formControlName="password"
+      />
+    </label>
+
+    <app-input-error [control]="passwordControl" />
+  </div>
+</div>

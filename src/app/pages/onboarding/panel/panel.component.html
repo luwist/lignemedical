@@ -1,12 +1,12 @@
-<div class="border-dashed w-96 h-72 p-6">
+<div class="border-dashed w-96 p-6">
   <div class="mb-12 flex flex-col items-center">
-    <img src="{{ imageSrc }}" alt="" class="w-12 h-12" />
-    <h2 class="text-lg text-primary-foreground text-center font-semibold p-2">
+    <img [src]="imageSrc" alt="" class="w-full h-48 object-cover rounded-3xl" />
+    <h2 class="text-xl text-primary-foreground text-center font-semibold p-2">
       {{ title }}
     </h2>
-    <p class="text-sm text-muted-foreground text-center font-medium">
+    <p class="text-base text-muted-foreground text-center">
       {{ description }}
     </p>
   </div>
-  <a routerLink="{{ routerLink }}" hlmBtn class="w-full">Unirse</a>
+  <a [routerLink]="routerLink" hlmBtn class="w-full">Unirse</a>
 </div>

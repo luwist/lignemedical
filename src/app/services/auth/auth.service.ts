@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/auth';
 import { LoginRequest } from '@app/requests';
 import { FirestoreService } from '../firestore';
+import { UploadService } from '../upload';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,11 @@ import { FirestoreService } from '../firestore';
 export class AuthService {
   authState$ = authState(this._auth);
 
-  constructor(private _auth: Auth, private _firestore: FirestoreService) {}
+  constructor(
+    private _auth: Auth,
+    private _firestore: FirestoreService,
+    private _uploadService: UploadService
+  ) {}
 
   async login(loginRequest: LoginRequest): Promise<void> {
     await signInWithEmailAndPassword(
@@ -29,18 +34,26 @@ export class AuthService {
   }
 
   async register(registerRequest: any): Promise<void> {
+    const { firstName, lastName } = registerRequest.personalInformation;
+
+    const { email, password } = registerRequest.contactInformation;
+
+    const { profileImage, dniImage } = registerRequest.profilePicture;
+
+    const profileUrl = await this._uploadService.upload(profileImage);
+
     const user = await createUserWithEmailAndPassword(
       this._auth,
-      registerRequest.email,
-      registerRequest.password
+      email,
+      password
     );
 
-    await sendEmailVerification(user.user);
-
     updateProfile(user.user, {
-      displayName: registerRequest.name,
-      photoURL: '',
+      displayName: `${firstName} ${lastName}`,
+      photoURL: profileUrl,
     });
+
+    await sendEmailVerification(user.user);
   }
 
   async logout(): Promise<void> {

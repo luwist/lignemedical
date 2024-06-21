@@ -1,21 +1,10 @@
 import { Component } from '@angular/core';
-import {
-  BrnDialogContentDirective,
-  BrnDialogTriggerDirective,
-} from '@spartan-ng/ui-dialog-brain';
-import {
-  HlmDialogComponent,
-  HlmDialogContentComponent,
-  HlmDialogDescriptionDirective,
-  HlmDialogFooterComponent,
-  HlmDialogHeaderComponent,
-  HlmDialogTitleDirective,
-} from '@spartan-ng/ui-dialog-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmSwitchComponent } from '@spartan-ng/ui-switch-helm';
 import { CommonModule } from '@angular/common';
+import { SheetComponent } from './sheet/sheet.component';
 
 @Component({
   selector: 'app-user',
@@ -23,15 +12,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
 
-    BrnDialogTriggerDirective,
-    BrnDialogContentDirective,
-
-    HlmDialogComponent,
-    HlmDialogContentComponent,
-    HlmDialogHeaderComponent,
-    HlmDialogFooterComponent,
-    HlmDialogTitleDirective,
-    HlmDialogDescriptionDirective,
+    SheetComponent,
 
     HlmLabelDirective,
     HlmInputDirective,

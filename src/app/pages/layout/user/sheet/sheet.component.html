@@ -1,0 +1,81 @@
+<hlm-sheet side="right">
+  <button id="edit-profile" brnSheetTrigger hlmBtn size="lg" class="gap-2">
+    <img src="assets/icons/add.png" alt="" />
+    Agregar usuario
+  </button>
+  <hlm-sheet-content *brnSheetContent="let ctx">
+    <hlm-sheet-header>
+      <h3 hlmSheetTitle>Agregar usuario</h3>
+    </hlm-sheet-header>
+
+    <form [formGroup]="registerForm" class="mt-20 w-[500px]">
+      <app-stepper>
+        <app-step label="Selecciona tu cuenta" [stepControl]="accountGroup">
+          <app-header
+            title="Selecciona el tipo de cuenta"
+            description="Elige el tipo de cuenta que deseas crear. Puedes registrarte como
+            doctor, paciente o administrador."
+          />
+
+          <div class="flex justify-center gap-5">
+            @for (account of accounts; track $index) {
+            <app-account-card
+              image="{{ account.imageSrc }}"
+              role="{{ account.role }}"
+              [selected]="selectedOption === account.id"
+              (click)="onSelect(account)"
+            />
+            }
+          </div>
+
+          <div class="flex justify-end mt-10">
+            <button
+              type="button"
+              hlmBtn
+              variant="secondary"
+              size="lg"
+              appStepperNext
+              [disabled]="(accountGroup.statusChanges | async) !== 'VALID'"
+            >
+              Siguiente
+            </button>
+          </div>
+        </app-step>
+
+        <app-step
+          label="Selecciona tu cuenta"
+          [stepControl]="personalInformationGroup"
+        >
+          <app-header
+            title="Selecciona el tipo de cuenta"
+            description="Elige el tipo de cuenta que deseas crear. Puedes registrarte como
+            doctor, paciente o administrador."
+          />
+
+          <app-personal-information [control]="personalInformationGroup" />
+
+          <div class="flex justify-end mt-10">
+            <button
+              type="button"
+              hlmBtn
+              variant="ghost"
+              size="lg"
+              appStepperPrevious
+            >
+              Volver
+            </button>
+            <button
+              type="button"
+              hlmBtn
+              variant="secondary"
+              size="lg"
+              appStepperNext
+            >
+              Siguiente
+            </button>
+          </div>
+        </app-step>
+      </app-stepper>
+    </form>
+  </hlm-sheet-content>
+</hlm-sheet>

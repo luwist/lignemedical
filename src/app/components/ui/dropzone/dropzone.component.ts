@@ -12,7 +12,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 })
 export class DropzoneComponent {
   @Input() control!: FormControl;
-  @Output() emitterFile = new EventEmitter<File>();
+  @Output() updateFile = new EventEmitter<File>();
 
   imageSrc!: string | ArrayBuffer | null;
 
@@ -28,7 +28,7 @@ export class DropzoneComponent {
       reader.readAsDataURL(file);
 
       if (file) {
-        this.emitterFile.emit(file);
+        this.updateFile.emit(file);
       }
     }
   }

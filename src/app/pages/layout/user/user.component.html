@@ -2,89 +2,7 @@
   <div class="flex items-center justify-between mb-6">
     <h2 class="text-xl font-semibold text-[#1B1E27]">Lista de usuarios</h2>
 
-    <div class="flex gap-4">
-      <!-- Crear un componente dentro de la carpeta para el modal -->
-      <hlm-dialog>
-        <button type="button" brnDialogTrigger hlmBtn size="lg" class="gap-2">
-          <img src="assets/icons/add.svg" alt="" />
-          Agregar nueva usuario
-        </button>
-
-        <hlm-dialog-content class="w-[425px]" *brnDialogContent="let ctx">
-          <hlm-dialog-header>
-            <h3 hlmDialogTitle>Agregar nueva usuario</h3>
-          </hlm-dialog-header>
-          <div>
-            <div class="flex flex-col items-center mb-5">
-              <span class="block w-20 h-20 rounded-full bg-slate-200"></span>
-            </div>
-
-            <div class="flex gap-5 mb-5">
-              <div>
-                <label hlmLabel for="name" class="text-right">Nombre</label>
-                <input hlmInput id="name" class="w-full" placeholder="Nombre" />
-              </div>
-
-              <div>
-                <label hlmLabel for="name" class="text-right">Apellido</label>
-                <input
-                  hlmInput
-                  id="name"
-                  class="w-full"
-                  placeholder="Apellido"
-                />
-              </div>
-            </div>
-
-            <div class="flex gap-5 mb-5">
-              <div>
-                <label hlmLabel for="name" class="text-right">DNI</label>
-                <input hlmInput id="name" class="w-full" placeholder="DNI" />
-              </div>
-
-              <div>
-                <label hlmLabel for="name" class="text-right"
-                  >Obra social</label
-                >
-                <input
-                  hlmInput
-                  id="name"
-                  class="w-full"
-                  placeholder="Obra social"
-                />
-              </div>
-            </div>
-
-            <div class="mb-5">
-              <label hlmLabel for="email" class="text-right"
-                >Correo electronico</label
-              >
-              <input
-                hlmInput
-                id="email"
-                class="w-full"
-                placeholder="Correo electronico"
-              />
-            </div>
-
-            <div class="mb-5">
-              <label hlmLabel for="email" class="text-right">Contraseña</label>
-              <input
-                hlmInput
-                id="email"
-                class="w-full"
-                placeholder="Contraseña"
-              />
-            </div>
-          </div>
-          <hlm-dialog-footer>
-            <button hlmBtn type="submit" class="w-full" (click)="ctx.close()">
-              Agregar usuario
-            </button>
-          </hlm-dialog-footer>
-        </hlm-dialog-content>
-      </hlm-dialog>
-    </div>
+    <app-sheet />
   </div>
 
   <table
@@ -106,7 +24,7 @@
           !active && idSelected !== item.id ? 'opacity-20' : 'opacity-100'
         "
       >
-        <td class="px-6 py-3 flex items-center gap-2 rounded-l-2xl">
+        <td class="px-6 py-3 flex items-center gap-2 rounded-r-2xl">
           <img
             src="{{ item.profileImage }}"
             alt=""

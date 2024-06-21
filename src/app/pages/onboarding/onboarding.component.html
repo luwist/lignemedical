@@ -1,26 +1,3 @@
-<!-- Crear un componente -->
-<header class="absolute top-0 left-0 w-full h-20 flex items-center px-9">
-  <a routerLink="/login" class="flex items-center gap-2">
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 15"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      stroke="#1B1E27"
-    >
-      <path
-        d="M8.75 12.12 4.947 8.317a1.16 1.16 0 0 1 0-1.634L8.75 2.88"
-        stroke-width="1.125"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-    <span class="text-sm text-primary-foreground font-semibold">Volver</span>
-  </a>
-</header>
-
 <main class="h-screen flex flex-col items-center justify-center gap-10">
   <h1 class="text-2xl font-semibold text-center text-primary-foreground">
     Elige tu tipo de cuenta
@@ -28,14 +5,14 @@
 
   <div class="flex gap-10">
     <app-panel
-      imageSrc="assets/images/boy.png"
+      imageSrc="assets/images/appointment.jpeg"
       title="Paciente"
       description="Accede a tus registros médicos, programa citas y mantén un seguimiento de tu salud."
       routerLink="/join/patient"
     />
 
     <app-panel
-      imageSrc="assets/images/nurse.png"
+      imageSrc="assets/images/doctor-appointment.jpg"
       title="Especialista"
       description="Gestiona tus pacientes, organiza consultas y accede a tus herramientas profesionales."
       routerLink="/join/specialist"

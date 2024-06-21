@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DropzoneComponent, InputErrorComponent } from '@app/components';
 import {
   StepComponent,
@@ -23,6 +23,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
 
     HlmButtonDirective,
     HlmInputDirective,
@@ -48,7 +49,7 @@ export class PatientComponent {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      identityDocument: new FormControl('', Validators.required),
+      dni: new FormControl('', Validators.required),
       healthInsurance: new FormControl('', Validators.required),
     }),
     contactInformation: new FormGroup({

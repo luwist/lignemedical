@@ -1,74 +1,82 @@
 <app-toast />
 
 <main class="min-h-screen flex items-center justify-center">
-  <form class="w-96 bg-white" [formGroup]="loginForm" (submit)="onLogin()">
-    <h1
-      class="text-center text-2xl text-primary-foreground font-semibold mb-10"
-    >
-      ¡Bienvenido de nuevo!
-    </h1>
+  <div class="flex gap-20">
+    <div class="w-96">
+      <h1
+        class="text-center text-2xl text-primary-foreground font-semibold mb-2"
+      >
+        Acceso rapido
+      </h1>
 
-    <div class="flex gap-5">
-      @for (account of accounts; track $index) {
-      <app-account-card
-        image="{{ account.imageSrc }}"
-        role="{{ account.role }}"
-        [selected]="selectedOption === account.id"
-        (click)="onSelect(account)"
-      />
-      }
+      <p class="text-muted-foreground text-base text-center font-normal mb-10">
+        Elige una cuenta de prueba para iniciar sesion sin necesidad de crear
+        una nueva
+      </p>
+
+      <div class="flex gap-5 flex-wrap">
+        @for (account of accounts; track $index) {
+        <app-account-card
+          image="{{ account.imageSrc }}"
+          role="{{ account.role }}"
+          [selected]="selectedOption === account.id"
+          (click)="onSelect(account)"
+        />
+        }
+      </div>
     </div>
+    <form class="w-96 bg-white" [formGroup]="loginForm" (submit)="onLogin()">
+      <h1
+        class="text-center text-2xl text-primary-foreground font-semibold mb-2"
+      >
+        ¡Bienvenido de nuevo!
+      </h1>
+      <p
+        class="text-muted-foreground text-base text-center font-normal mb-[66px]"
+      >
+        Ingresa tus datos para acceder a tu cuenta
+      </p>
 
-    <!-- Crear un componente para el divider -->
-    <div class="flex items-center my-7 text-muted-foreground gap-4">
-      <span class="flex-grow h-[1px] bg-muted-foreground"></span>
-      <span class="text-sm whitespace-nowrap">
-        tambien podes iniciar sesion con tu correo
-      </span>
-      <span class="flex-grow h-[1px] bg-muted-foreground"></span>
-    </div>
+      <div class="mb-4">
+        <label hlmLabel
+          >Correo Electronico
+          <input
+            class="w-full"
+            hlmInput
+            type="email"
+            placeholder="Correo Electronico"
+            formControlName="email"
+          />
+        </label>
+        <app-input-error [control]="emailControl" />
+      </div>
 
-    <div class="mb-4">
       <label hlmLabel
-        >Correo Electronico
+        >Contraseña
         <input
           class="w-full"
           hlmInput
-          type="email"
-          placeholder="Correo Electronico"
-          formControlName="email"
+          type="password"
+          placeholder="Contraseña"
+          formControlName="password"
         />
       </label>
-      <app-input-error [control]="emailControl" />
-    </div>
+      <app-input-error [control]="passwordControl" />
 
-    <label hlmLabel
-      >Contraseña
-      <input
-        class="w-full"
-        hlmInput
-        type="password"
-        placeholder="Contraseña"
-        formControlName="password"
-      />
-    </label>
-    <app-input-error [control]="passwordControl" />
-
-    <button
-      class="w-full mt-8"
-      [disabled]="(loginForm.statusChanges | async) !== 'VALID'"
-      hlmBtn
-    >
-      Iniciar sesion
-    </button>
-
-    <p class="text-sm font-regular text-[#23262f] text-center mt-5">
-      ¿No tienes una cuenta?
-      <a
-        routerLink="/onboarding"
-        class="underline text-primary-foreground"
-        >Registrate</a
+      <button
+        class="w-full mt-8"
+        [disabled]="(loginForm.statusChanges | async) !== 'VALID'"
+        hlmBtn
       >
-    </p>
-  </form>
+        Iniciar sesion
+      </button>
+
+      <p class="text-sm font-regular text-[#23262f] text-center mt-5">
+        ¿No tienes una cuenta?
+        <a routerLink="/onboarding" class="underline text-primary-foreground"
+          >Registrate</a
+        >
+      </p>
+    </form>
+  </div>
 </main>

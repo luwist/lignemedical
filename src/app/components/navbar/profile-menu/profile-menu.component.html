@@ -1,19 +1,35 @@
 <div class="flex w-full items-center justify-center pt-[20%]">
   <button hlmBtn variant="outline" align="end" [brnMenuTriggerFor]="menu">
-    <img src="assets/images/person.png" class="w-10 h-10" alt="Avatar User" />
+    <hlm-avatar>
+      <img
+        [src]="(user$ | async)?.photoURL"
+        alt="Profile picture"
+        hlmAvatarImage
+      />
+      <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+        fallBack
+      }}</span>
+    </hlm-avatar>
   </button>
 </div>
 <ng-template #menu>
   <hlm-menu class="w-56">
     <hlm-menu-label>
       <div class="flex items-center gap-3">
-        <img
-          src="assets/images/person.png"
-          class="w-12 h-12"
-          alt="Avatar User"
-        />
+        <hlm-avatar>
+          <img
+            [src]="(user$ | async)?.photoURL"
+            alt="Profile picture"
+            hlmAvatarImage
+          />
+          <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+            fallBack
+          }}</span>
+        </hlm-avatar>
         <div>
-          <p class="text-primary-foreground text-sm font-medium">Jhoe Doe</p>
+          <p class="text-primary-foreground text-sm font-medium">
+            {{ (user$ | async)?.displayName }}
+          </p>
           <p class="text-muted-foreground text-sm font-medium">Administrador</p>
         </div>
       </div>
