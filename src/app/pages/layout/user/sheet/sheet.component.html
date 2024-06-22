@@ -8,7 +8,7 @@
       <h3 hlmSheetTitle>Agregar usuario</h3>
     </hlm-sheet-header>
 
-    <form [formGroup]="registerForm" class="mt-20 w-[500px]">
+    <form [formGroup]="registerForm" class="mt-10 w-[500px]">
       <app-stepper>
         <app-step label="Selecciona tu cuenta" [stepControl]="accountGroup">
           <app-header
@@ -53,6 +53,30 @@
           />
 
           <app-personal-information [control]="personalInformationGroup" />
+          @switch (selectedRole) { @case ('paciente') {
+          <div class="w-full">
+            <label hlmLabel
+              >Obra social
+              <input
+                class="w-full"
+                hlmInput
+                type="text"
+                formControlName="healthInsurance"
+              />
+            </label>
+
+            <!-- <app-input-error [control]="healthInsuranceControl" /> -->
+          </div>
+          } @case ('especialista') {
+          <div class="w-full">
+            <label hlmLabel
+              >Especialidades
+              <input class="w-full" hlmInput type="text" />
+            </label>
+
+            <!-- <app-input-error [control]="healthInsuranceControl" /> -->
+          </div>
+          } }
 
           <div class="flex justify-end mt-10">
             <button

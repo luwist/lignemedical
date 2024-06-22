@@ -68,6 +68,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SheetComponent {
   selectedOption!: number;
+  selectedRole!: string;
 
   accounts: Account[] = [
     {
@@ -116,6 +117,7 @@ export class SheetComponent {
 
   onSelect(account: Account): void {
     this.selectedOption = account.id;
+    this.selectedRole = account.role;
 
     const accountGroup = this.accountGroup;
 
