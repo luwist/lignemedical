@@ -9,4 +9,23 @@ import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  items = [
+    {
+      label: 'Dashboard',
+      path: '/dashboard',
+    },
+    {
+      label: 'Usuarios',
+      path: '/users',
+    },
+    {
+      label: 'Turnos',
+      path: '/appointment',
+    },
+    {
+      label: 'Reservar turno',
+      path: '/booking',
+    },
+  ];
+}

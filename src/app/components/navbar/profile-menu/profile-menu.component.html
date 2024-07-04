@@ -13,10 +13,10 @@
   </button>
 </div>
 <ng-template #menu>
-  <hlm-menu class="w-56">
+  <hlm-menu class="w-64">
     <hlm-menu-label>
       <div class="flex items-center gap-3">
-        <hlm-avatar>
+        <hlm-avatar variant="large">
           <img
             [src]="(user$ | async)?.photoURL"
             alt="Profile picture"
@@ -27,13 +27,27 @@
           }}</span>
         </hlm-avatar>
         <div>
-          <p class="text-primary-foreground text-sm font-medium">
+          <p class="text-foreground text-base font-medium">
             {{ (user$ | async)?.displayName }}
           </p>
           <p class="text-muted-foreground text-sm font-medium">Administrador</p>
         </div>
       </div>
     </hlm-menu-label>
+
+    <hlm-menu-separator />
+
+    <hlm-menu-group>
+      <button hlmMenuItem>
+        <span>Mi perfil</span>
+      </button>
+      <button hlmMenuItem>
+        <span>Configuración</span>
+      </button>
+      <button hlmMenuItem>
+        <span>Cambiar idioma</span>
+      </button>
+    </hlm-menu-group>
 
     <hlm-menu-separator />
 

@@ -1,0 +1,31 @@
+<article class="w-96 rounded-3xl p-6 bg-card">
+  <div class="flex items-start justify-between">
+    <div class="flex items-center gap-3">
+      <hlm-avatar variant="xLarge" shape="square">
+        <img [src]="" alt="Profile picture" hlmAvatarImage />
+        <span class="bg-[#FD005B] text-white" hlmAvatarFallback>NN</span>
+      </hlm-avatar>
+      <div>
+        <p class="text-sm font-medium text-[#808080]">Doctor/a</p>
+        <p class="text-base font-medium text-foreground">{{ name }}</p>
+      </div>
+    </div>
+
+    <app-tag [severity]="status" />
+  </div>
+
+  <div class="mt-10 flex flex-col gap-5">
+    <p class="flex items-center justify-between text-sm text-[#808080]">
+      Especialidad:
+      <span class="text-foreground">{{ speciality }}</span>
+    </p>
+    <p class="flex items-center justify-between text-sm text-[#808080]">
+      Fecha:
+      <span class="text-foreground">{{ date }}</span>
+    </p>
+    <p class="flex items-center justify-between text-sm text-[#808080]">
+      Hora:
+      <span class="text-foreground">{{ hour }}</span>
+    </p>
+  </div>
+</article>

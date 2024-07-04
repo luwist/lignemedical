@@ -1,36 +1,33 @@
-<header class="w-full h-20 px-9 flex items-center justify-between">
-  <div class="flex items-center gap-8">
-    <a routerLink="/">
-      <img src="assets/logo.svg" alt="Logo" />
-    </a>
+<header class="w-full h-24 px-10 flex items-center justify-between">
+  <a routerLink="/">
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      class="logo"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.4 0c3.82 0 7.482 1.18 10.182 3.28S28.8 8.23 28.8 11.2s-1.517 5.82-4.218 7.92S18.22 22.4 14.4 22.4v-3.92c2.483 0 4.863-.767 6.618-2.132 1.756-1.365 2.742-3.217 2.742-5.148s-.986-3.782-2.742-5.148C19.264 4.687 16.883 3.92 14.4 3.92z"
+      />
+      <path
+        d="M17.6 32c-3.82 0-7.482-1.18-10.182-3.28S3.2 23.77 3.2 20.8s1.517-5.82 4.218-7.92S13.78 9.6 17.6 9.6v3.92c-2.482 0-4.863.767-6.619 2.132S8.24 18.87 8.24 20.8s.986 3.782 2.742 5.148c1.755 1.365 4.136 2.132 6.618 2.132z"
+      />
+    </svg>
+  </a>
 
-    <ul class="flex">
-      <li>
-        <a
-          class="menu-link"
-          routerLink="/users"
-          routerLinkActive="menu-link--active"
-          >Usuarios</a
-        >
-      </li>
-      <li>
-        <a
-          class="menu-link"
-          routerLink="/shift"
-          routerLinkActive="menu-link--active"
-          >Mis turnos</a
-        >
-      </li>
-      <li>
-        <a
-          class="menu-link"
-          routerLink="/booking"
-          routerLinkActive="menu-link--active"
-          >Reservar turno</a
-        >
-      </li>
-    </ul>
-  </div>
+  <ul class="flex">
+    @for (item of items; track $index) {
+    <li>
+      <a
+        class="h-12 px-6 rounded-full text-sm text-foreground flex items-center justify-center"
+        [routerLink]="item.path"
+        routerLinkActive="menu-link--active"
+        >{{ item.label }}</a
+      >
+    </li>
+    }
+  </ul>
 
   <app-profile-menu />
 </header>

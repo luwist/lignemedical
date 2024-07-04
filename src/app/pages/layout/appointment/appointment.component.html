@@ -1,0 +1,15 @@
+<div class="flex items-center justify-between mb-7">
+  <h1 class="text-3xl text-foreground">Mis turnos</h1>
+</div>
+
+<div class="flex gap-8 flex-wrap">
+  @for (doctor of doctors; track $index) {
+  <app-appointment-card
+    [name]="doctor.name"
+    [speciality]="doctor.speciality"
+    [date]="doctor.date"
+    [hour]="doctor.hour"
+    [status]="doctor.status"
+  />
+  }
+</div>
