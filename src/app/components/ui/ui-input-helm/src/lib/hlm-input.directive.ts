@@ -4,11 +4,11 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const inputVariants = cva(
-  'flex rounded-xl border font-normal border-input bg-background text-sm text-foreground file:border-0 file:text-foreground file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
+  'flex rounded-xl border font-normal border-input bg-[#353535] text-sm text-foreground file:border-0 file:text-foreground file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground focus-visible:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       size: {
-        default: 'h-14 py-2 px-5',
+        default: 'h-14 p-5',
         sm: 'h-9 px-3',
         lg: 'h-11 px-8',
       },

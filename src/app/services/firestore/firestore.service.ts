@@ -8,6 +8,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
 
@@ -43,6 +44,16 @@ export class FirestoreService {
     const collRef = collection(this._firestore, collectionName);
 
     await addDoc(collRef, data);
+  }
+
+  async addDocumentWithCustomId(
+    collectionName: string,
+    customId: string,
+    data: any
+  ): Promise<void> {
+    const docRef = doc(this._firestore, collectionName, customId);
+
+    await setDoc(docRef, data);
   }
 
   async updateDocumentById(

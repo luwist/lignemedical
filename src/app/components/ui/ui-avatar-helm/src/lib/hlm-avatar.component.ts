@@ -50,16 +50,12 @@ type AvatarVariants = VariantProps<typeof avatarVariants>;
 })
 export class HlmAvatarComponent extends BrnAvatarComponent {
   public readonly userClass = input<ClassValue>('', { alias: 'class' });
-  protected readonly _computedClass = computed(() => {
-    const a = hlm(
+  protected readonly _computedClass = computed(() =>
+    hlm(
       avatarVariants({ variant: this._variant(), shape: this._shape() }),
       this.userClass()
-    );
-
-    console.log(a);
-
-    return a;
-  });
+    )
+  );
 
   private readonly _variant = signal<AvatarVariants['variant']>('medium');
   @Input()

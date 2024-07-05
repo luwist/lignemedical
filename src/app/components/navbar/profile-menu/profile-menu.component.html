@@ -1,24 +1,23 @@
-<div class="flex w-full items-center justify-center pt-[20%]">
-  <button hlmBtn variant="outline" align="end" [brnMenuTriggerFor]="menu">
-    <hlm-avatar>
-      <img
-        [src]="(user$ | async)?.photoURL"
-        alt="Profile picture"
-        hlmAvatarImage
-      />
-      <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
-        fallBack
-      }}</span>
-    </hlm-avatar>
-  </button>
-</div>
+<button [brnMenuTriggerFor]="menu">
+  <hlm-avatar>
+    <img
+      [src]="(currentUser$ | async)?.profilePicture"
+      alt="Profile picture"
+      hlmAvatarImage
+    />
+    <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+      fallBack
+    }}</span>
+  </hlm-avatar>
+</button>
+
 <ng-template #menu>
   <hlm-menu class="w-64">
     <hlm-menu-label>
       <div class="flex items-center gap-3">
         <hlm-avatar variant="large">
           <img
-            [src]="(user$ | async)?.photoURL"
+            [src]="(currentUser$ | async)?.profilePicture"
             alt="Profile picture"
             hlmAvatarImage
           />
@@ -28,9 +27,11 @@
         </hlm-avatar>
         <div>
           <p class="text-foreground text-base font-medium">
-            {{ (user$ | async)?.displayName }}
+            {{ (currentUser$ | async)?.fullName }}
           </p>
-          <p class="text-muted-foreground text-sm font-medium">Administrador</p>
+          <p class="text-muted-foreground text-sm font-medium capitalize">
+            {{ (currentUser$ | async)?.role }}
+          </p>
         </div>
       </div>
     </hlm-menu-label>
@@ -38,12 +39,14 @@
     <hlm-menu-separator />
 
     <hlm-menu-group>
-      <button hlmMenuItem>
+      <a routerLink="/profile" hlmMenuItem>
         <span>Mi perfil</span>
-      </button>
+      </a>
+
       <button hlmMenuItem>
         <span>Configuración</span>
       </button>
+
       <button hlmMenuItem class="flex items-center gap-3">
         <span>Cambiar idioma</span>
         <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />

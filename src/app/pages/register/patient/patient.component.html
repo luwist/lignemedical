@@ -1,312 +1,103 @@
+<app-toast />
+
 <main class="h-screen flex items-center justify-center">
-  <form [formGroup]="form" (ngSubmit)="onRegister()">
-    <h1 class="text-2xl font-semibold text-primary-foreground mb-2">
-      Crea tu cuenta de paciente
-    </h1>
-    <p class="text-base text-muted-foreground font-regular mb-10">
-      Completa el formulario para registrarte como paciente.
-    </p>
+  <form [formGroup]="registerForm" (submit)="onRegister()">
+    <app-header
+      title="Crea tu cuenta de paciente"
+      description="Completa el formulario para registrarte como paciente."
+    />
+
     <app-stepper>
       <app-step
         label="Datos personales"
         [stepControl]="personalInformationGroup"
       >
-        <div class="mb-10">
-          <h2 class="text-2xl font-semibold text-primary-foreground mb-2">
-            Información personal
-          </h2>
-          <p class="text-base text-muted-foreground font-regular">
-            Por favor, introduce tu información personal. Esto nos ayudará a
-            conocerte mejor y a ofrecerte un mejor servicio.
-          </p>
-        </div>
-        <div formGroupName="personalInformation">
-          <div class="w-full flex gap-5 mb-5">
-            <div class="w-full">
-              <label hlmLabel>
-                Nombre
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  formControlName="firstName"
-                />
-              </label>
-              <app-input-error
-                [control]="getControl(personalInformationGroup, 'firstName')"
-              ></app-input-error>
-            </div>
-            <div class="w-full">
-              <label hlmLabel>
-                Apellido
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  formControlName="lastName"
-                />
-              </label>
-              <app-input-error
-                [control]="getControl(personalInformationGroup, 'lastName')"
-              ></app-input-error>
-            </div>
-          </div>
-          <div class="w-full flex gap-5">
-            <div class="w-full">
-              <label hlmLabel>
-                DNI
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  pattern="\d*"
-                  maxlength="8"
-                  formControlName="dni"
-                />
-              </label>
-              <app-input-error
-                [control]="getControl(personalInformationGroup, 'dni')"
-              ></app-input-error>
-            </div>
-            <div class="w-full">
-              <label hlmLabel>
-                Edad
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  pattern="\d*"
-                  maxlength="2"
-                  formControlName="age"
-                />
-              </label>
-              <app-input-error
-                [control]="getControl(personalInformationGroup, 'age')"
-              ></app-input-error>
-            </div>
-            <div class="w-full">
-              <label hlmLabel>
-                Obra social
-                <input
-                  class="w-full"
-                  hlmInput
-                  type="text"
-                  formControlName="healthInsurance"
-                />
-              </label>
-              <app-input-error
-                [control]="
-                  getControl(personalInformationGroup, 'healthInsurance')
-                "
-              ></app-input-error>
-            </div>
-          </div>
-        </div>
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm font-medium text-primary-foreground text-center">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
+        <app-header
+          title="Información personal"
+          description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
+        />
+
+        <app-personal-information [control]="personalInformationGroup" />
+
+        <app-footer>
           <button
             type="button"
             hlmBtn
             variant="secondary"
             size="lg"
             appStepperNext
-            [disabled]="personalInformationGroup.invalid"
+            [disabled]="
+              (personalInformationGroup.statusChanges | async) !== 'VALID'
+            "
           >
             Siguiente
           </button>
-        </div>
+        </app-footer>
       </app-step>
 
       <app-step
         label="Informacion de contacto"
         [stepControl]="contactInformationGroup"
       >
-        <div class="mb-10">
-          <h2 class="text-2xl font-semibold text-primary-foreground mb-2">
-            Informacion de contacto
-          </h2>
-          <p class="text-base text-muted-foreground font-regular">
-            Introduce tu dirección de correo electrónico y crea una contraseña
-            segura para tu cuenta.
-          </p>
-        </div>
-        <div formGroupName="contactInformation">
-          <div class="w-full mb-5">
-            <label hlmLabel>
-              Correo Electronico
-              <input
-                class="w-full"
-                hlmInput
-                type="text"
-                formControlName="email"
-              />
-            </label>
-            <app-input-error
-              [control]="getControl(contactInformationGroup, 'email')"
-            ></app-input-error>
-          </div>
-          <div class="w-full">
-            <label hlmLabel>
-              Contraseña
-              <input
-                class="w-full"
-                hlmInput
-                type="password"
-                formControlName="password"
-              />
-            </label>
-            <app-input-error
-              [control]="getControl(contactInformationGroup, 'password')"
-            ></app-input-error>
-          </div>
-        </div>
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm font-medium text-primary-foreground text-center">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
-          <div>
-            <button
-              type="button"
-              hlmBtn
-              variant="ghost"
-              size="lg"
-              appStepperPrevious
-            >
-              Volver
-            </button>
-            <button
-              type="button"
-              hlmBtn
-              variant="secondary"
-              size="lg"
-              appStepperNext
-              [disabled]="contactInformationGroup.invalid"
-            >
-              Siguiente
-            </button>
-          </div>
-        </div>
+        <app-header
+          title="Información de contacto"
+          description="Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta."
+        />
+
+        <app-contact-information [control]="contactInformationGroup" />
+
+        <app-footer>
+          <button
+            type="button"
+            hlmBtn
+            variant="ghost"
+            size="lg"
+            appStepperPrevious
+          >
+            Volver
+          </button>
+          <button
+            type="button"
+            hlmBtn
+            variant="secondary"
+            size="lg"
+            appStepperNext
+            [disabled]="
+              (contactInformationGroup.statusChanges | async) !== 'VALID'
+            "
+          >
+            Siguiente
+          </button>
+        </app-footer>
       </app-step>
 
       <app-step label="Fotos de perfil" [stepControl]="profilePictureGroup">
-        <div class="mb-10">
-          <h2 class="text-2xl font-semibold text-primary-foreground mb-2">
-            Fotos de perfil
-          </h2>
-          <p class="text-base text-muted-foreground font-regular">
-            Sube dos fotos para completar tu perfil. Esto ayudará a
-            identificarte mejor en nuestra plataforma.
-          </p>
-        </div>
-        <div formGroupName="profilePicture">
-          <div class="flex justify-between gap-10">
-            <div
-              class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
-            >
-              @if (imageSrc) {
-              <img
-                [src]="imageSrc"
-                alt=""
-                class="absolute top-0 left-0 rounded-3xl object-cover"
-                [ngClass]="{ 'w-full h-full': imageSrc }"
-              />
-              } @else {
-              <img src="assets/icons/gallery.svg" alt="" class="w-24" />
+        <app-header
+          title="Fotos de perfil"
+          description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
+        />
 
-              <button
-                hlmBtn
-                size="lg"
-                [variant]="'secondary'"
-                class="relative w-full"
-              >
-                <input
-                  type="file"
-                  class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                  accept=".jpg, .jpeg, .png"
-                />
-                Elegir foto
-              </button>
-              }
-            </div>
+        <app-profile-picture [control]="profilePictureGroup" />
 
-            <div
-              class="dashed-border relative p-8 rounded-3xl w-[270px] h-[230px] flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
-            >
-              @if (imageSrc) {
-              <img
-                [src]="imageSrc"
-                alt=""
-                class="absolute top-0 left-0 rounded-3xl object-cover"
-                [ngClass]="{ 'w-full h-full': imageSrc }"
-              />
-              } @else {
-              <img src="assets/icons/gallery.svg" alt="" class="w-24" />
-
-              <button
-                hlmBtn
-                size="lg"
-                [variant]="'secondary'"
-                class="relative w-full"
-              >
-                <input
-                  type="file"
-                  class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                  accept=".jpg, .jpeg, .png"
-                />
-                Elegir foto
-              </button>
-              }
-            </div>
-
-            <!-- <input
-              type="file"
-              formControlName="image1"
-              (change)="onImagePicked1($event)"
-            />
-            <input
-              type="file"
-              formControlName="image2"
-              (change)="onImagePicked2($event)"
-            /> -->
-            <!-- <app-dropzone
-              [control]="getControl(profilePictureGroup, 'imagen1')"
-              (emitterFile)="onImagePicked($event, 'imagen1')"
-            ></app-dropzone>
-            <app-dropzone
-              [control]="getControl(profilePictureGroup, 'imagen2')"
-              (emitterFile)="onImagePicked($event, 'imagen2')"
-            ></app-dropzone> -->
-          </div>
-        </div>
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm font-medium text-primary-foreground text-center">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
-          <div>
-            <button
-              type="button"
-              hlmBtn
-              variant="ghost"
-              size="lg"
-              appStepperPrevious
-            >
-              Volver
-            </button>
-            <button
-              type="submit"
-              hlmBtn
-              size="lg"
-              [disabled]="profilePictureGroup.invalid"
-            >
-              Crear una cuenta
-            </button>
-          </div>
-        </div>
+        <app-footer>
+          <button
+            type="button"
+            hlmBtn
+            variant="ghost"
+            size="lg"
+            appStepperPrevious
+          >
+            Volver
+          </button>
+          <button
+            type="submit"
+            hlmBtn
+            size="lg"
+            [disabled]="(profilePictureGroup.statusChanges | async) !== 'VALID'"
+          >
+            Crear una cuenta
+          </button>
+        </app-footer>
       </app-step>
     </app-stepper>
   </form>

@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { DropzoneComponent, InputErrorComponent } from '@app/components';
+import { DropzoneComponent, InputErrorComponent, MessageService, ToastComponent } from '@app/components';
 import {
   StepComponent,
   StepperComponent,
@@ -18,12 +18,20 @@ import {
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
+import { PersonalInformationComponent } from './personal-information/personal-information.component';
+import { ContactInformationComponent } from './contact-information/contact-information.component';
+import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { AuthService } from '@app/services';
 @Component({
   selector: 'app-patient',
   standalone: true,
   imports: [
     CommonModule,
     RouterLink,
+
+    ToastComponent,
 
     HlmButtonDirective,
     HlmInputDirective,
@@ -38,18 +46,24 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
     ReactiveFormsModule,
 
     InputErrorComponent,
-    DropzoneComponent,
+
+    PersonalInformationComponent,
+    ContactInformationComponent,
+    ProfilePictureComponent,
+
+    HeaderComponent,
+    FooterComponent,
   ],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
 })
 export class PatientComponent {
-  form = new FormGroup({
+  registerForm = new FormGroup({
     personalInformation: new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      age: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required),
       healthInsurance: new FormControl('', Validators.required),
     }),
     contactInformation: new FormGroup({
@@ -57,63 +71,42 @@ export class PatientComponent {
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
-      profilePicture: new FormControl(null, Validators.required),
-      image: new FormControl(null, Validators.required),
+      profileImage: new FormControl(null, Validators.required),
+      dniImage: new FormControl(null, Validators.required),
     }),
   });
 
-  imageSrc!: string | ArrayBuffer | null;
-
-  constructor(private _router: Router, private _auth: Auth) {}
+  constructor(
+    private _router: Router,
+    private _messageService: MessageService,
+    private _authService: AuthService
+  ) {}
 
   get personalInformationGroup(): FormGroup {
-    return this.form.get('personalInformation') as FormGroup;
+    return this.registerForm.get('personalInformation') as FormGroup;
   }
 
   get contactInformationGroup(): FormGroup {
-    return this.form.get('contactInformation') as FormGroup;
+    return this.registerForm.get('contactInformation') as FormGroup;
   }
 
   get profilePictureGroup(): FormGroup {
-    return this.form.get('profilePicture') as FormGroup;
-  }
-
-  getControl(formGroup: FormGroup, controlName: string): FormControl {
-    return formGroup.get(controlName) as FormControl;
-  }
-
-  onImagePicked(e: Event, controlName: string) {
-    const inputElement = e.target as HTMLInputElement;
-
-    if (inputElement.files && inputElement.files[0]) {
-      const file = inputElement.files[0];
-
-      const reader = new FileReader();
-      reader.onload = () => (this.imageSrc = reader.result);
-
-      reader.readAsDataURL(file);
-
-      if (file) {
-        this.profilePictureGroup.patchValue({
-          [controlName]: file,
-        });
-      }
-    }
+    return this.registerForm.get('profilePicture') as FormGroup;
   }
 
   async onRegister(): Promise<void> {
-    const credentials = this.form.getRawValue();
+    try {
+      const credentials = this.registerForm.getRawValue();
 
-    console.log(credentials);
+      await this._authService.register(credentials);
 
-    // const credentialRegister = await createUserWithEmailAndPassword(
-    //   this._auth,
-    //   credentials.contactInformation.email as string,
-    //   credentials.contactInformation.password as string
-    // );
-
-    // await sendEmailVerification(credentialRegister.user);
-
-    // this._router.navigateByUrl('/verify-email');
+      this._router.navigateByUrl('/verify-email');
+    } catch (error) {
+      console.log(error);
+      this._messageService.add({
+        description:
+          'Ha ocurrido un error en el servidor. Intentelo de nuevo mas tarde',
+      });
+    }
   }
 }

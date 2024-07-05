@@ -37,6 +37,8 @@ export class AppointmentComponent {
       date: '3 de Julio de 2024',
       hour: '2:00 - 2:30 pm',
       status: 'finished',
+      message:
+        'Lamento informarle que, debido a una emergencia médica, me veo en la obligación de cancelar su cita programada.',
     },
     {
       name: 'Javier Sánchez',

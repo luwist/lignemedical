@@ -1,0 +1,72 @@
+<div [formGroup]="personalInformationGroup">
+  <div class="w-full flex gap-5 mb-5">
+    <div class="w-full">
+      <label hlmLabel
+        >Nombre
+        <input
+          class="w-full"
+          hlmInput
+          type="text"
+          formControlName="firstName"
+        />
+      </label>
+
+      <app-input-error [control]="firstNameControl" />
+    </div>
+
+    <div class="w-full">
+      <label hlmLabel
+        >Apellido
+        <input class="w-full" hlmInput type="text" formControlName="lastName" />
+      </label>
+
+      <app-input-error [control]="lastNameControl" />
+    </div>
+  </div>
+
+  <div class="w-full flex gap-5 mb-5">
+    <div class="w-full">
+      <label hlmLabel
+        >Edad
+        <input
+          class="w-full"
+          hlmInput
+          type="text"
+          [maxLength]="8"
+          formControlName="age"
+        />
+      </label>
+
+      <app-input-error [control]="ageControl" />
+    </div>
+
+    <div class="w-full">
+      <label hlmLabel
+        >DNI
+        <input
+          class="w-full"
+          hlmInput
+          type="text"
+          [maxLength]="8"
+          formControlName="dni"
+        />
+      </label>
+
+      <app-input-error [control]="dniControl" />
+    </div>
+
+    <div class="w-full">
+      <label hlmLabel
+        >Obra social
+        <input
+          class="w-full"
+          hlmInput
+          type="text"
+          formControlName="healthInsurance"
+        />
+      </label>
+
+      <app-input-error [control]="healthInsuranceControl" />
+    </div>
+  </div>
+</div>

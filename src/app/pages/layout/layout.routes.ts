@@ -32,6 +32,18 @@ export const routes: Routes = [
             (m) => m.AppointmentComponent
           ),
       },
+      {
+        path: 'patients',
+        title: 'Pacientes',
+        loadComponent: () =>
+          import('./patient/patient.component').then((m) => m.PatientComponent),
+      },
+      {
+        path: 'profile',
+        title: 'Mi Perfil',
+        loadComponent: () =>
+          import('./profile/profile.component').then((m) => m.ProfileComponent),
+      },
     ],
   },
 ];

@@ -27,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContactInformationComponent } from './contact-information/contact-information.component';
 import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
 import { AuthService } from '@app/services';
+import { DoctorRequest } from '@app/requests';
 
 @Component({
   selector: 'app-specialist',
@@ -68,7 +69,7 @@ export class SpecialistComponent {
       lastName: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      healthInsurance: new FormControl('', Validators.required),
+      specialist: new FormControl('', Validators.required),
     }),
     contactInformation: new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -76,7 +77,6 @@ export class SpecialistComponent {
     }),
     profilePicture: new FormGroup({
       profileImage: new FormControl(null, Validators.required),
-      dniImage: new FormControl(null, Validators.required),
     }),
   });
 
@@ -102,7 +102,7 @@ export class SpecialistComponent {
     try {
       const credentials = this.registerForm.getRawValue();
 
-      await this._authService.register(credentials);
+      await this._authService.registerDoctor(credentials);
 
       this._router.navigateByUrl('/verify-email');
     } catch (error) {

@@ -1,0 +1,65 @@
+<div class="flex items-center justify-between mb-7">
+  <h1 class="text-3xl text-foreground">Pacientes</h1>
+</div>
+
+<table class="w-full text-sm text-left text-foreground">
+  <thead class="text-xs text-foreground uppercase">
+    <tr>
+      <th class="px-6 py-3">Nombre</th>
+      <th class="px-6 py-3">DNI</th>
+      <th class="px-6 py-3">Correo electronico</th>
+      <th class="px-6 py-3">Historial medico</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (patient of patients; track $index) {
+    <tr class="border-b border-b-card">
+      <td class="flex items-center gap-3 px-6 py-4">
+        <hlm-avatar variant="large" shape="square">
+          <img [src]="" alt="Profile picture" hlmAvatarImage />
+          <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+            getFallback(patient.name)
+          }}</span>
+        </hlm-avatar>
+        <div>
+          <p>
+            {{ patient.name }}
+          </p>
+          <p class="text-[#808080]">{{ patient.age }} años</p>
+        </div>
+      </td>
+      <td class="px-6 py-4">{{ patient.dni }}</td>
+      <td class="px-6 py-4">{{ patient.email }}</td>
+      <td class="px-6 py-4">
+        <button
+          class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            stroke="#808080"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

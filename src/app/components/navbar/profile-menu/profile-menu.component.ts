@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/services';
 import {
   HlmAvatarComponent,
@@ -16,13 +16,14 @@ import {
   HlmMenuLabelComponent,
   HlmMenuSeparatorComponent,
 } from '@spartan-ng/ui-menu-helm';
-import { filter } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile-menu',
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
     BrnMenuTriggerDirective,
 
     HlmMenuComponent,
@@ -41,17 +42,17 @@ import { filter } from 'rxjs';
 })
 export class ProfileMenuComponent implements OnInit {
   fallBack!: string;
-  user$ = this._authService.authState$.pipe(
-    filter((state) => (state ? true : false))
-  );
+  currentUser$!: Observable<any>;
 
   constructor(private _router: Router, private _authService: AuthService) {}
 
   ngOnInit(): void {
-    this.user$.subscribe((data) => {
-      if (data !== null && data.displayName !== null) {
+    this.currentUser$ = this._authService.currentUser$;
+
+    this.currentUser$.subscribe((data) => {
+      if (data !== null && data.fullName !== null) {
         this.fallBack =
-          data.displayName.split(' ')[0][0] + data.displayName.split(' ')[1][0];
+          data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0];
       } else {
         this.fallBack = 'LM';
       }
