@@ -69,7 +69,11 @@
         @for (date of dates; track $index) {
         <button
           type="button"
-          class="px-4 py-3 text-sm border text-primary-foreground bg-card rounded-xl font-semibold flex flex-col items-center justify-center gap-2"
+          class="px-4 py-3 text-sm border text-foreground bg-card rounded-xl font-semibold flex flex-col items-center justify-center gap-2"
+          (click)="onDateSelected(date, $index)"
+          [ngClass]="
+            dateSelected === $index ? 'border-primary' : 'border-transparent'
+          "
         >
           {{ date | date : "shortDate" }}
         </button>
