@@ -1,76 +1,82 @@
-<main class="flex justify-between">
+<div class="flex justify-between">
   <div>
     <h1 class="text-3xl text-foreground mb-7">Reservar turno</h1>
 
     <div class="mb-6">
-      <h2 class="text-muted-foreground font-medium text-base mb-2">
+      <h2 class="text-muted-foreground font-medium text-base mb-4">
         Eliga la especialidad
       </h2>
       <div class="flex flex-wrap gap-6">
-        @for (specialty of specialties; track $index) {
+        @if (specialties.length > 0) { @for (specialty of specialties; track
+        $index) {
         <button
           type="button"
-          class="w-20 h-20 border text-foreground bg-card rounded-full font-semibold"
+          [title]="specialty.name"
+          class="w-20 h-20 border text-foreground bg-card rounded-full font-semibold flex items-center justify-center"
           [ngClass]="
-            indexSelected === $index ? 'border-primary' : 'border-transparent'
+            specialtySelected === specialty.name
+              ? 'border-primary'
+              : 'border-transparent'
           "
-          (click)="onSelect($index)"
+          (click)="onSpecialtySelected(specialty.name)"
         >
           <img [src]="specialty.imageUrl" alt="" class="w-10 h-10" />
         </button>
+        } } @else {
+
+        <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+
         }
       </div>
     </div>
 
-    <!-- <div class="mb-6">
-      <h2 class="text-muted-foreground text-base mb-3">
-        Eliga el especialista medico
-      </h2>
+    @if (doctors.length > 0) {
+    <div class="mb-6">
+      <h2 class="text-muted-foreground text-base mb-3">Eliga al doctor</h2>
 
       <div class="flex flex-wrap gap-6">
         @for (doctor of doctors; track $index) {
         <button
           type="button"
           class="w-40 h-40 text-sm border text-primary-foreground bg-card rounded-full font-semibold flex flex-col items-center justify-center gap-2"
+          (click)="onDoctorSelected(doctor.id)"
           [ngClass]="
-            indexSelected === $index ? 'border-primary' : 'border-transparent'
+            doctorSelected === doctor.id
+              ? 'border-primary'
+              : 'border-transparent'
           "
-          (click)="onSelect($index)"
         >
-          <img [src]="doctor.imageSrc" alt="" class="w-12 h-12 rounded-xl" />
+          <img
+            [src]="doctor.photoURL"
+            alt=""
+            class="w-12 h-12 rounded-xl object-cover"
+          />
           <div>
             <h2 class="text-foreground text-sm font-medium text-center">
-              {{ doctor.name }}
+              {{ doctor.firstName }}
+              {{ doctor.lastName }}
             </h2>
           </div>
         </button>
         }
       </div>
     </div>
-
+    } @if (dates.length > 0) {
     <div class="mb-6">
       <h2 class="text-muted-foreground text-base mb-3">Eliga la fecha</h2>
 
       <div class="flex flex-wrap gap-6">
-        @for (doctor of doctors; track $index) {
+        @for (date of dates; track $index) {
         <button
           type="button"
-          class="w-40 h-40 text-sm border text-primary-foreground bg-card rounded-full font-semibold flex flex-col items-center justify-center gap-2"
-          [ngClass]="
-            indexSelected === $index ? 'border-primary' : 'border-transparent'
-          "
-          (click)="onSelect($index)"
+          class="px-4 py-3 text-sm border text-primary-foreground bg-card rounded-xl font-semibold flex flex-col items-center justify-center gap-2"
         >
-          <img [src]="doctor.imageSrc" alt="" class="w-12 h-12 rounded-xl" />
-          <div>
-            <h2 class="text-foreground text-sm font-medium text-center">
-              {{ doctor.name }}
-            </h2>
-          </div>
+          {{ date | date : "shortDate" }}
         </button>
         }
       </div>
-    </div> -->
+    </div>
+    }
   </div>
   <div
     class="min-w-96 min-h-[500px] p-8 bg-card rounded-3xl flex flex-col justify-between"
@@ -83,4 +89,4 @@
     </div>
     <button type="button" hlmBtn class="w-full">Reservar turno</button>
   </div>
-</main>
+</div>

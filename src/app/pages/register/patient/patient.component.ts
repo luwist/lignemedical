@@ -8,7 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { DropzoneComponent, InputErrorComponent, MessageService, ToastComponent } from '@app/components';
+import {
+  DropzoneComponent,
+  InputErrorComponent,
+  MessageService,
+  ToastComponent,
+} from '@app/components';
 import {
   StepComponent,
   StepperComponent,
@@ -98,7 +103,7 @@ export class PatientComponent {
     try {
       const credentials = this.registerForm.getRawValue();
 
-      await this._authService.register(credentials);
+      await this._authService.registerPatient(credentials);
 
       this._router.navigateByUrl('/verify-email');
     } catch (error) {

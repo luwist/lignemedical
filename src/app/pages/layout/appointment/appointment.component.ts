@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AppointmentCardComponent } from '@app/components';
+import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [AppointmentCardComponent],
+  imports: [AppointmentCardComponent, HlmInputDirective],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss',
 })

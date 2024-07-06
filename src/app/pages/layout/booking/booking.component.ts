@@ -1,68 +1,50 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '@app/services';
+import { provideIcons } from '@ng-icons/core';
+import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 @Component({
   selector: 'app-booking',
   standalone: true,
-  imports: [CommonModule, HlmButtonDirective],
+  imports: [CommonModule, HlmButtonDirective, HlmIconComponent],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.scss',
+  providers: [provideIcons({ lucideLoader2 })],
 })
 export class BookingComponent implements OnInit {
-  // specialties = [
-  //   'Cardiólogo',
-  //   'Pediatra',
-  //   'Psicólogo',
-  //   'Dermatólogo',
-  //   'Neurólogo',
-  // ];
-
-  // doctors = [
-  //   {
-  //     id: 1,
-  //     name: 'Jhoe Doe',
-  //     specialty: 'Cardiólogo',
-  //     imageSrc: 'https://randomuser.me/api/portraits/men/1.jpg',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Jane Smith',
-  //     specialty: 'Pediatra',
-  //     imageSrc: 'https://randomuser.me/api/portraits/women/2.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Carlos González',
-  //     specialty: 'Dermatólogo',
-  //     imageSrc: 'https://randomuser.me/api/portraits/men/3.jpg',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Ana Martínez',
-  //     specialty: 'Neurólogo',
-  //     imageSrc: 'https://randomuser.me/api/portraits/women/4.jpg',
-  //   },
-  //   {
-  //     id: 5,
-  //     name: 'Roberto Fernández',
-  //     specialty: 'Ginecólogo',
-  //     imageSrc: 'https://randomuser.me/api/portraits/men/5.jpg',
-  //   },
-  // ];
-
   specialties: any = [];
+  doctors: any = [];
+  dates: any = [];
 
-  indexSelected!: number;
+  specialtySelected!: string;
+  doctorSelected!: string;
 
   constructor(private _firestoreService: FirestoreService) {}
 
   async ngOnInit(): Promise<void> {
-    this.specialties = await this._firestoreService.getAllDocument('specialties');
+    this.specialties = await this._firestoreService.getAllDocument(
+      'specialties'
+    );
   }
 
-  onSelect(index: number): void {
-    this.indexSelected = index;
+  async onSpecialtySelected(name: string): Promise<void> {
+    this.specialtySelected = name;
+
+    this.doctors = await this._firestoreService.getDoctorBySpecialty(name);
+  }
+
+  async onDoctorSelected(id: string): Promise<void> {
+    this.doctorSelected = id;
+
+    const doctor = await this._firestoreService.getDocumentById('users', id);
+
+    this.makeDates();
+  }
+
+  private makeDates(): void {
+    this.dates.push(new Date());
   }
 }

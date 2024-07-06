@@ -8,8 +8,10 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -73,5 +75,21 @@ export class FirestoreService {
     const docRef = doc(this._firestore, collectionName, documentId);
 
     await deleteDoc(docRef);
+  }
+
+  async getDoctorBySpecialty(specialty: string): Promise<any> {
+    const document: DocumentData[] = [];
+
+    const docRef = collection(this._firestore, 'users');
+
+    const collRef = query(docRef, where('specialist', '==', specialty));
+
+    const querySnapshot = await getDocs(collRef);
+
+    querySnapshot.forEach((doc) => {
+      document.push(doc.data());
+    });
+
+    return document;
   }
 }

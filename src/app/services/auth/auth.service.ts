@@ -124,4 +124,38 @@ export class AuthService {
 
     await sendEmailVerification(user.user);
   }
+
+  async registerPatient(registerRequest: any): Promise<void> {
+    const { firstName, lastName, age, dni, healthInsurance } =
+      registerRequest.personalInformation;
+
+    const { email, password } = registerRequest.contactInformation;
+
+    const { profileImage } = registerRequest.profilePicture;
+
+    const profileUrl = await this._uploadService.upload(profileImage);
+
+    const user = await createUserWithEmailAndPassword(
+      this._auth,
+      email,
+      password
+    );
+
+    updateProfile(user.user, {
+      displayName: `${firstName} ${lastName}`,
+    });
+
+    await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
+      firstName: firstName,
+      lastName: lastName,
+      photoURL: profileUrl,
+      age: Number(age),
+      dni: Number(dni),
+      healthInsurance: healthInsurance,
+      role: Role.Patient,
+      email: email,
+    });
+
+    await sendEmailVerification(user.user);
+  }
 }
