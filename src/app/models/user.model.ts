@@ -7,4 +7,8 @@ export interface User {
   role: string | null;
   specialist?: string;
   healthInsurance?: string;
+
+  id?: string;
+  name?: string;
+  picture?: string;
 }

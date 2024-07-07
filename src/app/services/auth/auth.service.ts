@@ -38,6 +38,7 @@ export class AuthService {
 
     if (user !== null) {
       this._currentUser.next({
+        id: uid,
         fullName: `${user.firstName} ${user.lastName}`,
         profilePicture: user.photoURL,
         age: user.age,
