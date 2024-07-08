@@ -20,23 +20,23 @@ import {
 export class FirestoreService {
   constructor(private _firestore: Firestore) {}
 
-  async getDocumentById(
+  async getDocumentById<T>(
     collection: string,
     documentId: string
-  ): Promise<DocumentData | null> {
+  ): Promise<T | null> {
     const docRef = doc(this._firestore, collection, documentId);
     const docSnap = await getDoc(docRef);
 
-    return docSnap.exists() ? docSnap.data() : null;
+    return docSnap.exists() ? (docSnap.data() as T) : null;
   }
 
-  async getAllDocument(collectionName: string): Promise<DocumentData[]> {
-    const document: DocumentData[] = [];
+  async getAllDocument<T>(collectionName: string): Promise<T[]> {
+    const document: T[] = [];
     const collRef = collection(this._firestore, collectionName);
     const querySnapshot = await getDocs(collRef);
 
     querySnapshot.forEach((doc) => {
-      document.push(doc.data());
+      document.push(doc.data() as T);
     });
 
     return document;

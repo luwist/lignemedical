@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AppointmentStatus } from '@app/enums/appointment-status.enum';
+import { DoctorRepository, SpecialtyRepository } from '@app/repositories';
 import { AuthService, FirestoreService } from '@app/services';
+import { DoctorService } from '@app/services/doctor/doctor.service';
+import { SpecialtyService } from '@app/services/specialty/specialty.service';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import {
@@ -44,7 +47,11 @@ export class BookingComponent implements OnInit {
   buttonState: boolean = true;
 
   appointment: any = {
-    patient: '',
+    patient: null,
+    doctor: null,
+    specialty: null,
+    date: null,
+    hour: null,
     status: AppointmentStatus.Pending,
   };
 
@@ -52,7 +59,12 @@ export class BookingComponent implements OnInit {
 
   constructor(
     private _firestoreService: FirestoreService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _doctorService: DoctorService,
+    private _specialtyService: SpecialtyService,
+
+    private _specialtyRepository: SpecialtyRepository,
+    private _doctorRepository: DoctorRepository
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -69,21 +81,17 @@ export class BookingComponent implements OnInit {
       }
     });
 
-    this.specialties = await this._firestoreService.getAllDocument(
-      'specialties'
-    );
+    this.specialties = await this._specialtyRepository.getSpecialtyList();
   }
 
-  async onSpecialtySelected(name: string): Promise<void> {
-    this.specialtySelected = name;
+  async onSpecialtySelected(specialty: any): Promise<void> {
+    this.specialtySelected = specialty.id;
 
-    const newObj = {
-      specialty: name,
-    };
+    this.appointment.specialty = specialty.name;
 
-    this.appointment = { ...this.appointment, ...newObj };
-
-    this.doctors = await this._firestoreService.getDoctorBySpecialty(name);
+    this.doctors = await this._doctorRepository.getDoctorListBySpecialty(
+      specialty.name
+    );
   }
 
   async onDoctorSelected(id: string): Promise<void> {
@@ -100,7 +108,35 @@ export class BookingComponent implements OnInit {
 
     this.appointment = { ...this.appointment, ...doctorObj };
 
-    this.makeDates();
+    this.dates = await this._doctorService.getDateAvailableById(id);
+  }
+
+  async onDateSelected(date: Date, id: number): Promise<void> {
+    this.dateSelected = id;
+
+    // await this.getSchedulesByDoctorId(this.doctorSelected, date);
+    await this._doctorService.getAppointmentAvailableByDate(
+      this.doctorSelected,
+      date
+    );
+
+    const newObj = {
+      date: date,
+    };
+
+    this.appointment = { ...this.appointment, ...newObj };
+  }
+
+  onHourSelected(hour: any, id: number): void {
+    this.hourSelected = id;
+
+    this.buttonState = false;
+
+    const newObj = {
+      hour: hour,
+    };
+
+    this.appointment = { ...this.appointment, ...newObj };
   }
 
   async getSchedulesByDoctorId(id: string, dateSelected: Date): Promise<void> {
@@ -157,30 +193,6 @@ export class BookingComponent implements OnInit {
     this.hours = newHours;
   }
 
-  async onDateSelected(date: Date, id: number): Promise<void> {
-    this.dateSelected = id;
-
-    await this.getSchedulesByDoctorId(this.doctorSelected, date);
-
-    const newObj = {
-      date: date,
-    };
-
-    this.appointment = { ...this.appointment, ...newObj };
-  }
-
-  onHourSelected(hour: any, id: number): void {
-    this.hourSelected = id;
-
-    this.buttonState = false;
-
-    const newObj = {
-      hour: hour,
-    };
-
-    this.appointment = { ...this.appointment, ...newObj };
-  }
-
   async onBookAppointment(): Promise<void> {
     await this._firestoreService.addDocument(
       `users/${this.userId}/appointments`,
@@ -190,30 +202,5 @@ export class BookingComponent implements OnInit {
       `users/${this.doctorSelected}/appointments`,
       this.appointment
     );
-  }
-
-  private makeDates(): void {
-    const newDates = [];
-    const newDate = new Date();
-
-    for (let i = 0; i < 15; i++) {
-      if (i !== 0) {
-        const day = newDate.getDate() + 1;
-
-        newDate.setDate(day);
-      }
-
-      const localeDateString = newDate.toLocaleDateString();
-
-      const dateSplit = localeDateString.split('/');
-
-      const dateNew = new Date(
-        `${dateSplit[1]}/${dateSplit[0]}/${dateSplit[2]}`
-      );
-
-      newDates.push(dateNew);
-    }
-
-    this.dates = newDates;
   }
 }
