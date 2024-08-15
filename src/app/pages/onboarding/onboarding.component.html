@@ -1,21 +1,21 @@
 <main class="h-screen flex flex-col items-center justify-center gap-10">
-  <h1 class="text-2xl font-semibold text-center text-primary-foreground">
+  <h1 class="text-2xl font-semibold text-center">
     Elige tu tipo de cuenta
   </h1>
 
   <div class="flex gap-10">
     <app-panel
+      imageSrc="assets/images/doctor-appointment.jpg"
+      title="Doctor"
+      description="Gestiona tus pacientes, organiza consultas y accede a tus herramientas profesionales."
+      routerLink="/join/specialist"
+    />
+
+    <app-panel
       imageSrc="assets/images/appointment.jpeg"
       title="Paciente"
       description="Accede a tus registros médicos, programa citas y mantén un seguimiento de tu salud."
       routerLink="/join/patient"
-    />
-
-    <app-panel
-      imageSrc="assets/images/doctor-appointment.jpg"
-      title="Especialista"
-      description="Gestiona tus pacientes, organiza consultas y accede a tus herramientas profesionales."
-      routerLink="/join/specialist"
     />
   </div>
 </main>

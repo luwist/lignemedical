@@ -30,7 +30,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PersonalInformationComponent } from './personal-information/personal-information.component';
-import { Account } from '@app/pages/login/account.interface';
+import { Account } from '@app/interfaces/account.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({

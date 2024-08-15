@@ -10,11 +10,14 @@ import { Router, RouterLink } from '@angular/router';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
-import { Account } from './account.interface';
 import { AuthService } from '@app/services';
 import { AccountCardComponent, InputErrorComponent } from '@app/components';
 import { LoginRequest } from '@app/requests';
 import { MessageService, ToastComponent } from '@app/components/ui/toast';
+import { provideIcons } from '@ng-icons/core';
+import { lucideLoader2 } from '@ng-icons/lucide';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { Account } from '@app/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +25,8 @@ import { MessageService, ToastComponent } from '@app/components/ui/toast';
   imports: [
     CommonModule,
     RouterLink,
+
+    HlmIconComponent,
 
     HlmLabelDirective,
     HlmInputDirective,
@@ -35,54 +40,56 @@ import { MessageService, ToastComponent } from '@app/components/ui/toast';
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
+  providers: [provideIcons({ lucideLoader2 })],
 })
 export class LoginComponent {
-  selectedOption!: number;
-
   accounts: Account[] = [
     {
       id: 1,
-      imageSrc: 'images/hacker.png',
-      role: 'administrador',
+      imageSrc: 'images/image-2.png',
       email: 'administrador@administrador.com',
       password: 'administrador',
+      role: 'administrador',
     },
     {
       id: 2,
-      imageSrc: 'images/nurse.png',
-      role: 'especialista',
+      imageSrc: 'images/image-3.png',
       email: 'sofia.garcia@doctor.com',
       password: '123456',
+      role: 'doctora',
     },
     {
       id: 3,
-      imageSrc: 'images/nurse.png',
-      role: 'especialista',
+      imageSrc: 'images/image-4.png',
       email: 'diego.navarro@doctor.com',
       password: '123456',
+      role: 'doctor',
     },
     {
       id: 4,
-      imageSrc: 'images/boy.png',
+      imageSrc: 'images/image-5.png',
       role: 'paciente',
       email: 'pablo.torres@patient.com',
       password: '123456',
     },
     {
       id: 5,
-      imageSrc: 'images/boy.png',
+      imageSrc: 'images/image-6.png',
       role: 'paciente',
       email: 'maria.fernandez@patient.com',
       password: '123456',
     },
     {
       id: 6,
-      imageSrc: 'images/boy.png',
+      imageSrc: 'images/image-7.png',
       role: 'paciente',
       email: 'laura.ruiz@patient.com',
       password: '123456',
     },
   ];
+
+  isLoading: boolean = false;
+  selectedOption!: number;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -117,6 +124,7 @@ export class LoginComponent {
       const credentials = this.loginForm.getRawValue() as LoginRequest;
 
       this.loginForm.markAsPending();
+      this.isLoading = true;
 
       await this._authService.login(credentials);
 
@@ -137,6 +145,8 @@ export class LoginComponent {
           });
           break;
       }
+
+      this.isLoading = false;
     }
   }
 }

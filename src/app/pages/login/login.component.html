@@ -62,6 +62,10 @@
         [disabled]="(loginForm.statusChanges | async) !== 'VALID'"
         hlmBtn
       >
+        @if (isLoading) {
+          <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" color="#1f1f1f" />
+        }
+
         Iniciar sesion
       </button>
 
