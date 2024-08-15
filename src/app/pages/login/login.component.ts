@@ -54,7 +54,7 @@ export class LoginComponent {
     {
       id: 2,
       imageSrc: 'images/image-3.png',
-      email: 'sofia.garcia@doctor.com',
+      email: 'niwegix401@chaladas.com',
       password: '123456',
       role: 'doctora',
     },
@@ -145,7 +145,7 @@ export class LoginComponent {
           });
           break;
       }
-
+    } finally {
       this.isLoading = false;
     }
   }

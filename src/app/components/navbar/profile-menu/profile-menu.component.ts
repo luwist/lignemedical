@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@app/services';
 import {
@@ -42,21 +43,12 @@ import { Observable } from 'rxjs';
 })
 export class ProfileMenuComponent implements OnInit {
   fallBack!: string;
-  currentUser$!: Observable<any>;
+  currentUser$!: Observable<User | null>;
 
   constructor(private _router: Router, private _authService: AuthService) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._authService.currentUser$;
-
-    this.currentUser$.subscribe((data) => {
-      if (data !== null && data.fullName !== null) {
-        this.fallBack =
-          data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0];
-      } else {
-        this.fallBack = 'LM';
-      }
-    });
   }
 
   onLogout(): void {

@@ -68,18 +68,18 @@ export class BookingComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this._authService.currentUser$.subscribe((data) => {
-      if (data !== null && data.fullName !== null) {
-        this.name = data.fullName;
-        this.appointment.patient = data.fullName;
-        this.userId = data.id;
+    // this._authService.currentUser$.subscribe((data) => {
+    //   if (data !== null && data.fullName !== null) {
+    //     this.name = data.fullName;
+    //     this.appointment.patient = data.fullName;
+    //     this.userId = data.id;
 
-        this.fallBack =
-          data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0];
-      } else {
-        this.fallBack = 'LM';
-      }
-    });
+    //     this.fallBack =
+    //       data.fullName.split(' ')[0][0] + data.fullName.split(' ')[1][0];
+    //   } else {
+    //     this.fallBack = 'LM';
+    //   }
+    // });
 
     this.specialties = await this._specialtyRepository.getSpecialtyList();
   }

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { isEmailVerifiedGuard } from '@/app/guards';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
@@ -8,7 +9,7 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.routes),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, isEmailVerifiedGuard],
     data: {
       authGuardPipe: redirectUnauthorizedToLogin,
     },

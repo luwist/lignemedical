@@ -9,49 +9,22 @@ import {
   signOut,
   updateProfile,
 } from '@angular/fire/auth';
-import { DoctorRequest, LoginRequest } from '@app/requests';
+import { LoginRequest } from '@app/requests';
 import { FirestoreService } from '../firestore';
 import { UploadService } from '../upload';
 import { Role } from '@app/enums';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '@app/models';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _currentUser = new BehaviorSubject<User>({
-    fullName: null,
-    profilePicture: null,
-    age: null,
-    dni: null,
-    role: null,
-    email: null,
-  });
-
-  get currentUser$(): Observable<any> {
-    return this._currentUser.asObservable();
-  }
-
-  async updateProfile(uid: string): Promise<void> {
-    const user: any = await this._firestore.getDocumentById('users', uid);
-
-    if (user !== null) {
-      this._currentUser.next({
-        id: uid,
-        fullName: `${user.firstName} ${user.lastName}`,
-        profilePicture: user.photoURL,
-        age: user.age,
-        dni: user.dni,
-        role: user.role,
-        email: user.email,
-      });
-    }
-  }
+  currentUser$ = authState(this._auth);
 
   constructor(
     private _auth: Auth,
     private _firestore: FirestoreService,
+    private _firebase: Firestore,
     private _uploadService: UploadService
   ) {}
 
@@ -61,8 +34,6 @@ export class AuthService {
       loginRequest.email,
       loginRequest.password
     );
-
-    this.updateProfile(user.user.uid);
   }
 
   async register(registerRequest: any): Promise<void> {
@@ -100,7 +71,7 @@ export class AuthService {
 
     const { profileImage } = registerRequest.profilePicture;
 
-    const profileUrl = await this._uploadService.upload(profileImage);
+    const picture = await this._uploadService.upload(profileImage);
 
     const user = await createUserWithEmailAndPassword(
       this._auth,
@@ -110,12 +81,13 @@ export class AuthService {
 
     updateProfile(user.user, {
       displayName: `${firstName} ${lastName}`,
+      photoURL: picture,
     });
 
     await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
       firstName: firstName,
       lastName: lastName,
-      photoURL: profileUrl,
+      photoURL: picture,
       age: Number(age),
       dni: Number(dni),
       specialist: specialist,

@@ -1,8 +1,11 @@
-<main class="h-screen flex flex-col justify-center items-center">
-  <img src="assets/illustrations/send-email.svg" alt="" />
-  <h1 class="text-2xl font-semibold text-primary-foreground">
-    Activa tu cuenta
-  </h1>
-  <p>Te enviamos a tu correo electronico un email para validar tu cuenta</p>
-  <a routerLink="/login" hlmBtn class="w-56">Iniciar sesion</a>
+<main class="h-screen flex justify-center items-center">
+  <div class="w-[500px] bg-popover p-14 rounded-3xl">
+    <h1 class="text-2xl font-semibold text-center mb-2">
+      Verifica tu direccion de correo electronico
+    </h1>
+    <p class="text-muted-foreground text-center">Hemos enviado un enlace de verificación a tu correo electrónico: <span class="text-foreground">{{ (currentUser$ | async)?.email }}</span>. Haz clic en el enlace para activar tu cuenta. Si no lo encuentras, revisa la carpeta de spam.</p>
+    <p class="text-muted-foreground text-sm text-center mt-24 mb-2">Si no recibiste el correo, haz clic en el botón de abajo para reenviar el enlace de verificación.</p>
+    <button type="button" hlmBtn class="w-full">Reenviar</button>
+    <button type="button" hlmBtn variant="ghost" class="w-full" (click)="onLogout()">Cerrar sesión</button>
+  </div>
 </main>

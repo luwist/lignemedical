@@ -1,7 +1,7 @@
 <button [brnMenuTriggerFor]="menu">
   <hlm-avatar>
     <img
-      [src]="(currentUser$ | async)?.profilePicture"
+      [src]="(currentUser$ | async)?.photoURL"
       alt="Profile picture"
       hlmAvatarImage
     />
@@ -14,10 +14,10 @@
 <ng-template #menu>
   <hlm-menu class="w-64">
     <hlm-menu-label>
-      <div class="flex items-center gap-3">
+      <div class="flex flex-col items-center gap-3">
         <hlm-avatar variant="large">
           <img
-            [src]="(currentUser$ | async)?.profilePicture"
+            [src]="(currentUser$ | async)?.photoURL"
             alt="Profile picture"
             hlmAvatarImage
           />
@@ -26,11 +26,11 @@
           }}</span>
         </hlm-avatar>
         <div>
-          <p class="text-foreground text-base font-medium">
-            {{ (currentUser$ | async)?.fullName }}
+          <p class="text-foreground text-base font-medium text-center">
+            {{ (currentUser$ | async)?.displayName }}
           </p>
-          <p class="text-muted-foreground text-sm font-medium capitalize">
-            {{ (currentUser$ | async)?.role }}
+          <p class="text-muted-foreground text-sm font-medium text-center">
+            {{ (currentUser$ | async)?.email }}
           </p>
         </div>
       </div>
