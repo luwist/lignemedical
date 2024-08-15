@@ -19,9 +19,9 @@ import {
   styleUrl: './patient.component.scss',
 })
 export class PatientComponent implements OnInit {
-  patients: User[] = [];
+  patients: any[] = [];
 
-  getFallback(name: string) {
+  getFallback(name: any) {
     return name.split(' ')[0][0] + name.split(' ')[1][0];
   }
 

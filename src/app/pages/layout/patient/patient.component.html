@@ -16,15 +16,11 @@
     <tr class="border-b border-b-card">
       <td class="flex items-center gap-3 px-6 py-4">
         <hlm-avatar variant="large" shape="square">
-          <img [src]="" alt="Profile picture" hlmAvatarImage />
-          <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
-            getFallback(patient.name)
-          }}</span>
+          <img [src]="patient.photoURL" alt="Profile picture" hlmAvatarImage />
+          <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
         </hlm-avatar>
         <div>
-          <p>
-            {{ patient.name }}
-          </p>
+          <p>{{ patient.firstName }} {{ patient.lastName }}</p>
           <p class="text-[#808080]">{{ patient.age }} años</p>
         </div>
       </td>
