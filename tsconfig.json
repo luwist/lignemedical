@@ -18,7 +18,10 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "paths": {
       "@spartan-ng/ui-button-helm": [
         ".\\src/app/components/ui/ui-button-helm/src/index.ts"
@@ -50,7 +53,15 @@
       "@spartan-ng/ui-sheet-helm": [
         ".\\src/app/components/ui/ui-sheet-helm/src/index.ts"
       ],
-      "@*": [".\\src/*"]
+      "@spartan-ng/ui-skeleton-helm": [
+        ".\\src/app/components/ui/ui-skeleton-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-tabs-helm": [
+        ".\\src/app/components/ui/ui-tabs-helm/src/index.ts"
+      ],
+      "@*": [
+        ".\\src/*"
+      ]
     }
   },
   "angularCompilerOptions": {

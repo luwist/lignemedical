@@ -1,11 +1,10 @@
 export interface Patient {
+  id: string;
   firstName: string;
   lastName: string;
-  age: string;
-  identityDocument: string;
-  healthInsurance: string;
+  age: number;
+  dni: number;
+  insurance: string;
   email: string;
-  password: string;
-  firstImage: string;
-  secondImage: string;
+  picture: string;
 }

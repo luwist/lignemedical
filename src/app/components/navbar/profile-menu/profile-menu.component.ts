@@ -42,13 +42,28 @@ import { Observable } from 'rxjs';
   styleUrl: './profile-menu.component.scss',
 })
 export class ProfileMenuComponent implements OnInit {
-  fallBack!: string;
+  label!: string;
   currentUser$!: Observable<User | null>;
 
   constructor(private _router: Router, private _authService: AuthService) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._authService.currentUser$;
+
+    this.getLabel();
+  }
+
+  getLabel() {
+    this.currentUser$.subscribe((user) => {
+      if (user !== null && user.displayName !== null) {
+        this.label = user.displayName
+          .split(' ')
+          .map((letter: string) => letter[0])
+          .join('');
+      } else {
+        this.label = '';
+      }
+    });
   }
 
   onLogout(): void {
