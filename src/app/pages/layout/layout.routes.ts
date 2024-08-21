@@ -39,7 +39,15 @@ export const routes: Routes = [
           import('./patient/patient.component').then((m) => m.PatientComponent),
       },
       {
-        path: 'profile',
+        path: 'settings',
+        title: 'Configuraciones',
+        loadComponent: () =>
+          import('./configuration/configuration.component').then(
+            (m) => m.ConfigurationComponent
+          ),
+      },
+      {
+        path: ':uid',
         title: 'Mi Perfil',
         loadComponent: () =>
           import('./profile/profile.component').then((m) => m.ProfileComponent),

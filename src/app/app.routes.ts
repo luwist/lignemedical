@@ -6,15 +6,6 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
 export const routes: Routes = [
   {
-    path: '',
-    loadChildren: () =>
-      import('./pages/layout/layout.routes').then((m) => m.routes),
-    canActivate: [AuthGuard, isEmailVerifiedGuard],
-    data: {
-      authGuardPipe: redirectUnauthorizedToLogin,
-    },
-  },
-  {
     path: 'login',
     title: 'Iniciar sesion',
     loadComponent: () =>
@@ -40,5 +31,14 @@ export const routes: Routes = [
     path: 'join',
     loadChildren: () =>
       import('./pages/register/register.routes').then((m) => m.routes),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./pages/layout/layout.routes').then((m) => m.routes),
+    canActivate: [AuthGuard],
+    data: {
+      authGuardPipe: redirectUnauthorizedToLogin,
+    },
   },
 ];

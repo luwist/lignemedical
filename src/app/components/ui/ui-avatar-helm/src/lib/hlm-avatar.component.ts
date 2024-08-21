@@ -15,9 +15,10 @@ import type { ClassValue } from 'clsx';
 export const avatarVariants = cva('relative flex shrink-0 overflow-hidden', {
   variants: {
     variant: {
-      medium: 'h-11 w-11',
-      large: 'h-12 w-12 text-base',
-      xLarge: 'h-14 w-14 text-xl',
+      tiny: 'h-11 w-11',
+      small: 'h-12 w-12 text-base',
+      medium: 'h-14 w-14 text-xl',
+      large: 'h-28 w-28 text-3xl',
     },
     shape: {
       circle: 'rounded-full',
@@ -25,7 +26,7 @@ export const avatarVariants = cva('relative flex shrink-0 overflow-hidden', {
     },
   },
   defaultVariants: {
-    variant: 'medium',
+    variant: 'tiny',
     shape: 'circle',
   },
 });
@@ -57,7 +58,7 @@ export class HlmAvatarComponent extends BrnAvatarComponent {
     )
   );
 
-  private readonly _variant = signal<AvatarVariants['variant']>('medium');
+  private readonly _variant = signal<AvatarVariants['variant']>('tiny');
   @Input()
   set variant(variant: AvatarVariants['variant']) {
     this._variant.set(variant);

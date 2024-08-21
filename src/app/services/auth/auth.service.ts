@@ -59,8 +59,8 @@ export class AuthService {
     await sendEmailVerification(user.user);
   }
 
-  async logout(): Promise<void> {
-    await signOut(this._auth);
+  logout(): void {
+    signOut(this._auth);
   }
 
   async registerDoctor(registerRequest: any): Promise<void> {

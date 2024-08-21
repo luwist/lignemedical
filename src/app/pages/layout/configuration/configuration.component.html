@@ -1,0 +1,104 @@
+<div class="w-[932px] mx-auto">
+    <div class="flex items-center gap-3 mb-10 w-">
+        <hlm-avatar variant="medium">
+            <img [src]="(currentUser$ | async)?.photoURL" alt="Profile picture" hlmAvatarImage />
+            <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+          </hlm-avatar>
+
+          <div>
+            <p class="text-lg font-medium">{{ (currentUser$ | async)?.displayName }}</p>
+            <p class="text-sm text-muted-foreground font-medium">Cuenta personal</p>
+          </div>
+    </div>
+    <div class="flex justify-between">
+        <div>
+            <ul>
+                <li class="item">General</li>
+                <li class="item">Cuenta</li>
+                <li class="item">Contraseña</li>
+                <li class="item">Apariencia</li>
+                <brn-separator hlmSeparator class="my-2" />
+                <li class="item text-destructive">Eliminar cuenta</li>
+            </ul>
+        </div>
+        <div class="w-[655px]">
+            <section>
+                <h2 class="text-xl mb-2">Informacion personal</h2>
+            <p class="text-muted-foreground text-sm leading-6 mb-6">Revisa y actualiza tus datos personales. Los cambios se guardan automáticamente para mantener tu perfil siempre al día.</p>
+
+            <div class="w-full flex gap-5 mb-5">
+                <div class="w-full">
+                  <label hlmLabel
+                    >Nombre
+                    <input
+                      class="w-full"
+                      hlmInput
+                      type="text"
+                    />
+                  </label>
+            
+                </div>
+            
+                <div class="w-full">
+                  <label hlmLabel
+                    >Apellido
+                    <input class="w-full" hlmInput type="text" />
+                  </label>
+            
+                </div>
+              </div>
+            
+              <div class="w-full flex gap-5 mb-5">
+                <div class="w-full">
+                  <label hlmLabel
+                    >Edad
+                    <input
+                      class="w-full"
+                      hlmInput
+                      type="text"
+                      [maxLength]="8"
+                    />
+                  </label>
+            
+                </div>
+            
+                <div class="w-full">
+                  <label hlmLabel
+                    >DNI
+                    <input
+                      class="w-full"
+                      hlmInput
+                      type="text"
+                      [maxLength]="8"
+                    />
+                  </label>
+            
+                </div>
+            
+                <div class="w-full">
+                    <label hlmLabel
+                      >Especialidad
+                      <input
+                        class="w-full"
+                        hlmInput
+                        type="text"
+                      />
+                    </label>
+                </div>
+              </div>
+            </section>
+
+            <brn-separator hlmSeparator class="my-5" />
+
+            <section>
+                <h2 class="text-xl mb-2">Apariencia</h2>
+                <p class="text-muted-foreground text-sm leading-6 mb-6">Elige tu tema favorito o sincronízalo con el sistema para alternar entre modos claro y oscuro. Los ajustes se aplican de inmediato y se guardan automáticamente.</p>
+
+                <div class="flex gap-5">
+                    <button class="bg-popover w-full h-52 rounded-2xl"></button>
+                    <button class="bg-popover w-full h-52 rounded-2xl"></button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

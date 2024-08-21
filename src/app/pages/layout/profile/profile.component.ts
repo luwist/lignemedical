@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '@app/models';
+import { FirestoreService } from '@app/services';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
   HlmAvatarImageDirective,
 } from '@spartan-ng/ui-avatar-helm';
-import { filter, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -22,20 +23,18 @@ import { filter, Observable } from 'rxjs';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
-  fallBack!: string;
-  currentUser$!: Observable<any>;
+  user!: User | null;
 
-  constructor(private _authService: AuthService) {}
+  constructor(
+    private _route: ActivatedRoute,
+    private _firestore: FirestoreService
+  ) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this._authService.currentUser$;
+    this._route.params.subscribe(async (param) => {
+      const uid = param['uid'];
 
-    this.currentUser$.subscribe((data) => {
-      if (data !== null) {
-        this.fallBack = data.firstName[0] + data.lastName[0];
-      } else {
-        this.fallBack = 'LM';
-      }
+      this.user = await this._firestore.getDocumentById<User>('users', uid);
     });
   }
 }

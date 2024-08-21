@@ -38,7 +38,7 @@
       @if (patients.length > 0) { @for (patient of patients; track $index) {
       <tr class="border-b border-b-card">
         <td class="flex items-center gap-3 px-6 py-4">
-          <hlm-avatar variant="large" shape="square">
+          <hlm-avatar variant="medium" shape="square">
             <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
             <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
           </hlm-avatar>
