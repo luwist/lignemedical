@@ -87,7 +87,7 @@ export class AuthService {
     await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
       firstName: firstName,
       lastName: lastName,
-      photoURL: picture,
+      picture: picture,
       age: Number(age),
       dni: Number(dni),
       specialist: specialist,
@@ -121,7 +121,7 @@ export class AuthService {
     await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
       firstName: firstName,
       lastName: lastName,
-      photoURL: profileUrl,
+      picture: profileUrl,
       age: Number(age),
       dni: Number(dni),
       healthInsurance: healthInsurance,

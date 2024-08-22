@@ -69,7 +69,7 @@ export class LoginComponent {
       id: 4,
       imageSrc: 'images/image-5.png',
       role: 'paciente',
-      email: 'pablo.torres@patient.com',
+      email: 'hojog81063@amxyy.com',
       password: '123456',
     },
     {

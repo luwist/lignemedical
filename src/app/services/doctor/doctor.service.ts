@@ -62,15 +62,8 @@ export class DoctorService {
       (schedule) => schedule.isActive && schedule.dayWeek === date.getDay()
     ) as Schedule;
 
-    // const startTimeInMilliseconds = schedule.startTime.getTime();
-    // const endTimeInMilliseconds = schedule.endTime.getTime();
-
-    console.log(schedule);
-
     appointments.forEach((appointment) => {
       // const hourInMilliseconds = appointment.hour.getTime();
-
-      console.log(appointment.hour);
     });
 
     return appointmentsAvailable;

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { isAdminGuard, isDoctorGuard } from '@app/guards';
 
 export const routes: Routes = [
   {
@@ -7,16 +8,16 @@ export const routes: Routes = [
       import('./layout.component').then((m) => m.LayoutComponent),
     children: [
       {
-        path: 'users',
-        title: 'Usuarios',
-        loadComponent: () =>
-          import('./user/user.component').then((m) => m.UserComponent),
+        path: '',
+        loadChildren: () =>
+          import('./admin/admin.routes').then((m) => m.routes),
+        canActivate: [isAdminGuard],
       },
       {
-        path: 'shift',
-        title: 'Mis turnos',
-        loadComponent: () =>
-          import('./shift/shift.component').then((m) => m.ShiftComponent),
+        path: '',
+        loadChildren: () =>
+          import('./doctor/doctor.routes').then((m) => m.routes),
+        canActivate: [isDoctorGuard],
       },
       {
         path: 'booking',
@@ -31,12 +32,6 @@ export const routes: Routes = [
           import('./appointment/appointment.component').then(
             (m) => m.AppointmentComponent
           ),
-      },
-      {
-        path: 'patients',
-        title: 'Pacientes',
-        loadComponent: () =>
-          import('./patient/patient.component').then((m) => m.PatientComponent),
       },
       {
         path: 'settings',

@@ -7,7 +7,6 @@ export const isEmailVerifiedGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   authService.currentUser$.subscribe((user) => {
-    console.log(user);
     if (user !== null && !user?.emailVerified) {
       router.navigateByUrl('/verify-email');
     }
