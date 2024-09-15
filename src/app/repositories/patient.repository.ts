@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Patient } from '@app/models';
+import { Patient, User } from '@app/models';
 import { FirestoreService } from '@app/services';
 
 @Injectable({
@@ -10,5 +10,9 @@ export class PatientRepository {
 
   async getPatientList(): Promise<Patient[]> {
     return await this._firestoreService.getAllDocument<Patient>(`patients`);
+  }
+
+  async getUserList(): Promise<User[]> {
+    return await this._firestoreService.getAllDocument<User>(`users`);
   }
 }

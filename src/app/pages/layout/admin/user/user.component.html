@@ -9,7 +9,7 @@
     <hlm-tabs-list class="w-full" aria-label="tabs example">
       <button hlmTabsTrigger="administrators">Administradores</button>
       <button hlmTabsTrigger="doctors">Doctores</button>
-      <button hlmTabsTrigger="password">pacientes</button>
+      <button hlmTabsTrigger="patients">Pacientes</button>
     </hlm-tabs-list>
     <div hlmTabsContent="administrators">
       <table class="w-full text-sm text-left text-foreground">
@@ -64,22 +64,22 @@
           </tr>
         </thead>
         <tbody>
-          @for (patient of items; track $index) {
+          @for (doctor of doctors; track $index) {
             <tr class="border-b border-b-card">
               <td class="flex items-center gap-3 px-6 py-4">
                 <hlm-avatar variant="medium" shape="square">
-                  <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
+                  <img [src]="doctor.picture" alt="Profile picture" hlmAvatarImage />
                   <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
                 </hlm-avatar>
                 <div>
-                  <p>{{ patient.firstName }} {{ patient.lastName }}</p>
-                  <p class="text-[#808080]">{{ patient.age }} años</p>
+                  <p>{{ doctor.firstName }} {{ doctor.lastName }}</p>
+                  <p class="text-[#808080]">{{ doctor.age }} años</p>
                 </div>
               </td>
-              <td class="px-6 py-4">{{ patient.dni }}</td>
-              <td class="px-6 py-4">{{ patient.email }}</td>
+              <td class="px-6 py-4">{{ doctor.dni }}</td>
+              <td class="px-6 py-4">{{ doctor.email }}</td>
               <td class="px-6 py-4">
-                @if (patient.emailVerified) {
+                @if (doctor.emailVerified) {
                   <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
                     Verificado
                   </span>
@@ -90,7 +90,7 @@
                 }
               </td>
               <td class="px-6 py-4">
-                switch
+                <hlm-switch (changed)="onChange($event, doctor.id)" [checked]="doctor.isEnable" />
               </td>
             </tr>
             }

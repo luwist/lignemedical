@@ -4,6 +4,7 @@ import {
   authState,
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
@@ -14,6 +15,7 @@ import { FirestoreService } from '../firestore';
 import { UploadService } from '../upload';
 import { Role } from '@app/enums';
 import { Firestore } from '@angular/fire/firestore';
+import { emailVerified } from '@angular/fire/auth-guard';
 
 @Injectable({
   providedIn: 'root',
@@ -106,7 +108,7 @@ export class AuthService {
 
     const { profileImage } = registerRequest.profilePicture;
 
-    const profileUrl = await this._uploadService.upload(profileImage);
+    const picture = await this._uploadService.upload(profileImage);
 
     const user = await createUserWithEmailAndPassword(
       this._auth,
@@ -116,12 +118,13 @@ export class AuthService {
 
     updateProfile(user.user, {
       displayName: `${firstName} ${lastName}`,
+      photoURL: picture,
     });
 
     await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
       firstName: firstName,
       lastName: lastName,
-      picture: profileUrl,
+      picture: picture,
       age: Number(age),
       dni: Number(dni),
       healthInsurance: healthInsurance,

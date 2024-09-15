@@ -2,3 +2,15 @@
 <main class="p-10">
   <router-outlet />
 </main>
+
+@if (!isEnable) {
+  <div class="fixed top-0 right-0 w-full h-screen bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="w-[570px] bg-popover rounded-3xl p-7 flex flex-col items-center">
+      <h1 class="text-xl mb-5">Tu cuenta a sido deshabilitada</h1>
+
+      <p class="text-muted-foreground text-base text-center leading-6">Tu cuenta ha sido deshabilitada. Ya no tendrás acceso a las funcionalidades del sistema hasta que se habilite nuevamente. Por favor, contacta al administrador para que vuelva a habilitar tu cuenta.</p>
+
+      <button hlmBtn class="w-56 mt-10" (click)="onLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+}

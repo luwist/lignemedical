@@ -17,6 +17,7 @@ import {
   HlmTabsListComponent,
   HlmTabsTriggerDirective,
 } from '@spartan-ng/ui-tabs-helm';
+import { FirestoreService } from '@app/services';
 
 @Component({
   selector: 'app-user',
@@ -46,10 +47,21 @@ import {
 })
 export class UserComponent implements OnInit {
   items: any[] = [];
+  doctors: any[] = [];
 
-  constructor(private _patientRepository: PatientRepository) {}
+  constructor(
+    private _patientRepository: PatientRepository,
+    private _firestoreService: FirestoreService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.items = await this._patientRepository.getPatientList();
+    this.doctors = await this._patientRepository.getUserList();
+  }
+
+  onChange(e: any, id: string): void {
+    this._firestoreService.updateDocumentById('users', id, {
+      isEnable: e,
+    });
   }
 }

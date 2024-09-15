@@ -47,8 +47,8 @@ export class LoginComponent {
     {
       id: 1,
       imageSrc: 'images/image-2.png',
-      email: 'administrador@administrador.com',
-      password: 'administrador',
+      email: 'i645nrl63t@knmcadibav.com',
+      password: '123456',
       role: 'administrador',
     },
     {

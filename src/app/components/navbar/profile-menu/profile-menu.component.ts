@@ -8,6 +8,18 @@ import {
   HlmAvatarFallbackDirective,
   HlmAvatarImageDirective,
 } from '@spartan-ng/ui-avatar-helm';
+import {
+  BrnDialogContentDirective,
+  BrnDialogTriggerDirective,
+} from '@spartan-ng/ui-dialog-brain';
+import {
+  HlmDialogComponent,
+  HlmDialogContentComponent,
+  HlmDialogDescriptionDirective,
+  HlmDialogFooterComponent,
+  HlmDialogHeaderComponent,
+  HlmDialogTitleDirective,
+} from '@spartan-ng/ui-dialog-helm';
 import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 import {
   HlmMenuComponent,
@@ -33,6 +45,16 @@ import { Observable } from 'rxjs';
     HlmMenuItemIconDirective,
     HlmMenuSeparatorComponent,
     HlmMenuGroupComponent,
+
+    BrnDialogTriggerDirective,
+    BrnDialogContentDirective,
+
+    HlmDialogComponent,
+    HlmDialogContentComponent,
+    HlmDialogHeaderComponent,
+    HlmDialogFooterComponent,
+    HlmDialogTitleDirective,
+    HlmDialogDescriptionDirective,
 
     HlmAvatarImageDirective,
     HlmAvatarComponent,
