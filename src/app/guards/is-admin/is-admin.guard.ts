@@ -13,9 +13,9 @@ export const isAdminGuard: CanActivateFn = (route, state) => {
 
     if (uid !== undefined) {
       const role = await userRepository.getRoleById(uid);
-      
+
       if (role === 'doctor' || role === 'patient') {
-        router.navigateByUrl('/appointment');
+        router.navigateByUrl('/');
       }
     }
   });

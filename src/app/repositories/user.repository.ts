@@ -9,20 +9,17 @@ export class UserRepository {
   constructor(private _firestoreORM: FirestoreORM<User>) {}
 
   async getRoleById(id: string): Promise<string | null> {
+    const user = await this._firestoreORM.collection('users').limit(2).first();
+
     // const user = await this._firestoreORM
     //   .collection('users')
-    //   .limit(2)
+    //   .where('emailVerified', '==', true)
+    //   .where('age', '==', 57)
     //   .get();
-
-    const user = await this._firestoreORM
-      .collection('users')
-      .where('emailVerified', '==', true)
-      .where('age', '==', 57)
-      .get();
 
     console.log(user);
 
-    // if (user) return user.role;
+    if (user) return user.role;
 
     return null;
   }

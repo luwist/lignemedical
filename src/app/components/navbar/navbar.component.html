@@ -20,14 +20,16 @@
     @for (item of items; track $index) {
     <li>
       <a
-        class="h-12 px-6 rounded-full text-sm text-foreground flex items-center justify-center"
+        class="h-12 px-6 rounded-full text-sm font-medium text-foreground flex items-center justify-center"
         [routerLink]="item.path"
-        routerLinkActive="menu-link--active"
         >{{ item.label }}</a
       >
     </li>
     }
   </ul>
 
-  <app-profile-menu />
+  <div class="flex items-center gap-4">
+    <app-notification />
+    <app-profile-menu />
+  </div>
 </header>

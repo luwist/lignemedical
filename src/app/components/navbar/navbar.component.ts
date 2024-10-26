@@ -7,11 +7,17 @@ import { Role } from '@app/enums';
 import { User } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { UserRepository } from '@app/repositories';
+import { NotificationComponent } from './notification/notification.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ProfileMenuComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    NotificationComponent,
+    ProfileMenuComponent,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -37,7 +43,8 @@ export class NavbarComponent implements OnInit {
       const uid = user?.uid;
 
       if (uid !== undefined) {
-        const role = await this._userRepository.getRoleById(uid);
+        // const role = await this._userRepository.getRoleById(uid);
+        const role: any = 'administrador';
 
         switch (role) {
           case 'administrador':
@@ -49,6 +56,18 @@ export class NavbarComponent implements OnInit {
               {
                 label: 'Usuarios',
                 path: '/users',
+              },
+              {
+                label: 'Citas',
+                path: '/appointment',
+              },
+              {
+                label: 'Pacientes',
+                path: '/patients',
+              },
+              {
+                label: 'Reservar cita',
+                path: '/booking',
               },
             ];
             break;

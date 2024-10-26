@@ -36,7 +36,7 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.routes),
-    canActivate: [AuthGuard, isEmailVerifiedGuard],
+    canActivate: [AuthGuard],
     data: {
       authGuardPipe: redirectUnauthorizedToLogin,
     },

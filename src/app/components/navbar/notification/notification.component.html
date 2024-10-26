@@ -1,0 +1,45 @@
+<brn-popover sideOffset="5" closeDelay="100" align="end">
+  <button brnPopoverTrigger class="relative w-11 h-11 flex items-center justify-center">
+      <span class="block w-[6px] h-[6px] rounded-full bg-[#FB5959] absolute top-[8px] right-[12px]"></span>
+
+      <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      >
+      <path
+        d="M10.0167 2.42502C7.25835 2.42502 5.01668 4.66668 5.01668 7.42502V9.83335C5.01668 10.3417 4.80001 11.1167 4.54168 11.55L3.58335 13.1417C2.99168 14.125 3.40001 15.2167 4.48335 15.5834C8.07501 16.7834 11.95 16.7834 15.5417 15.5834C16.55 15.25 16.9917 14.0584 16.4417 13.1417L15.4833 11.55C15.2333 11.1167 15.0167 10.3417 15.0167 9.83335V7.42502C15.0167 4.67502 12.7667 2.42502 10.0167 2.42502Z"
+        stroke="white"
+        stroke-width="1.25"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+      />
+      <path
+        d="M11.5584 2.66661C11.3 2.59161 11.0334 2.53327 10.7584 2.49994C9.95837 2.39994 9.1917 2.45827 8.47504 2.66661C8.7167 2.04994 9.3167 1.61661 10.0167 1.61661C10.7167 1.61661 11.3167 2.04994 11.5584 2.66661Z"
+        stroke="white"
+        stroke-width="1.25"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12.5167 15.8834C12.5167 17.2584 11.3917 18.3834 10.0167 18.3834C9.33333 18.3834 8.7 18.1001 8.25 17.6501C7.8 17.2001 7.51666 16.5667 7.51666 15.8834"
+        stroke="white"
+        stroke-width="1.25"
+        stroke-miterlimit="10"
+      />
+    </svg>
+  </button>
+
+  <div hlmPopoverContent *brnPopoverContent="let ctx">
+    <h4 class="text-base font-semibold p-5">Notificaciones</h4>
+
+    <div class="border-t border-[#575757] p-5 flex flex-col gap-5">
+      <app-notification-message name="Maria Fernandez" />
+      <app-notification-message name="Carlos Santana" />
+      <app-notification-message name="Javier Vilchez" />
+    </div>
+  </div>
+</brn-popover>

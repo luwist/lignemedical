@@ -59,9 +59,21 @@
       "@spartan-ng/ui-tabs-helm": [
         ".\\src/app/components/ui/ui-tabs-helm/src/index.ts"
       ],
+      "@spartan-ng/ui-popover-helm": [
+        ".\\src/app/components/ui/ui-popover-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-pagination-helm": [
+        ".\\src/app/components/ui/ui-pagination-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-table-helm": [
+        ".\\src/app/components/ui/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-badge-helm": [
+        ".\\src/app/components/ui/ui-badge-helm/src/index.ts"
+      ],
       "@*": [
         ".\\src/*"
-      ]
+      ],
     }
   },
   "angularCompilerOptions": {
