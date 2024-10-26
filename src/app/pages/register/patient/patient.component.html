@@ -8,7 +8,27 @@
     />
 
     <app-stepper>
-      <app-step
+      <app-stepper-item step="1">
+        <app-stepper-trigger>1</app-stepper-trigger>
+
+        <app-stepper-separator />
+      </app-stepper-item>
+
+      <app-stepper-item step="2">
+        <app-stepper-trigger>2</app-stepper-trigger>
+
+        <app-stepper-separator />
+      </app-stepper-item>
+    </app-stepper>
+
+    <div stepIndex="1">
+
+    </div>
+
+    <div stepIndex="2">
+
+    </div>
+      <!-- <app-step
         label="Datos personales"
         [stepControl]="personalInformationGroup"
       >
@@ -98,7 +118,6 @@
             Crear una cuenta
           </button>
         </app-footer>
-      </app-step>
-    </app-stepper>
+      </app-step> -->
   </form>
 </main>

@@ -17,8 +17,11 @@ import {
 import {
   StepComponent,
   StepperComponent,
+  StepperItemComponent,
   StepperNextDirective,
   StepperPreviousDirective,
+  StepperSeparatorComponent,
+  StepperTriggerComponent,
 } from '@app/components/ui/stepper';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
@@ -58,6 +61,10 @@ import { AuthService } from '@app/services';
 
     HeaderComponent,
     FooterComponent,
+
+    StepperItemComponent,
+    StepperSeparatorComponent,
+    StepperTriggerComponent,
   ],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
