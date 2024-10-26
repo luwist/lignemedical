@@ -1,0 +1,34 @@
+<div
+  class="w-[400px] h-[58px] border-2 border-transparent rounded-full pl-6 pr-2 bg-[#353535] grid grid-cols-[1fr_40px] items-center"
+  [ngClass]="{ 'border-primary/50 bg-transparent': isFocused }"
+  (mouseover)="onMouseover()"
+  (mouseleave)="onMouseleave()"
+>
+  <input
+    type="text"
+    class="block w-full h-full bg-transparent outline-none text-white placeholder:text-[#808080] text-sm"
+    placeholder="Nombre, apellido, dni, edad,..."
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  />
+
+  <button
+    class="w-10 h-10 bg-primary rounded-full flex items-center justify-center"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.583 17.5a7.917 7.917 0 1 0 0-15.833 7.917 7.917 0 0 0 0 15.833m8.75.833-1.666-1.666"
+        stroke="#1F1F1F"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
