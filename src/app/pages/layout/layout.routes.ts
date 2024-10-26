@@ -42,10 +42,18 @@ export const routes: Routes = [
           ),
       },
       {
-        path: ':uid',
+        path: 'account',
         title: 'Mi Perfil',
         loadComponent: () =>
           import('./profile/profile.component').then((m) => m.ProfileComponent),
+      },
+      {
+        path: '**',
+        title: '404 Pagina no encontrada',
+        loadComponent: () =>
+          import('./not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
+          ),
       },
     ],
   },
