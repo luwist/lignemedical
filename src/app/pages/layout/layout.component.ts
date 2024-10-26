@@ -14,7 +14,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit {
-  isEnable!: boolean;
+  isEnable: boolean = true;
 
   constructor(
     private _authService: AuthService,

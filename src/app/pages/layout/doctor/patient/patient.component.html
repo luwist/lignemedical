@@ -1,5 +1,35 @@
 <div class="flex items-center justify-between mb-7">
   <h1 class="text-[28px]">Pacientes</h1>
+
+  <div
+    class="w-[400px] h-14 rounded-full pl-6 pr-2 bg-[#353535] grid grid-cols-[1fr_40px] items-center"
+  >
+    <input
+      type="text"
+      class="block w-full h-full bg-transparent outline-none text-white placeholder:text-[#808080] text-sm"
+      placeholder="Nombre, apellido, dni, edad,..."
+    />
+
+    <button
+      class="w-10 h-10 bg-primary rounded-full flex items-center justify-center"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9.583 17.5a7.917 7.917 0 1 0 0-15.833 7.917 7.917 0 0 0 0 15.833m8.75.833-1.666-1.666"
+          stroke="#1F1F1F"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
 </div>
 
 <table class="w-full text-sm text-left text-foreground">
@@ -12,83 +42,80 @@
     </tr>
   </thead>
   <tbody>
-    @if(isLoading) {
-      @for (item of [1, 2, 3, 4 ,5]; track $index) {
-        <tr>
-          <td class="flex items-center justify-between gap-3 px-6 py-4">
-            <hlm-skeleton class='w-12 h-12 rounded-xl' />
-    
-            <div class="w-full">
-              <hlm-skeleton class='w-28 h-5 rounded-sm mb-2' />
-              <hlm-skeleton class='w-12 h-5 rounded-sm' />
-            </div>
-          </td>
-          <td class="px-6 py-4">
-            <hlm-skeleton class='w-16 h-5 rounded-sm' />
-          </td>
-          <td class="px-6 py-4">
-            <hlm-skeleton class='w-48 h-5 rounded-sm' />
-          </td>
-          <td class="px-6 py-4">
-            <hlm-skeleton class='w-12 h-12 rounded-full' />
-          </td>
-        </tr>
-      }
-    } @else {
-      @if (patients.length > 0) { @for (patient of patients; track $index) {
-      <tr class="border-b border-b-card">
-        <td class="flex items-center gap-3 px-6 py-4">
-          <hlm-avatar variant="medium" shape="square">
-            <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
-            <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
-          </hlm-avatar>
-          <div>
-            <p>{{ patient.firstName }} {{ patient.lastName }}</p>
-            <p class="text-[#808080]">{{ patient.age }} años</p>
-          </div>
-        </td>
-        <td class="px-6 py-4">{{ patient.dni }}</td>
-        <td class="px-6 py-4">{{ patient.email }}</td>
-        <td class="px-6 py-4">
-          <button
-            class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+    @if(isLoading) { @for (item of [1, 2, 3, 4 ,5]; track $index) {
+    <tr>
+      <td class="grid grid-cols-[48px_1fr] gap-3 px-6 py-4">
+        <hlm-skeleton class="w-12 h-12 rounded-xl" />
+
+        <div class="w-full">
+          <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+          <hlm-skeleton class="w-12 h-5 rounded-sm" />
+        </div>
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-16 h-5 rounded-sm" />
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-48 h-5 rounded-sm" />
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-12 h-12 rounded-full" />
+      </td>
+    </tr>
+    } } @else { @if (patients.length > 0) { @for (patient of patients; track
+    $index) {
+    <tr class="border-b border-b-card">
+      <td class="flex items-center gap-3 px-6 py-4">
+        <hlm-avatar variant="medium" shape="square">
+          <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
+          <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+        </hlm-avatar>
+        <div>
+          <p>{{ patient.firstName }} {{ patient.lastName }}</p>
+          <p class="text-[#808080]">{{ patient.age }} años</p>
+        </div>
+      </td>
+      <td class="px-6 py-4">{{ patient.dni }}</td>
+      <td class="px-6 py-4">{{ patient.email }}</td>
+      <td class="px-6 py-4">
+        <button
+          class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            stroke="#808080"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              stroke="#808080"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </td>
-      </tr>
-      } } @else {
-      <tr>
-        <td [attr.colspan]="4" class="h-[405px] text-center align-middle">
-          <p class="text-sm font-medium">
-            No tenes pacientes. Empieza a aceptar los turnos.
-          </p>
-        </td>
-      </tr>
-      }
-    }
+            <path
+              d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </td>
+    </tr>
+    } } @else {
+    <tr>
+      <td [attr.colspan]="4" class="h-[405px] text-center align-middle">
+        <p class="text-sm font-medium">
+          No tenes pacientes. Empieza a aceptar los turnos.
+        </p>
+      </td>
+    </tr>
+    } }
   </tbody>
 </table>
 

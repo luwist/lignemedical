@@ -1,82 +1,102 @@
 <hlm-dialog>
   <button [brnMenuTriggerFor]="menu">
+    @if (currentUser$ | async; as currentUser) {
     <hlm-avatar>
-      <img
-        [src]="(currentUser$ | async)?.photoURL"
-        alt="Profile picture"
-        hlmAvatarImage
-      />
+      <img [src]="currentUser.photoURL" alt="Profile picture" hlmAvatarImage />
       <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{ label }}</span>
     </hlm-avatar>
+    }
   </button>
-  
+
   <ng-template #menu>
     <hlm-menu class="w-64">
       <hlm-menu-label>
         <div class="flex flex-col items-center gap-3">
+          @if (currentUser$ | async; as currentUser) {
           <hlm-avatar variant="medium">
             <img
-              [src]="(currentUser$ | async)?.photoURL"
+              [src]="currentUser.photoURL"
               alt="Profile picture"
               hlmAvatarImage
             />
-            <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{ label }}</span>
+            <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+              label
+            }}</span>
           </hlm-avatar>
+
           <div>
             <p class="text-foreground text-base font-medium text-center">
-              {{ (currentUser$ | async)?.displayName }}
+              {{ currentUser.displayName }}
             </p>
             <p class="text-muted-foreground text-sm font-medium text-center">
-              {{ (currentUser$ | async)?.email }}
+              {{ currentUser.email }}
             </p>
           </div>
+          }
         </div>
       </hlm-menu-label>
-  
+
       <hlm-menu-separator />
-  
+
       <hlm-menu-group>
         <button hlmMenuItem>
-          <a routerLink="/{{ (currentUser$ | async)?.uid }}" class="flex items-center w-full h-full text-start">
+          <a
+            routerLink="/{{ (currentUser$ | async)?.uid }}"
+            class="flex items-center w-full h-full text-start"
+          >
             <span>Mi perfil</span>
           </a>
         </button>
-  
+
         <button hlmMenuItem>
-          <a routerLink="/settings" class="flex items-center w-full h-full text-start">
+          <a
+            routerLink="/settings"
+            class="flex items-center w-full h-full text-start"
+          >
             <span>Configuración</span>
           </a>
         </button>
-  
+
         <button hlmMenuItem>
-          <button id="change-language" brnDialogTrigger hlmBtn class="flex items-center gap-3">
+          <button
+            id="change-language"
+            brnDialogTrigger
+            hlmBtn
+            class="flex items-center gap-3"
+          >
             <span>Cambiar idioma</span>
-          <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />
+            <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />
           </button>
-            <hlm-dialog-content *brnDialogContent="let ctx">
-              <hlm-dialog-header>
-                <h3 hlmDialogTitle>Elige el idioma:</h3>
-              </hlm-dialog-header>
-              <div class="flex items-center gap-5">
-                <button class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm">
-                  English
-                  <img src="assets/flags/en-US.png" alt="flag" class="w-7" />
-                </button>
-                <button class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm">
-                  Português
-                  <img src="assets/flags/pt-BR.png" alt="flag" class="w-7" />
-                </button>
-                <button class="flex items-center gap-2 border border-primary rounded-xl px-5 py-3 text-sm">
-                  Español
-                  <img src="assets/flags/es-ES.png" alt="flag" class="w-7" />
-                </button>
-              </div>
-            </hlm-dialog-content>
+          <hlm-dialog-content *brnDialogContent="let ctx">
+            <hlm-dialog-header>
+              <h3 hlmDialogTitle>Elige el idioma:</h3>
+            </hlm-dialog-header>
+            <div class="flex items-center gap-5">
+              <button
+                class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm"
+              >
+                English
+                <img src="assets/flags/en-US.png" alt="flag" class="w-7" />
+              </button>
+              <button
+                class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm"
+              >
+                Português
+                <img src="assets/flags/pt-BR.png" alt="flag" class="w-7" />
+              </button>
+              <button
+                class="flex items-center gap-2 border border-primary rounded-xl px-5 py-3 text-sm"
+              >
+                Español
+                <img src="assets/flags/es-ES.png" alt="flag" class="w-7" />
+              </button>
+            </div>
+          </hlm-dialog-content>
         </button>
       </hlm-menu-group>
-  
+
       <hlm-menu-separator />
-  
+
       <hlm-menu-group>
         <button hlmMenuItem (click)="onLogout()">
           <span>Cerrar sesion</span>
@@ -85,4 +105,3 @@
     </hlm-menu>
   </ng-template>
 </hlm-dialog>
-

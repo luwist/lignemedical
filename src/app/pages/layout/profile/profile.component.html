@@ -1,11 +1,7 @@
 <div class="w-[932px] mx-auto">
   <div class="flex items-center gap-6">
     <hlm-avatar variant="large" shape="square">
-      <img
-        [src]="user?.picture"
-        alt="Profile picture"
-        hlmAvatarImage
-      />
+      <img [src]="user?.picture" alt="Profile picture" hlmAvatarImage />
       <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LM</span>
     </hlm-avatar>
 
@@ -14,16 +10,29 @@
 
       <div class="flex justify-between">
         <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">Nombre: <span class="text-foreground">{{ user?.firstName }}</span></p>
-          <p class="text-sm text-muted-foreground font-medium">Rol: <span class="text-foreground">{{ user?.role }}</span></p>
+          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+            Nombre: <span class="text-foreground">{{ user?.firstName }}</span>
+          </p>
+          <p class="text-sm text-muted-foreground font-medium capitalize">
+            Rol: <span class="text-foreground">{{ user?.role }}</span>
+          </p>
         </div>
         <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">Apellido: <span class="text-foreground">{{ user?.lastName }}</span></p>
-          <p class="text-sm text-muted-foreground font-medium">DNI: <span class="text-foreground">{{ user?.dni }}</span></p>
+          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+            Apellido: <span class="text-foreground">{{ user?.lastName }}</span>
+          </p>
+          <p class="text-sm text-muted-foreground font-medium">
+            DNI: <span class="text-foreground">{{ user?.dni }}</span>
+          </p>
         </div>
         <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">Edad: <span class="text-foreground">{{ user?.age }}</span></p>
-          <p class="text-sm text-muted-foreground font-medium">Correo electronico: <span class="text-foreground">{{ user?.email }}</span></p>
+          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+            Edad: <span class="text-foreground">{{ user?.age }}</span>
+          </p>
+          <p class="text-sm text-muted-foreground font-medium">
+            Correo electronico:
+            <span class="text-foreground">{{ user?.email }}</span>
+          </p>
         </div>
       </div>
     </div>
