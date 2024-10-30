@@ -12,12 +12,6 @@ import {
   MessageService,
   ToastComponent,
 } from '@app/components';
-import {
-  StepComponent,
-  StepperComponent,
-  StepperNextDirective,
-  StepperPreviousDirective,
-} from '@app/components/ui/stepper';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
@@ -41,12 +35,6 @@ import { DoctorRequest } from '@app/requests';
     HlmButtonDirective,
     HlmInputDirective,
     HlmLabelDirective,
-
-    StepperComponent,
-    StepComponent,
-
-    StepperNextDirective,
-    StepperPreviousDirective,
 
     ReactiveFormsModule,
 

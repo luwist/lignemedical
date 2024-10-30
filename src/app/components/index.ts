@@ -5,3 +5,4 @@ export * from './navbar';
 export * from './ui/dropzone';
 export * from './ui/toast';
 export * from './ui/ng-stepper';
+export * from './ui/ng-number-input';

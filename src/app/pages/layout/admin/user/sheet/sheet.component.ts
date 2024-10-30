@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  AccountCardComponent,
-  InputErrorComponent,
-  StepComponent,
-  StepperComponent,
-  StepperNextDirective,
-  StepperPreviousDirective,
-} from '@app/components';
+import { AccountCardComponent, InputErrorComponent } from '@app/components';
 import {
   HlmSheetComponent,
   HlmSheetContentComponent,
@@ -52,11 +45,7 @@ import { CommonModule } from '@angular/common';
 
     InputErrorComponent,
 
-    StepperComponent,
-    StepperNextDirective,
-    StepperPreviousDirective,
     PersonalInformationComponent,
-    StepComponent,
     HeaderComponent,
 
     ReactiveFormsModule,

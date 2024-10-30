@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepperItemComponent } from './stepper-item.component';
+import { NgTagsInputComponent } from './ng-tags-input.component';
 
-describe('StepperItemComponent', () => {
-  let component: StepperItemComponent;
-  let fixture: ComponentFixture<StepperItemComponent>;
+describe('NgTagsInputComponent', () => {
+  let component: NgTagsInputComponent;
+  let fixture: ComponentFixture<NgTagsInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StepperItemComponent]
+      imports: [NgTagsInputComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(StepperItemComponent);
+    fixture = TestBed.createComponent(NgTagsInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

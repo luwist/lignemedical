@@ -26,6 +26,7 @@ type ListVariants = VariantProps<typeof listVariants>;
   hostDirectives: [BrnTabsListDirective],
   template: '<ng-content/>',
   host: {
+    '[attr.aria-orientation]': 'orientation()',
     '[class]': '_computedClass()',
   },
 })

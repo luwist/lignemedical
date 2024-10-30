@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagsInputComponent } from './tags-input.component';
+import { NgSearchInputComponent } from './ng-search-input.component';
 
-describe('TagsInputComponent', () => {
-  let component: TagsInputComponent;
-  let fixture: ComponentFixture<TagsInputComponent>;
+describe('NgSearchInputComponent', () => {
+  let component: NgSearchInputComponent;
+  let fixture: ComponentFixture<NgSearchInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TagsInputComponent]
+      imports: [NgSearchInputComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TagsInputComponent);
+    fixture = TestBed.createComponent(NgSearchInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
