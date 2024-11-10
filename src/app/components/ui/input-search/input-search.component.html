@@ -1,8 +1,6 @@
 <div
-  class="w-[400px] h-[58px] border-2 border-transparent rounded-full pl-6 pr-2 bg-[#353535] grid grid-cols-[1fr_40px] items-center"
-  [ngClass]="{ 'border-primary/50 bg-transparent': isFocused }"
-  (mouseover)="onMouseover()"
-  (mouseleave)="onMouseleave()"
+  class="w-[400px] h-[58px] border-2 rounded-full pl-6 pr-2 bg-[#353535] grid grid-cols-[1fr_40px] items-center"
+  [ngClass]="isFocused ? 'border-primary/50 bg-transparent': 'border-transparent'"
 >
   <input
     type="text"

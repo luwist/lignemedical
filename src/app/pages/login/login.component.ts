@@ -10,7 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
-import { AuthService } from '@app/services';
+import { AuthService, RedirectService } from '@app/services';
 import { AccountCardComponent, InputErrorComponent } from '@app/components';
 import { LoginRequest } from '@app/requests';
 import { MessageService, ToastComponent } from '@app/components/ui/toast';
@@ -18,6 +18,10 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { Account } from '@app/interfaces';
+import { select, Store } from '@ngrx/store';
+import { credentialsLogin } from '@app/store/auth/auth.actions';
+import { selectUser } from '@app/store/auth/auth.selectors';
+import { AppState } from '@app/store/app.state';
 
 @Component({
   selector: 'app-login',
@@ -90,6 +94,7 @@ export class LoginComponent {
 
   isLoading: boolean = false;
   selectedOption!: number;
+  role!: string;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -99,7 +104,9 @@ export class LoginComponent {
   constructor(
     private _authService: AuthService,
     private _messageService: MessageService,
-    private _router: Router
+    private _redirectService: RedirectService,
+    private _router: Router,
+    private _store: Store<AppState>,
   ) {}
 
   get emailControl(): FormControl {
@@ -112,6 +119,7 @@ export class LoginComponent {
 
   onSelect(account: Account): void {
     this.selectedOption = account.id;
+    this.role = account.role;
 
     this.loginForm.patchValue({
       email: account.email,
@@ -122,13 +130,14 @@ export class LoginComponent {
   async onLogin(): Promise<void> {
     try {
       const credentials = this.loginForm.getRawValue() as LoginRequest;
+      const url = this._redirectService.redirectByRole(this.role);
 
       this.loginForm.markAsPending();
       this.isLoading = true;
 
-      await this._authService.login(credentials);
-
-      this._router.navigateByUrl('/');
+      this._store.dispatch(credentialsLogin({email: credentials.email, password: credentials.password}));
+      
+      this._router.navigateByUrl(url);
     } catch (error: any) {
       switch (error.code) {
         case 'auth/invalid-credential':

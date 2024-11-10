@@ -18,12 +18,4 @@ export class InputSearchComponent {
   onBlur(): void {
     this.isFocused = false;
   }
-
-  onMouseover(): void {
-    this.isFocused = true;
-  }
-
-  onMouseleave(): void {
-    this.isFocused = false;
-  }
 }

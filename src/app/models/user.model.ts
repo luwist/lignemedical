@@ -8,6 +8,6 @@ export interface User {
   role: string | null;
   isEnable: boolean | null;
 
-  specialist?: string;
+  specialist?: string[];
   insurance?: string;
 }

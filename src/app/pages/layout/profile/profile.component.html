@@ -1,40 +1,51 @@
 <div class="w-[932px] mx-auto">
   <div class="flex items-center gap-6">
-    <hlm-avatar variant="large" shape="square">
-      <img [src]="user?.picture" alt="Profile picture" hlmAvatarImage />
-      <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LM</span>
-    </hlm-avatar>
-
-    <div class="w-full">
-      <h2 class="text-xl mb-6">{{ user?.firstName }} {{ user?.lastName }}</h2>
-
-      <div class="flex justify-between">
-        <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-            Nombre: <span class="text-foreground">{{ user?.firstName }}</span>
-          </p>
-          <p class="text-sm text-muted-foreground font-medium capitalize">
-            Rol: <span class="text-foreground">{{ user?.role }}</span>
-          </p>
-        </div>
-        <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-            Apellido: <span class="text-foreground">{{ user?.lastName }}</span>
-          </p>
-          <p class="text-sm text-muted-foreground font-medium">
-            DNI: <span class="text-foreground">{{ user?.dni }}</span>
-          </p>
-        </div>
-        <div>
-          <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-            Edad: <span class="text-foreground">{{ user?.age }}</span>
-          </p>
-          <p class="text-sm text-muted-foreground font-medium">
-            Correo electronico:
-            <span class="text-foreground">{{ user?.email }}</span>
-          </p>
+    @if (user$ | async; as user) {
+      <hlm-avatar variant="large" shape="square">
+        <img [src]="user.picture" alt="Profile picture" hlmAvatarImage />
+        <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LM</span>
+      </hlm-avatar>
+  
+      <div class="w-full">
+        <h2 class="text-xl mb-6">{{ user.firstName }} {{ user.lastName }}</h2>
+  
+        <div class="flex justify-between">
+          <div>
+            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+              Nombre: <span class="text-foreground">{{ user.firstName }}</span>
+            </p>
+            <p class="text-sm text-muted-foreground font-medium capitalize">
+              Rol: <span class="text-foreground">{{ user.role }}</span>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+              Apellido: <span class="text-foreground">{{ user.lastName }}</span>
+            </p>
+            <p class="text-sm text-muted-foreground font-medium">
+              DNI: <span class="text-foreground">{{ user.dni }}</span>
+            </p>
+          </div>
+          <div>
+            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
+              Edad: <span class="text-foreground">{{ user.age }}</span>
+            </p>
+            <p class="text-sm text-muted-foreground font-medium">
+              Correo electronico:
+              <span class="text-foreground">{{ user.email }}</span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+
+    }
   </div>
+
+  @if (user$ | async; as user) {
+    @if (user.role === 'doctor') {
+      <div class="py-7">
+        <h1 class="font-medium text-xl">Horarios</h1>
+      </div>
+    }
+  }
 </div>

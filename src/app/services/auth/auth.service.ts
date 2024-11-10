@@ -36,6 +36,8 @@ export class AuthService {
       loginRequest.email,
       loginRequest.password
     );
+
+    
   }
 
   async register(registerRequest: any): Promise<void> {

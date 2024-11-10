@@ -45,7 +45,7 @@
                   />
                 </label>
           
-                <app-input-error [control]="getFormGroup('firstName')" />
+                <app-input-error [control]="getFormControl('firstName')" />
               </div>
           
               <div class="w-full">
@@ -54,7 +54,7 @@
                   <input class="w-full" hlmInput type="text" formControlName="lastName" />
                 </label>
           
-                <app-input-error [control]="getFormGroup('lastName')" />
+                <app-input-error [control]="getFormControl('lastName')" />
               </div>
             </div>
           
@@ -71,16 +71,10 @@
                   />
                 </label>
           
-                <app-input-error [control]="getFormGroup('age')" />
+                <app-input-error [control]="getFormControl('age')" />
               </div>
-          
-              <ng-number-input
-                label="DNI"
-                [length]="8"
-                [control]="getFormGroup('identity')"
-                formControlName="identity"
-              />
-              <!-- <div class="w-full">
+
+              <div class="w-full">
                 <label hlmLabel
                   >DNI
                   <input
@@ -92,9 +86,9 @@
                   />
                 </label>
           
-                <app-input-error [control]="getFormGroup('identity')" />
-              </div> -->
-          
+                <app-input-error [control]="getFormControl('identity')" />
+              </div>
+
               <div class="w-full">
                 <label hlmLabel
                   >Obra social
@@ -106,7 +100,7 @@
                   />
                 </label>
           
-                <app-input-error [control]="getFormGroup('insurance')" />
+                <app-input-error [control]="getFormControl('insurance')" />
               </div>
             </div>
           </div>          
@@ -116,12 +110,35 @@
           <span class="text-sm text-muted-foreground">Paso 2/3</span>
           <h1 class="text-xl text-foreground font-semibold">Información de contacto</h1>
           <p class="text-base text-muted-foreground mt-1">Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta.</p>
+        
+          <div class="w-full">
+            <label hlmLabel
+              >Correo electronico
+              <input class="w-full" hlmInput type="text" formControlName="email" />
+            </label>
+      
+            <app-input-error [control]="getFormControl('email')" />
+          </div>
+
+          <div class="w-full">
+            <label hlmLabel
+              >Contraseña
+              <input class="w-full" hlmInput type="text" formControlName="password" />
+            </label>
+      
+            <app-input-error [control]="getFormControl('password')" />
+          </div>
         </div>
   
         <div [ngStepperStepIndex]="3">
           <span class="text-sm text-muted-foreground">Paso 3/3</span>
           <h1 class="text-xl text-foreground font-semibold">Fotos de perfil</h1>
           <p class="text-base text-muted-foreground mt-1">Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma.</p>
+        
+          <div class="flex justify-between">
+            <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
+            <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
+          </div>
         </div>
 
         <div class="w-full mt-16 flex items-center justify-between">
@@ -138,7 +155,7 @@
             @if (stepper.activeStep === 3) {
               <button hlmBtn size="lg">Crear cuenta</button>
             } @else {
-              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()">Siguiente</button>
+              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="">Siguiente</button>
             }
           </div>
         </div>

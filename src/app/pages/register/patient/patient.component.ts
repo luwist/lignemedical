@@ -30,40 +30,33 @@ import { FooterComponent } from './footer/footer.component';
 import { AuthService } from '@app/services';
 import { NgStepperTriggerDirective } from '@app/components/ui/ng-stepper/ng-stepper-trigger/ng-stepper-trigger.directive';
 import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper-list/ng-stepper-list.component';
+
 @Component({
   selector: 'app-patient',
   standalone: true,
   imports: [
     CommonModule,
     RouterLink,
-
     ToastComponent,
-
     HlmButtonDirective,
     HlmInputDirective,
     HlmLabelDirective,
-
     ReactiveFormsModule,
-
     InputErrorComponent,
-
     PersonalInformationComponent,
     ContactInformationComponent,
     ProfilePictureComponent,
-
     HeaderComponent,
     FooterComponent,
-
     NgStepperComponent,
     NgStepperListComponent,
     NgStepperItemComponent,
     NgStepperSeparatorComponent,
-
     NgStepperStepIndexDirective,
     NgStepperTriggerDirective,
-
     NgNumberInputComponent,
-  ],
+    DropzoneComponent
+],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
 })
@@ -71,34 +64,22 @@ export class PatientComponent {
   @ViewChild('stepper', { static: true })
   public stepper!: NgStepperComponent;
 
-  registerForm = new FormGroup({
-    personalInformation: new FormGroup({
+  form = new FormGroup({
+    personal: new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      dni: new FormControl('', Validators.required),
+      dni: new FormControl('', [Validators.required, Validators.email]),
       age: new FormControl('', Validators.required),
-      healthInsurance: new FormControl('', Validators.required),
+      insurance: new FormControl('', Validators.required),
     }),
-    contactInformation: new FormGroup({
+    contact: new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
       profileImage: new FormControl(null, Validators.required),
       dniImage: new FormControl(null, Validators.required),
-    }),
-  });
-
-  form = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    identity: new FormControl('', Validators.required),
-    age: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
-    insurance: new FormControl('', Validators.required),
-    profileImage: new FormControl(null, Validators.required),
-    dniImage: new FormControl(null, Validators.required),
+    })
   });
 
   constructor(
@@ -107,20 +88,20 @@ export class PatientComponent {
     private _authService: AuthService
   ) {}
 
-  getFormGroup(name: string): FormGroup {
-    return this.form.get(name) as FormGroup;
+  getFormControl(name: string): FormControl {
+    return this.form.get(name) as FormControl;
   }
 
-  get personalInformationGroup(): FormGroup {
-    return this.registerForm.get('personalInformation') as FormGroup;
-  }
+  onUpdateFile(file: File, name: string): void {
+    const profilePicture = this.form;
 
-  get contactInformationGroup(): FormGroup {
-    return this.registerForm.get('contactInformation') as FormGroup;
-  }
-
-  get profilePictureGroup(): FormGroup {
-    return this.registerForm.get('profilePicture') as FormGroup;
+    for (const key in profilePicture.controls) {
+      if (name === key) {
+        this.form.patchValue({
+          [key]: file,
+        });
+      }
+    }
   }
 
   async onRegister(): Promise<void> {

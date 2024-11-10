@@ -3,7 +3,13 @@ import { Component, forwardRef, Input } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
+  FormControl,
+  FormGroupDirective,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  NgForm,
+  ValidationErrors,
+  Validator,
 } from '@angular/forms';
 import { InputErrorComponent } from '@app/components/input-error';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
@@ -19,21 +25,18 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
     HlmInputDirective,
   ],
   template: `
-    <div class="w-full">
-      <label hlmLabel
-        >{{ label }}
-        <input
-          class="w-full"
-          hlmInput
-          type="text"
-          [maxLength]="length"
-          (input)="onInput($event)"
-          (blur)="onTouched()"
-        />
-      </label>
+    <label hlmLabel
+      >{{ label }}
+      <input
+        class="w-full"
+        hlmInput
+        type="text"
+        [value]="value"
+        (input)="onInput($event)"
+      />
+    </label>
 
-      <app-input-error [control]="control" />
-    </div>
+    <app-input-error [control]="control" />
   `,
   styles: `
     :host {
@@ -43,8 +46,8 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NgNumberInputComponent),
       multi: true,
+      useExisting: forwardRef(() => NgNumberInputComponent),
     },
   ],
 })
@@ -55,7 +58,7 @@ export class NgNumberInputComponent implements ControlValueAccessor {
 
   value: string = '';
 
-  onChange = (value: any) => {};
+  onChangeFn!: Function;
 
   onTouched = () => {};
 
@@ -67,27 +70,38 @@ export class NgNumberInputComponent implements ControlValueAccessor {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
-    this.onChange(value);
+    // this.markAsTouched();
+
+    // if (!this.disabled) {
+    //   this.onChangeFn(value);
+    // }
 
     this.value = value;
-
-    console.log(this.value);
-    console.log(this.control);
   }
 
-  writeValue(value: string) {
+  // markAsTouched() {
+  //   if (!this.touched) {
+  //     this.onTouched();
+
+  //     this.touched = true;
+  //   }
+  // }
+
+  writeValue(value: string): void {
+    this.onTouched();
+
     this.value = value;
   }
 
-  registerOnChange(onChange: any) {
-    this.onChange = onChange;
+  registerOnChange(fn: any): void {
+    this.onChangeFn = fn;
   }
 
-  registerOnTouched(onTouched: any) {
-    this.onTouched = onTouched;
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
   }
 
-  setDisabledState(disabled: boolean) {
-    this.disabled = disabled;
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

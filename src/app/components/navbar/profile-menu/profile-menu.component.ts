@@ -29,6 +29,7 @@ import {
   HlmMenuLabelComponent,
   HlmMenuSeparatorComponent,
 } from '@spartan-ng/ui-menu-helm';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -59,6 +60,8 @@ import { Observable } from 'rxjs';
     HlmAvatarImageDirective,
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
+
+    HlmSkeletonComponent
   ],
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.scss',

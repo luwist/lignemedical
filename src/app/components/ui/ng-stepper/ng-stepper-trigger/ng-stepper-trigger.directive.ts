@@ -11,7 +11,6 @@ import { NgStepperItemComponent } from '../ng-stepper-item';
     '[attr.data-state]': "isActive() && 'active'",
     '[attr.data-selected]': "isActive() || selected() ? 'true' : 'false'",
     '[class]': '_computedClass()',
-    '(click)': 'activate()',
   },
 })
 export class NgStepperTriggerDirective {
@@ -28,12 +27,6 @@ export class NgStepperTriggerDirective {
     private _root: NgStepperComponent,
     private _stepperItem: NgStepperItemComponent
   ) {}
-
-  activate(): void {
-    const step = this._stepperItem.step;
-
-    this._root.setStepActivated(step);
-  }
 
   selected(): boolean {
     const step = this._stepperItem.step;
