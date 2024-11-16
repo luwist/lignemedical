@@ -30,6 +30,8 @@ import { FooterComponent } from './footer/footer.component';
 import { AuthService } from '@app/services';
 import { NgStepperTriggerDirective } from '@app/components/ui/ng-stepper/ng-stepper-trigger/ng-stepper-trigger.directive';
 import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper-list/ng-stepper-list.component';
+import { UserValidator } from '@app/validators/user.validator';
+import { UserRepository } from '@app/repositories';
 
 @Component({
   selector: 'app-patient',
@@ -68,12 +70,15 @@ export class PatientComponent {
     personal: new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      dni: new FormControl('', [Validators.required, Validators.email]),
+      dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
       insurance: new FormControl('', Validators.required),
     }),
     contact: new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [UserValidator.checkIfEmailExists(this._userRepository)]
+      }),
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
@@ -85,11 +90,12 @@ export class PatientComponent {
   constructor(
     private _router: Router,
     private _messageService: MessageService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _userRepository: UserRepository
   ) {}
 
-  getFormControl(name: string): FormControl {
-    return this.form.get(name) as FormControl;
+  getFormGroup(name: string): FormGroup {
+    return this.form.get(name) as FormGroup;
   }
 
   onUpdateFile(file: File, name: string): void {

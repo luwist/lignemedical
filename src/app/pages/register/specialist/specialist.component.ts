@@ -8,8 +8,14 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import {
+  DropzoneComponent,
   InputErrorComponent,
   MessageService,
+  NgStepperComponent,
+  NgStepperItemComponent,
+  NgStepperSeparatorComponent,
+  NgStepperStepIndexDirective,
+  NgStepperTriggerDirective,
   ToastComponent,
 } from '@app/components';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
@@ -22,6 +28,7 @@ import { ContactInformationComponent } from './contact-information/contact-infor
 import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
 import { AuthService } from '@app/services';
 import { DoctorRequest } from '@app/requests';
+import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper-list/ng-stepper-list.component';
 
 @Component({
   selector: 'app-specialist',
@@ -44,6 +51,15 @@ import { DoctorRequest } from '@app/requests';
     ContactInformationComponent,
     ProfilePictureComponent,
 
+    NgStepperComponent,
+    NgStepperItemComponent,
+    NgStepperListComponent,
+    NgStepperSeparatorComponent,
+    NgStepperStepIndexDirective,
+    NgStepperTriggerDirective,
+
+    DropzoneComponent,
+
     HeaderComponent,
     FooterComponent,
   ],
@@ -51,15 +67,15 @@ import { DoctorRequest } from '@app/requests';
   styleUrl: './specialist.component.scss',
 })
 export class SpecialistComponent {
-  registerForm = new FormGroup({
-    personalInformation: new FormGroup({
+  form = new FormGroup({
+    personal: new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      specialist: new FormControl('', Validators.required),
+      // specialist: new FormControl('', Validators.required),
     }),
-    contactInformation: new FormGroup({
+    contact: new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     }),
@@ -74,21 +90,25 @@ export class SpecialistComponent {
     private _authService: AuthService
   ) {}
 
-  get personalInformationGroup(): FormGroup {
-    return this.registerForm.get('personalInformation') as FormGroup;
+  getFormGroup(name: string): FormGroup {
+    return this.form.get(name) as FormGroup;
   }
 
-  get contactInformationGroup(): FormGroup {
-    return this.registerForm.get('contactInformation') as FormGroup;
-  }
+  onUpdateFile(file: File, name: string): void {
+    const profilePicture = this.form;
 
-  get profilePictureGroup(): FormGroup {
-    return this.registerForm.get('profilePicture') as FormGroup;
+    for (const key in profilePicture.controls) {
+      if (name === key) {
+        this.form.patchValue({
+          [key]: file,
+        });
+      }
+    }
   }
 
   async onRegister(): Promise<void> {
     try {
-      const credentials = this.registerForm.getRawValue();
+      const credentials = this.form.getRawValue();
 
       await this._authService.registerDoctor(credentials);
 

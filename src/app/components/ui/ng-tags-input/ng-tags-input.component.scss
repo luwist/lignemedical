@@ -1,0 +1,23 @@
+.input {
+    background: transparent;
+    outline: 0;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid transparent;
+
+    &:focus {
+        border: 1px solid hsl(var(--primary));
+    }
+}
+
+.menu {
+    position: absolute;
+    width: 100%;
+    top: calc(100% + 8px);
+    left: 0;
+    box-shadow: 0 0 15px 5px hsla(0, 0%, 0%, 0.1);
+    background: hsl(var(--input));
+    padding: 16px 0;
+    border-radius: 12px;
+    z-index: 10;
+}

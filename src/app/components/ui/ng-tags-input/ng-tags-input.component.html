@@ -1,1 +1,33 @@
-<p>ng-tags-input works!</p>
+<div class="relative w-full min-h-14 bg-input rounded-xl flex items-center gap-2 flex-wrap mt-1" [ngClass]="tags.length > 0 ? 'p-5' : 'px-5'">
+    <ul class="flex items-center gap-2 flex-wrap">
+        @for (tag of tags; track $index) {
+            <li class="bg-[#3D3D3D] rounded-full pl-2 flex items-center gap-2 text-sm capitalize">
+                {{ tag }}
+                <button type="button" class="bg-[#333333] rounded-full w-6 h-6 flex items-center justify-center" (click)="onRemoveTag($index)">
+                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.00049 1.00024L7.00008 6.99984" stroke="white" stroke-width="0.642857" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0.999916 6.99984L6.99951 1.00024" stroke="white" stroke-width="0.642857" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </li>
+        }
+    </ul>
+
+    <input type="text" class="input" (keydown)="onInput($event)" (focus)="onFocus()" [(ngModel)]="value" />
+
+    @if (showDropdown) {
+        <div class="menu">
+            <ul>
+                @for (specialist of specialists; track $index) {
+                    @if (specialist.name.indexOf(value) !== -1) {
+                        <li class="w-full h-11 px-5 cursor-pointer text-sm capitalize flex items-center hover:bg-[#3D3D3D]" (click)="onSelected(specialist.name)">{{ specialist.name }}</li>
+                    }
+                }
+    
+                @if (value && !specialistsFiltered.includes(value)) {
+                    <li class="w-full h-11 px-5 cursor-pointer text-sm flex items-center hover:bg-[#3D3D3D]" (click)="onSelected(value)"><b>{{ value }}</b></li>
+                }
+            </ul>
+        </div>
+    }
+</div>

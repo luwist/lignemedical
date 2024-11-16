@@ -17,6 +17,7 @@ import {
 } from '@spartan-ng/ui-sheet-brain';
 import { HeaderComponent } from './header/header.component';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -27,6 +28,8 @@ import { Account } from '@app/interfaces/account.interface';
 import { CommonModule } from '@angular/common';
 import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper-list/ng-stepper-list.component';
 import { ContactInformationComponent } from './contact-information/contact-information.component';
+import { UserValidator } from '@app/validators/user.validator';
+import { UserRepository } from '@app/repositories';
 
 @Component({
   selector: 'app-sheet',
@@ -107,10 +110,12 @@ export class SheetComponent {
       lastName: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      healthInsurance: new FormControl('', Validators.required),
     }),
     contact: new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [UserValidator.checkIfEmailExists(this._userRepository)]
+      }),
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
@@ -118,6 +123,8 @@ export class SheetComponent {
       dniImage: new FormControl(null, Validators.required),
     }),
   });
+
+  constructor(private _userRepository: UserRepository) {}
 
   onSelect(account: Account): void {
     this.selectedOption = account.id;

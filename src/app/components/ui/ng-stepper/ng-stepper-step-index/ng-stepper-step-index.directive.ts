@@ -1,4 +1,4 @@
-import { AfterContentChecked, ChangeDetectorRef, Directive, Input } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { NgStepperComponent } from '../ng-stepper.component';
 import { AbstractControl } from '@angular/forms';
 
@@ -9,21 +9,13 @@ import { AbstractControl } from '@angular/forms';
     '[hidden]': 'isSelected() === false',
   },
 })
-export class NgStepperStepIndexDirective implements AfterContentChecked {
+export class NgStepperStepIndexDirective {
   @Input() ngStepperStepIndex!: number;
   @Input() stepControl!: AbstractControl;
 
   public isDisabled!: boolean;
 
-  constructor(private _root: NgStepperComponent, private cdr: ChangeDetectorRef) {}
-
-  ngAfterContentChecked(): void {
-    if (this.isSelected()) {
-      this.isDisabled = this.stepControl.invalid;
-      
-      this._root.disabled = this.isDisabled;
-    }
-  }
+  constructor(private _root: NgStepperComponent) {}
 
   isSelected(): boolean {
     return this._root.activeStep == this.ngStepperStepIndex;

@@ -32,4 +32,8 @@ export class DropzoneComponent {
       }
     }
   }
+
+  onRemoveImage(): void {
+    this.imageSrc = null;
+  }
 }

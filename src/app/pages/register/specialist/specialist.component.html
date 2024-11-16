@@ -1,104 +1,95 @@
-<!-- <app-toast />
+<app-toast />
 
 <main class="h-screen flex items-center justify-center">
-  <form [formGroup]="registerForm" (submit)="onRegister()">
+  <form [formGroup]="form" (submit)="onRegister()" class="w-[690px]">
     <app-header
       title="Crea tu cuenta de especialista medico"
       description="Completa el formulario para registrarte como especialista medico."
     />
 
-    <app-stepper>
-      <app-step
-        label="Datos personales"
-        [stepControl]="personalInformationGroup"
-      >
-        <app-header
-          title="Información personal"
-          description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
-        />
+    <ng-stepper #stepper>
+      <ng-stepper-list orientation="vertical">
+        <ng-stepper-item [step]="1">
+          <button ngStepperTrigger>1</button>
+  
+          <ng-stepper-separator />
+        </ng-stepper-item>
+  
+        <ng-stepper-item [step]="2">
+          <button ngStepperTrigger>2</button>
+          
+          <ng-stepper-separator />
+        </ng-stepper-item>
+  
+        <ng-stepper-item [step]="3">
+          <button ngStepperTrigger>3</button>
+        </ng-stepper-item>
+      </ng-stepper-list>
+      
+      <div>
+        <div [ngStepperStepIndex]="1" [stepControl]="getFormGroup('personal')">
+          <app-header
+            title="Información personal"
+            description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
+          />
 
-        <app-personal-information [control]="personalInformationGroup" />
+          <app-personal-information [control]="getFormGroup('personal')" />
 
-        <app-footer>
-          <button
-            type="button"
-            hlmBtn
-            variant="secondary"
-            size="lg"
-            appStepperNext
-            [disabled]="
-              (personalInformationGroup.statusChanges | async) !== 'VALID'
-            "
-          >
-            Siguiente
-          </button>
-        </app-footer>
-      </app-step>
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
 
-      <app-step
-        label="Informacion de contacto"
-        [stepControl]="contactInformationGroup"
-      >
-        <app-header
-          title="Información de contacto"
-          description="Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta."
-        />
+            <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('personal')?.valid">Siguiente</button>
+          </div>
+        </div>
 
-        <app-contact-information [control]="contactInformationGroup" />
+        <div [ngStepperStepIndex]="2" [stepControl]="getFormGroup('contact')">
+          <app-header
+            title="Información de contacto"
+            description="Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta."
+          />
+        
+          <app-contact-information [control]="getFormGroup('contact')" />
 
-        <app-footer>
-          <button
-            type="button"
-            hlmBtn
-            variant="ghost"
-            size="lg"
-            appStepperPrevious
-          >
-            Volver
-          </button>
-          <button
-            type="button"
-            hlmBtn
-            variant="secondary"
-            size="lg"
-            appStepperNext
-            [disabled]="
-              (contactInformationGroup.statusChanges | async) !== 'VALID'
-            "
-          >
-            Siguiente
-          </button>
-        </app-footer>
-      </app-step>
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
+          
+            <div class="flex">
+              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('contact')?.valid">Siguiente</button>
+            </div>
+          </div>
+        </div>
 
-      <app-step label="Fotos de perfil" [stepControl]="profilePictureGroup">
-        <app-header
-          title="Fotos de perfil"
-          description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
-        />
+        <div [ngStepperStepIndex]="3">
+          <app-header
+            title="Fotos de perfil"
+            description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
+          />
+        
+          <div class="flex justify-between">
+            <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
+            <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
+          </div>
 
-        <app-profile-picture [control]="profilePictureGroup" />
-
-        <app-footer>
-          <button
-            type="button"
-            hlmBtn
-            variant="ghost"
-            size="lg"
-            appStepperPrevious
-          >
-            Volver
-          </button>
-          <button
-            type="submit"
-            hlmBtn
-            size="lg"
-            [disabled]="(profilePictureGroup.statusChanges | async) !== 'VALID'"
-          >
-            Crear una cuenta
-          </button>
-        </app-footer>
-      </app-step>
-    </app-stepper>
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
+          
+            <div class="flex">
+              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn type="button" size="lg" [disabled]="!form.get('profilePicture')?.valid">Crear cuenta</button>
+            </div>
+          </div>
+          </div>
+      </div>
+    </ng-stepper>
   </form>
-</main> -->
+</main>

@@ -50,6 +50,10 @@
               />
               }
             </div>
+
+            <div class="w-full mt-16 flex items-center justify-end">
+              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('account')?.valid">Siguiente</button>
+            </div>
           </div>
 
           <div [ngStepperStepIndex]="2" [stepControl]="getFormGroup('personal')">
@@ -59,6 +63,11 @@
             />
 
             <app-personal-information [control]="getFormGroup('personal')"/>
+
+            <div class="w-full mt-16 flex items-center justify-end">
+              <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('personal')?.valid">Siguiente</button>
+            </div>
           </div>
 
           <div [ngStepperStepIndex]="3" [stepControl]="getFormGroup('contact')">
@@ -68,6 +77,11 @@
             />
 
             <app-contact-information [control]="getFormGroup('contact')"/>
+
+            <div class="w-full mt-16 flex items-center justify-end">
+              <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('contact')?.valid">Siguiente</button>
+            </div>
           </div>
 
           <div [ngStepperStepIndex]="4" [stepControl]="getFormGroup('profilePicture')">
@@ -79,20 +93,6 @@
             <div class="flex justify-between">
               <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
               <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
-            </div>
-          </div>
-
-          <div class="w-full mt-16 flex items-center justify-end">
-            <div class="flex">
-              @if (stepper.activeStep !== 1) {
-                <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              }
-  
-              @if (stepper.activeStep === 4) {
-                <button hlmBtn size="lg">Crear cuenta</button>
-              } @else {
-                <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="stepper.disabled">Siguiente</button>
-              }
             </div>
           </div>
         </div>

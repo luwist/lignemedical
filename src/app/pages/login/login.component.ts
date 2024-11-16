@@ -51,8 +51,8 @@ export class LoginComponent {
     {
       id: 1,
       imageSrc: 'images/image-2.png',
-      email: 'carlos.santana@lignemedical.com',
-      password: '123456',
+      email: 'javier.vilchez@lignemedical.com',
+      password: 'administrador',
       role: 'administrador',
     },
     {

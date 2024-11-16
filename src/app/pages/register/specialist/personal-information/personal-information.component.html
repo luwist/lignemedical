@@ -24,7 +24,15 @@
     </div>
   </div>
 
-  <div class="w-full flex gap-5 mb-5">
+  <div class="w-full mb-5">
+    <label hlmLabel
+      >Especialidad
+    </label>
+    
+    <ng-tags-input />
+  </div>
+
+  <div class="w-full flex gap-5">
     <div class="w-full">
       <label hlmLabel
         >Edad
@@ -53,20 +61,6 @@
       </label>
 
       <app-input-error [control]="dniControl" />
-    </div>
-
-    <div class="w-full">
-      <label hlmLabel
-        >Especialidad
-        <input
-          class="w-full"
-          hlmInput
-          type="text"
-          formControlName="specialist"
-        />
-      </label>
-
-      <app-input-error [control]="specialistControl" />
     </div>
   </div>
 </div>

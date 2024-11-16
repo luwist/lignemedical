@@ -44,7 +44,7 @@ export class PersonalInformationComponent {
     return this.control.get('age') as FormControl;
   }
 
-  get healthInsuranceControl(): FormControl {
-    return this.control.get('healthInsurance') as FormControl;
+  get insuranceControl(): FormControl {
+    return this.control.get('insurance') as FormControl;
   }
 }

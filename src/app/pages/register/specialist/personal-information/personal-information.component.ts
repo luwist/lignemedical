@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { InputErrorComponent } from '@app/components';
+import { NgTagsInputComponent } from '@app/components/ui/ng-tags-input/ng-tags-input.component';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
@@ -17,6 +18,8 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
     HlmLabelDirective,
     InputErrorComponent,
     ReactiveFormsModule,
+
+    NgTagsInputComponent
   ],
   templateUrl: './personal-information.component.html',
   styleUrl: './personal-information.component.scss',
@@ -44,7 +47,7 @@ export class PersonalInformationComponent {
     return this.control.get('age') as FormControl;
   }
 
-  get specialistControl(): FormControl {
-    return this.control.get('specialist') as FormControl;
-  }
+  // get specialistControl(): FormControl {
+  //   return this.control.get('specialist') as FormControl;
+  // }
 }

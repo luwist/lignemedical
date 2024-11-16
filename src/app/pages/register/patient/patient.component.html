@@ -7,7 +7,7 @@
       description="Completa el formulario para registrarte como paciente."
     />
 
-    <ng-stepper #stepper class="flex gap-20">
+    <ng-stepper #stepper>
       <ng-stepper-list orientation="vertical">
         <ng-stepper-item [step]="1">
           <button ngStepperTrigger>1</button>
@@ -26,139 +26,69 @@
         </ng-stepper-item>
       </ng-stepper-list>
       
-      <div class="w-full">
-        <div [ngStepperStepIndex]="1">
-          <span class="text-sm text-muted-foreground">Paso 1/3</span>
-          <h1 class="text-xl text-foreground font-semibold">Información personal</h1>
-          <p class="text-base text-muted-foreground mt-1">Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio.</p>
+      <div>
+        <div [ngStepperStepIndex]="1" [stepControl]="getFormGroup('personal')">
+          <app-header
+            title="Información personal"
+            description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
+          />
 
-          <div>
-            <div class="w-full flex gap-5 mb-5">
-              <div class="w-full">
-                <label hlmLabel
-                  >Nombre
-                  <input
-                    class="w-full"
-                    hlmInput
-                    type="text"
-                    formControlName="firstName"
-                  />
-                </label>
-          
-                <app-input-error [control]="getFormControl('firstName')" />
-              </div>
-          
-              <div class="w-full">
-                <label hlmLabel
-                  >Apellido
-                  <input class="w-full" hlmInput type="text" formControlName="lastName" />
-                </label>
-          
-                <app-input-error [control]="getFormControl('lastName')" />
-              </div>
-            </div>
-          
-            <div class="w-full flex gap-5 mb-5">
-              <div class="w-full">
-                <label hlmLabel
-                  >Edad
-                  <input
-                    class="w-full"
-                    hlmInput
-                    type="text"
-                    [maxLength]="8"
-                    formControlName="age"
-                  />
-                </label>
-          
-                <app-input-error [control]="getFormControl('age')" />
-              </div>
+          <app-personal-information [control]="getFormGroup('personal')" />
 
-              <div class="w-full">
-                <label hlmLabel
-                  >DNI
-                  <input
-                    class="w-full"
-                    hlmInput
-                    type="text"
-                    [maxLength]="8"
-                    formControlName="identity"
-                  />
-                </label>
-          
-                <app-input-error [control]="getFormControl('identity')" />
-              </div>
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
 
-              <div class="w-full">
-                <label hlmLabel
-                  >Obra social
-                  <input
-                    class="w-full"
-                    hlmInput
-                    type="text"
-                    formControlName="insurance"
-                  />
-                </label>
-          
-                <app-input-error [control]="getFormControl('insurance')" />
-              </div>
-            </div>
-          </div>          
+            <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('personal')?.valid">Siguiente</button>
+          </div>
         </div>
-  
-        <div [ngStepperStepIndex]="2">
-          <span class="text-sm text-muted-foreground">Paso 2/3</span>
-          <h1 class="text-xl text-foreground font-semibold">Información de contacto</h1>
-          <p class="text-base text-muted-foreground mt-1">Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta.</p>
+
+        <div [ngStepperStepIndex]="2" [stepControl]="getFormGroup('contact')">
+          <app-header
+            title="Información de contacto"
+            description="Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta."
+          />
         
-          <div class="w-full">
-            <label hlmLabel
-              >Correo electronico
-              <input class="w-full" hlmInput type="text" formControlName="email" />
-            </label>
-      
-            <app-input-error [control]="getFormControl('email')" />
-          </div>
+          <app-contact-information [control]="getFormGroup('contact')" />
 
-          <div class="w-full">
-            <label hlmLabel
-              >Contraseña
-              <input class="w-full" hlmInput type="text" formControlName="password" />
-            </label>
-      
-            <app-input-error [control]="getFormControl('password')" />
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
+          
+            <div class="flex">
+              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('contact')?.valid">Siguiente</button>
+            </div>
           </div>
         </div>
-  
+
         <div [ngStepperStepIndex]="3">
-          <span class="text-sm text-muted-foreground">Paso 3/3</span>
-          <h1 class="text-xl text-foreground font-semibold">Fotos de perfil</h1>
-          <p class="text-base text-muted-foreground mt-1">Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma.</p>
+          <app-header
+            title="Fotos de perfil"
+            description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
+          />
         
           <div class="flex justify-between">
             <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
             <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
           </div>
-        </div>
 
-        <div class="w-full mt-16 flex items-center justify-between">
-          <p class="text-sm text-foreground">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/login" class="underline">Inicia sesion</a>
-          </p>
-        
-          <div class="flex">
-            @if (stepper.activeStep !== 1) {
-              <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-            }
-
-            @if (stepper.activeStep === 3) {
-              <button hlmBtn size="lg">Crear cuenta</button>
-            } @else {
-              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="">Siguiente</button>
-            }
+          <div class="w-full mt-16 flex items-center justify-between">
+            <p class="text-sm text-foreground">
+              ¿Ya tienes una cuenta?
+              <a routerLink="/login" class="underline">Inicia sesion</a>
+            </p>
+          
+            <div class="flex">
+              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button hlmBtn type="button" size="lg" [disabled]="!form.get('profilePicture')?.valid">Crear cuenta</button>
+            </div>
           </div>
-        </div>
+          </div>
       </div>
     </ng-stepper>
   </form>

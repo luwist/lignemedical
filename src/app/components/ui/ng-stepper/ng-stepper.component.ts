@@ -12,7 +12,6 @@ import {
 import { NgStepperItemComponent } from './ng-stepper-item';
 import { ClassValue } from 'clsx';
 import { hlm } from '@spartan-ng/ui-core';
-import { NgStepperStepIndexDirective } from './ng-stepper-step-index';
 
 @Component({
   selector: 'ng-stepper',
@@ -31,9 +30,6 @@ export class NgStepperComponent implements AfterContentInit {
 
   @ContentChildren(NgStepperItemComponent, { descendants: true })
   private _steps!: QueryList<NgStepperItemComponent>;
-
-  @ContentChildren(NgStepperStepIndexDirective, { descendants: true })
-  private _stepIndex!: QueryList<NgStepperStepIndexDirective>;
 
   @Output()
   readonly stepActivated = new EventEmitter<number>();
