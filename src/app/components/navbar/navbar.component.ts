@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { AuthService } from '@app/services';
-import { from, Observable, of, switchMap } from 'rxjs';
-import { Role } from '@app/enums';
-import { User } from '@angular/fire/auth';
-import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { UserRepository } from '@app/repositories';
 import { NotificationComponent } from './notification/notification.component';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/store/app.state';
+import { selectUser } from '@app/store/auth/auth.selectors';
+import { User } from '@app/store/auth/auth.state';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
+    CommonModule,
     RouterLink,
     RouterLinkActive,
     NotificationComponent,
@@ -25,15 +28,11 @@ export class NavbarComponent implements OnInit {
   items: any = [];
 
   currentUser$!: Observable<User | null>;
-  newCurrentUser$!: Observable<any>;
 
-  constructor(
-    private _authService: AuthService,
-    private _userRepository: UserRepository
-  ) {}
+  constructor(private _store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this._authService.currentUser$;
+    this.currentUser$ = this._store.select(selectUser);
 
     this.initMenu();
   }
@@ -43,7 +42,6 @@ export class NavbarComponent implements OnInit {
       const uid = user?.uid;
 
       if (uid !== undefined) {
-        // const role = await this._userRepository.getRoleById(uid);
         const role: any = 'administrador';
 
         switch (role) {

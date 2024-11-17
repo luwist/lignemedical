@@ -24,15 +24,7 @@
     </div>
   </div>
 
-  <div class="w-full mb-5">
-    <label hlmLabel
-      >Especialidad
-    </label>
-    
-    <ng-tags-input />
-  </div>
-
-  <div class="w-full flex gap-5">
+  <div class="w-full flex gap-5 mb-5">
     <div class="w-full">
       <label hlmLabel
         >Edad
@@ -62,5 +54,13 @@
 
       <app-input-error [control]="dniControl" />
     </div>
+  </div>
+
+  <div class="w-full">
+    <label hlmLabel
+      >Especialidad
+    </label>
+    
+    <ng-tags-input (getSpecialty)="onSpecialty($event)" />
   </div>
 </div>

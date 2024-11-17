@@ -29,6 +29,9 @@ import { ProfilePictureComponent } from './profile-picture/profile-picture.compo
 import { AuthService } from '@app/services';
 import { DoctorRequest } from '@app/requests';
 import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper-list/ng-stepper-list.component';
+import { provideIcons } from '@ng-icons/core';
+import { lucideLoader2 } from '@ng-icons/lucide';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 @Component({
   selector: 'app-specialist',
@@ -36,6 +39,8 @@ import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper
   imports: [
     CommonModule,
     RouterLink,
+
+    HlmIconComponent,
 
     ToastComponent,
 
@@ -65,6 +70,7 @@ import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper
   ],
   templateUrl: './specialist.component.html',
   styleUrl: './specialist.component.scss',
+  providers: [provideIcons({ lucideLoader2 })],
 })
 export class SpecialistComponent {
   form = new FormGroup({
@@ -73,7 +79,7 @@ export class SpecialistComponent {
       lastName: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      // specialist: new FormControl('', Validators.required),
+      specialist: new FormControl('', Validators.required),
     }),
     contact: new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -83,6 +89,9 @@ export class SpecialistComponent {
       profileImage: new FormControl(null, Validators.required),
     }),
   });
+
+  currentSpecialists: string[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private _router: Router,
@@ -94,31 +103,43 @@ export class SpecialistComponent {
     return this.form.get(name) as FormGroup;
   }
 
-  onUpdateFile(file: File, name: string): void {
-    const profilePicture = this.form;
+  onSendSpecialty(name: string): void {
+    const formGroup = this.getFormGroup('personal');
 
-    for (const key in profilePicture.controls) {
-      if (name === key) {
-        this.form.patchValue({
-          [key]: file,
-        });
-      }
-    }
+    this.currentSpecialists.push(name);
+
+    formGroup.patchValue({
+      specialist: this.currentSpecialists,
+    });
+  }
+
+  onUpdateFile(url: string): void {
+    const formGroup = this.getFormGroup('profilePicture');
+
+    formGroup.patchValue({
+      profileImage: url,
+    });
   }
 
   async onRegister(): Promise<void> {
     try {
       const credentials = this.form.getRawValue();
 
-      await this._authService.registerDoctor(credentials);
+      this.form.markAsPending();
+      this.isLoading = true;
 
-      this._router.navigateByUrl('/verify-email');
+      console.log(credentials);      
+
+      // await this._authService.registerDoctor(credentials);
+
+      // this._router.navigateByUrl('/verify-email');
     } catch (error) {
-      console.log(error);
       this._messageService.add({
         description:
           'Ha ocurrido un error en el servidor. Intentelo de nuevo mas tarde',
       });
+    } finally {
+      this.isLoading = false;
     }
   }
 }

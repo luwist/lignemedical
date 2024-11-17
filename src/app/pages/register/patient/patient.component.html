@@ -85,7 +85,7 @@
           
             <div class="flex">
               <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn type="button" size="lg" [disabled]="!form.get('profilePicture')?.valid">Crear cuenta</button>
+              <button hlmBtn type="button" size="lg" [disabled]="(form.statusChanges | async) !== 'VALID'">Crear cuenta</button>
             </div>
           </div>
           </div>

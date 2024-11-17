@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Specialty, SpecialtyRepository } from '@app/repositories';
 
@@ -17,7 +17,9 @@ export class NgTagsInputComponent implements OnInit {
   showDropdown: boolean = false;
 
   specialists!: Specialty[];
-  specialistsFiltered: string[] = []
+  specialistsFiltered: string[] = [];
+
+  @Output() getSpecialty = new EventEmitter<string>();
 
   constructor(private _specialtyRepository: SpecialtyRepository) {
   }
@@ -27,11 +29,13 @@ export class NgTagsInputComponent implements OnInit {
   }
 
   async onInput(e: KeyboardEvent): Promise<void> {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && this.value !== '') {
       const valueTemp = this.value;
 
       this.tags.push(this.value);
       this.value = '';
+
+      this.getSpecialty.emit(valueTemp);
       
       await this.addSpecialty(valueTemp);
     }
@@ -42,18 +46,20 @@ export class NgTagsInputComponent implements OnInit {
   }
 
   async onSelected(value: string): Promise<void> {
-    const valueTemp = this.value;
+    const valueTemp = value;
 
     this.tags.push(value);
 
     this.value = '';
     this.showDropdown = false;
+    
+    this.getSpecialty.emit(valueTemp);
 
     await this.addSpecialty(valueTemp);
   }
   
   async addSpecialty(name: string) {
-    if (this.specialists.find(x => x.name == name) == undefined) {
+    if (this.specialists.find(x => x.name == name) == undefined && name !== '') {
       await this._specialtyRepository.add(name);
     }
   }

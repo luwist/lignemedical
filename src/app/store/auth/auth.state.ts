@@ -4,6 +4,7 @@ export interface User {
     displayName: string | null;
     email: string | null;
     photoURL: string | null;
+    role: string;
 }
 
 interface Error {

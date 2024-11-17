@@ -33,7 +33,7 @@
             description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
           />
 
-          <app-personal-information [control]="getFormGroup('personal')" />
+          <app-personal-information [control]="getFormGroup('personal')" (sendSpecialty)="onSendSpecialty($event)" />
 
           <div class="w-full mt-16 flex items-center justify-between">
             <p class="text-sm text-foreground">
@@ -72,9 +72,8 @@
             description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
           />
         
-          <div class="flex justify-between">
-            <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
-            <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
+          <div class="flex justify-center">
+            <app-dropzone (updateFile)="onUpdateFile($event)" />
           </div>
 
           <div class="w-full mt-16 flex items-center justify-between">
@@ -85,7 +84,13 @@
           
             <div class="flex">
               <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn type="button" size="lg" [disabled]="!form.get('profilePicture')?.valid">Crear cuenta</button>
+              <button hlmBtn type="submit" size="lg" [disabled]="!form.get('profilePicture')?.valid">
+                @if (isLoading) {
+                  <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" color="#1f1f1f" />
+                }
+                
+                Crear cuenta
+              </button>
             </div>
           </div>
           </div>

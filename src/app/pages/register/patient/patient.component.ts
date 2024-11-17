@@ -98,13 +98,13 @@ export class PatientComponent {
     return this.form.get(name) as FormGroup;
   }
 
-  onUpdateFile(file: File, name: string): void {
+  onUpdateFile(url: string, name: string): void {
     const profilePicture = this.form;
 
     for (const key in profilePicture.controls) {
       if (name === key) {
         this.form.patchValue({
-          [key]: file,
+          [key]: url,
         });
       }
     }

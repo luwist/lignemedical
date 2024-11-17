@@ -12,4 +12,4 @@ export const selectUser = createSelector(
 export const selectIsUserLogged = createSelector(
     selectAuth,
     (state: AuthState) => state.loggedIn
-  );
+);

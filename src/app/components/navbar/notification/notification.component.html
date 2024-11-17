@@ -1,6 +1,8 @@
 <brn-popover sideOffset="5" closeDelay="100" align="end">
   <button brnPopoverTrigger class="relative w-11 h-11 flex items-center justify-center">
-      <span class="block w-[6px] h-[6px] rounded-full bg-[#FB5959] absolute top-[8px] right-[12px]"></span>
+      @if (notifications.length > 0) {
+        <span class="block w-[6px] h-[6px] rounded-full bg-[#FB5959] absolute top-[8px] right-[12px]"></span>
+      }
 
       <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -37,9 +39,11 @@
     <h4 class="text-base font-semibold p-5">Notificaciones</h4>
 
     <div class="border-t border-[#575757] p-5 flex flex-col gap-5">
-      <app-notification-message name="Maria Fernandez" />
-      <app-notification-message name="Carlos Santana" />
-      <app-notification-message name="Javier Vilchez" />
+      @for (notification of notifications; track $index) {
+        <app-notification-message [id]="notification.id" name="{{ notification.doctor.firstName }} {{ notification.doctor.lastName }}" />
+      } @empty {
+        <div class="py-6 text-sm text-center">No tienes ninguna notificación</div>
+      }
     </div>
   </div>
 </brn-popover>

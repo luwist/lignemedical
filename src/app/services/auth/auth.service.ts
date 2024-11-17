@@ -31,13 +31,11 @@ export class AuthService {
   ) {}
 
   async login(loginRequest: LoginRequest): Promise<void> {
-    const user = await signInWithEmailAndPassword(
+    await signInWithEmailAndPassword(
       this._auth,
       loginRequest.email,
       loginRequest.password
     );
-
-    
   }
 
   async register(registerRequest: any): Promise<void> {

@@ -16,13 +16,13 @@ export class ProfilePictureComponent {
     return this.control as FormGroup;
   }
 
-  onUpdateFile(file: File, name: string): void {
+  onUpdateFile(url: string, name: string): void {
     const profilePicture = this.profilePictureGroup;
 
     for (const key in profilePicture.controls) {
       if (name === key) {
         this.control.patchValue({
-          [key]: file,
+          [key]: url,
         });
       }
     }

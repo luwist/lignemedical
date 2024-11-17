@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -26,6 +26,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 })
 export class PersonalInformationComponent {
   @Input() control!: AbstractControl;
+  @Output() sendSpecialty = new EventEmitter<string>();
 
   get personalInformationGroup(): FormGroup {
     return this.control as FormGroup;
@@ -47,7 +48,7 @@ export class PersonalInformationComponent {
     return this.control.get('age') as FormControl;
   }
 
-  // get specialistControl(): FormControl {
-  //   return this.control.get('specialist') as FormControl;
-  // }
+  onSpecialty(name: string): void {
+    this.sendSpecialty.emit(name);
+  }
 }
