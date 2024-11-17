@@ -11,21 +11,21 @@
       <ng-stepper-list orientation="vertical">
         <ng-stepper-item [step]="1">
           <button ngStepperTrigger>1</button>
-  
+
           <ng-stepper-separator />
         </ng-stepper-item>
-  
+
         <ng-stepper-item [step]="2">
           <button ngStepperTrigger>2</button>
-          
+
           <ng-stepper-separator />
         </ng-stepper-item>
-  
+
         <ng-stepper-item [step]="3">
           <button ngStepperTrigger>3</button>
         </ng-stepper-item>
       </ng-stepper-list>
-      
+
       <div>
         <div [ngStepperStepIndex]="1" [stepControl]="getFormGroup('personal')">
           <app-header
@@ -33,7 +33,10 @@
             description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
           />
 
-          <app-personal-information [control]="getFormGroup('personal')" (sendSpecialty)="onSendSpecialty($event)" />
+          <app-personal-information
+            [control]="getFormGroup('personal')"
+            (sendSpecialty)="onSendSpecialty($event)"
+          />
 
           <div class="w-full mt-16 flex items-center justify-between">
             <p class="text-sm text-foreground">
@@ -41,7 +44,16 @@
               <a routerLink="/login" class="underline">Inicia sesion</a>
             </p>
 
-            <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('personal')?.valid">Siguiente</button>
+            <button
+              hlmBtn
+              type="button"
+              variant="secondary"
+              size="lg"
+              (click)="stepper.next()"
+              [disabled]="!form.get('personal')?.valid"
+            >
+              Siguiente
+            </button>
           </div>
         </div>
 
@@ -50,7 +62,7 @@
             title="Información de contacto"
             description="Introduce tu dirección de correo electrónico y crea una contraseña segura para tu cuenta."
           />
-        
+
           <app-contact-information [control]="getFormGroup('contact')" />
 
           <div class="w-full mt-16 flex items-center justify-between">
@@ -58,10 +70,27 @@
               ¿Ya tienes una cuenta?
               <a routerLink="/login" class="underline">Inicia sesion</a>
             </p>
-          
+
             <div class="flex">
-              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn type="button" variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!form.get('contact')?.valid">Siguiente</button>
+              <button
+                hlmBtn
+                type="button"
+                variant="ghost"
+                size="lg"
+                (click)="stepper.prev()"
+              >
+                Volver
+              </button>
+              <button
+                hlmBtn
+                type="button"
+                variant="secondary"
+                size="lg"
+                (click)="stepper.next()"
+                [disabled]="!form.get('contact')?.valid"
+              >
+                Siguiente
+              </button>
             </div>
           </div>
         </div>
@@ -71,7 +100,7 @@
             title="Fotos de perfil"
             description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
           />
-        
+
           <div class="flex justify-center">
             <app-dropzone (updateFile)="onUpdateFile($event)" />
           </div>
@@ -81,19 +110,37 @@
               ¿Ya tienes una cuenta?
               <a routerLink="/login" class="underline">Inicia sesion</a>
             </p>
-          
+
             <div class="flex">
-              <button hlmBtn type="button" variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn type="submit" size="lg" [disabled]="!form.get('profilePicture')?.valid">
+              <button
+                hlmBtn
+                type="button"
+                variant="ghost"
+                size="lg"
+                (click)="stepper.prev()"
+              >
+                Volver
+              </button>
+              <button
+                hlmBtn
+                type="submit"
+                size="lg"
+                [disabled]="
+                  (profilePictureGroup.statusChanges | async) !== 'VALID'
+                "
+              >
                 @if (isLoading) {
-                  <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" color="#1f1f1f" />
-                }
-                
-                Crear cuenta
+                <hlm-icon
+                  name="lucideLoader2"
+                  size="sm"
+                  class="mr-2 animate-spin"
+                  color="#1f1f1f"
+                />
+                } Crear cuenta
               </button>
             </div>
           </div>
-          </div>
+        </div>
       </div>
     </ng-stepper>
   </form>

@@ -32,6 +32,8 @@ import { NgStepperListComponent } from '@app/components/ui/ng-stepper/ng-stepper
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { UserValidator } from '@app/validators/user.validator';
+import { UserRepository } from '@app/repositories';
 
 @Component({
   selector: 'app-specialist',
@@ -79,14 +81,19 @@ export class SpecialistComponent {
       lastName: new FormControl('', Validators.required),
       dni: new FormControl('', Validators.required),
       age: new FormControl('', Validators.required),
-      specialist: new FormControl('', Validators.required),
+      specialist: new FormControl(''),
     }),
     contact: new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [
+          UserValidator.checkIfEmailExists(this._userRepository),
+        ],
+      }),
       password: new FormControl('', Validators.required),
     }),
     profilePicture: new FormGroup({
-      profileImage: new FormControl(null, Validators.required),
+      profileImage: new FormControl(null),
     }),
   });
 
@@ -96,7 +103,8 @@ export class SpecialistComponent {
   constructor(
     private _router: Router,
     private _messageService: MessageService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _userRepository: UserRepository
   ) {}
 
   getFormGroup(name: string): FormGroup {
@@ -121,6 +129,10 @@ export class SpecialistComponent {
     });
   }
 
+  get profilePictureGroup(): FormGroup {
+    return this.form.get('profilePicture') as FormGroup;
+  }
+
   async onRegister(): Promise<void> {
     try {
       const credentials = this.form.getRawValue();
@@ -128,11 +140,9 @@ export class SpecialistComponent {
       this.form.markAsPending();
       this.isLoading = true;
 
-      console.log(credentials);      
+      await this._authService.registerDoctor(credentials);
 
-      // await this._authService.registerDoctor(credentials);
-
-      // this._router.navigateByUrl('/verify-email');
+      this._router.navigateByUrl('/verify-email');
     } catch (error) {
       this._messageService.add({
         description:

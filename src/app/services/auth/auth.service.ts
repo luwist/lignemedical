@@ -67,13 +67,11 @@ export class AuthService {
 
   async registerDoctor(registerRequest: any): Promise<void> {
     const { firstName, lastName, age, dni, specialist } =
-      registerRequest.personalInformation;
+      registerRequest.personal;
 
-    const { email, password } = registerRequest.contactInformation;
+    const { email, password } = registerRequest.contact;
 
-    const { profileImage } = registerRequest.profilePicture;
-
-    const picture = await this._uploadService.upload(profileImage);
+    const { url } = registerRequest.profilePicture;
 
     const user = await createUserWithEmailAndPassword(
       this._auth,
@@ -83,16 +81,16 @@ export class AuthService {
 
     updateProfile(user.user, {
       displayName: `${firstName} ${lastName}`,
-      photoURL: picture,
+      photoURL: url,
     });
 
     await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
       firstName: firstName,
       lastName: lastName,
-      picture: picture,
+      picture: url,
       age: Number(age),
       dni: Number(dni),
-      specialist: specialist,
+      specialists: specialist,
       role: Role.Doctor,
       email: email,
     });
