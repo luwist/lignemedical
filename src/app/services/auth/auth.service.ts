@@ -3,8 +3,6 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
   sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
@@ -13,9 +11,9 @@ import {
 import { LoginRequest } from '@app/requests';
 import { FirestoreService } from '../firestore';
 import { UploadService } from '../upload';
-import { Role } from '@app/enums';
 import { Firestore } from '@angular/fire/firestore';
-import { emailVerified } from '@angular/fire/auth-guard';
+import { UserRepository } from '@app/repositories';
+import { User } from '@app/models';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +25,8 @@ export class AuthService {
     private _auth: Auth,
     private _firestore: FirestoreService,
     private _firebase: Firestore,
-    private _uploadService: UploadService
+    private _uploadService: UploadService,
+    private _userRepository: UserRepository
   ) {}
 
   async login(loginRequest: LoginRequest): Promise<void> {
@@ -38,98 +37,38 @@ export class AuthService {
     );
   }
 
-  async register(registerRequest: any): Promise<void> {
-    const { firstName, lastName } = registerRequest.personalInformation;
+  async register(request: any, role: string): Promise<void> {
+    const { email, password } = request.contact;
 
-    const { email, password } = registerRequest.contactInformation;
-
-    const { profileImage, dniImage } = registerRequest.profilePicture;
-
-    const profileUrl = await this._uploadService.upload(profileImage);
-
-    const user = await createUserWithEmailAndPassword(
+    const userCredential = await createUserWithEmailAndPassword(
       this._auth,
       email,
       password
     );
 
-    updateProfile(user.user, {
-      displayName: `${firstName} ${lastName}`,
-      photoURL: profileUrl,
+    const user: User = { 
+      ...request.personal,
+      ...request.images,
+
+      id: userCredential.user.uid,
+      email: email,
+      isEnable: false,
+      age: Number(request.personal.age),
+      dni: Number(request.personal.dni),
+      role: role
+    }
+
+    updateProfile(userCredential.user, {
+      displayName: `${user.firstName} ${user.lastName}`,
+      photoURL: user.picture,
     });
 
-    await sendEmailVerification(user.user);
+    await this._userRepository.add(user);
+
+    await sendEmailVerification(userCredential.user);
   }
 
   logout(): void {
     signOut(this._auth);
-  }
-
-  async registerDoctor(registerRequest: any): Promise<void> {
-    const { firstName, lastName, age, dni, specialist } =
-      registerRequest.personal;
-
-    const { email, password } = registerRequest.contact;
-
-    const { url } = registerRequest.profilePicture;
-
-    const user = await createUserWithEmailAndPassword(
-      this._auth,
-      email,
-      password
-    );
-
-    updateProfile(user.user, {
-      displayName: `${firstName} ${lastName}`,
-      photoURL: url,
-    });
-
-    await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
-      firstName: firstName,
-      lastName: lastName,
-      picture: url,
-      age: Number(age),
-      dni: Number(dni),
-      specialists: specialist,
-      role: Role.Doctor,
-      email: email,
-    });
-
-    await sendEmailVerification(user.user);
-  }
-
-  async registerPatient(registerRequest: any): Promise<void> {
-    const { firstName, lastName, age, dni, healthInsurance } =
-      registerRequest.personalInformation;
-
-    const { email, password } = registerRequest.contactInformation;
-
-    const { profileImage } = registerRequest.profilePicture;
-
-    const picture = await this._uploadService.upload(profileImage);
-
-    const user = await createUserWithEmailAndPassword(
-      this._auth,
-      email,
-      password
-    );
-
-    updateProfile(user.user, {
-      displayName: `${firstName} ${lastName}`,
-      photoURL: picture,
-    });
-
-    await this._firestore.addDocumentWithCustomId('users', user.user.uid, {
-      firstName: firstName,
-      lastName: lastName,
-      picture: picture,
-      age: Number(age),
-      dni: Number(dni),
-      healthInsurance: healthInsurance,
-      role: Role.Patient,
-      email: email,
-    });
-
-    await sendEmailVerification(user.user);
   }
 }

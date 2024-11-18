@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
-import { AuthService } from '@app/services';
-import { Observable } from 'rxjs';
-import { UserRepository } from '@app/repositories';
+import { Observable, } from 'rxjs';
 import { NotificationComponent } from './notification/notification.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/store/app.state';
 import { selectUser } from '@app/store/auth/auth.selectors';
 import { User } from '@app/store/auth/auth.state';
 import { CommonModule } from '@angular/common';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 @Component({
   selector: 'app-navbar',
@@ -17,9 +16,10 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive,
     NotificationComponent,
     ProfileMenuComponent,
+
+    HlmSkeletonComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
@@ -38,11 +38,11 @@ export class NavbarComponent implements OnInit {
   }
 
   initMenu(): void {
-    this.currentUser$.subscribe(async (user) => {
+    this.currentUser$.subscribe((user) => {
       const uid = user?.uid;
 
       if (uid !== undefined) {
-        const role: any = 'administrador';
+        const role: any = user?.role;
 
         switch (role) {
           case 'administrador':

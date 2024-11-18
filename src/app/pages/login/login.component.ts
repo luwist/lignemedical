@@ -137,7 +137,7 @@ export class LoginComponent {
 
       this._store.dispatch(credentialsLogin({email: credentials.email, password: credentials.password}));
       
-      this._router.navigateByUrl(url);
+      await this._router.navigateByUrl(url);
     } catch (error: any) {
       switch (error.code) {
         case 'auth/invalid-credential':

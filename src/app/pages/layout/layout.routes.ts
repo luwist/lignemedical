@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { isAdminGuard, isDoctorGuard } from '@app/guards';
 
 export const routes: Routes = [
   {
@@ -10,14 +9,12 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./admin/admin.routes').then((m) => m.routes),
-        canActivate: [isAdminGuard],
+          import('./admin/admin.routes').then((m) => m.routes)
       },
       {
         path: '',
         loadChildren: () =>
           import('./doctor/doctor.routes').then((m) => m.routes),
-        canActivate: [isDoctorGuard],
       },
       {
         path: 'booking',

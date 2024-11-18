@@ -34,6 +34,8 @@ import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { UserValidator } from '@app/validators/user.validator';
 import { UserRepository } from '@app/repositories';
+import { User } from '@app/models';
+import { Role } from '@app/enums';
 
 @Component({
   selector: 'app-specialist',
@@ -92,8 +94,8 @@ export class SpecialistComponent {
       }),
       password: new FormControl('', Validators.required),
     }),
-    profilePicture: new FormGroup({
-      profileImage: new FormControl(null),
+    images: new FormGroup({
+      picture: new FormControl(null),
     }),
   });
 
@@ -122,15 +124,15 @@ export class SpecialistComponent {
   }
 
   onUpdateFile(url: string): void {
-    const formGroup = this.getFormGroup('profilePicture');
+    const formGroup = this.getFormGroup('images');
 
     formGroup.patchValue({
-      profileImage: url,
+      picture: url,
     });
   }
 
   get profilePictureGroup(): FormGroup {
-    return this.form.get('profilePicture') as FormGroup;
+    return this.form.get('images') as FormGroup;
   }
 
   async onRegister(): Promise<void> {
@@ -140,7 +142,7 @@ export class SpecialistComponent {
       this.form.markAsPending();
       this.isLoading = true;
 
-      await this._authService.registerDoctor(credentials);
+      await this._authService.register(credentials, Role.Doctor);
 
       this._router.navigateByUrl('/verify-email');
     } catch (error) {

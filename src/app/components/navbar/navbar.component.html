@@ -18,13 +18,17 @@
 
   <ul class="flex">
     @for (item of items; track $index) {
-    <li>
-      <a
-        class="h-12 px-6 rounded-full text-sm font-medium text-foreground flex items-center justify-center"
-        [routerLink]="item.path"
-        >{{ item.label }}</a
-      >
-    </li>
+      <li>
+        <a
+          class="h-12 px-6 rounded-full text-sm font-medium text-foreground flex items-center justify-center"
+          [routerLink]="item.path"
+          >{{ item.label }}</a
+        >
+      </li>
+    } @empty {
+      <li>
+        <hlm-skeleton class="w-96 h-5 rounded-xl" />
+      </li>
     }
   </ul>
 

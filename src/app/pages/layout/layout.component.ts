@@ -4,9 +4,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '@app/components';
 import { User } from '@app/models';
 import { AuthService } from '@app/services';
-import { AppState } from '@app/store/app.state';
-import { selectUser } from '@app/store/auth/auth.selectors';
-import { select, Store } from '@ngrx/store';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({
@@ -23,7 +20,6 @@ export class LayoutComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private _firestore: Firestore,
-    private _store: Store<AppState>,
   ) {}
 
   ngOnInit() {
@@ -38,12 +34,6 @@ export class LayoutComponent implements OnInit {
         });
       }
     });
-
-    this._store.pipe(select(selectUser)).subscribe((user) => {
-      console.log("===== LAYOUT COMPONENT =====");
-      console.log(user);
-      console.log("===== LAYOUT COMPONENT =====");
-    })
   }
 
   onLogout(): void {

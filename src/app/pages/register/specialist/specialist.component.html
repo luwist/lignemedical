@@ -10,19 +10,19 @@
     <ng-stepper #stepper>
       <ng-stepper-list orientation="vertical">
         <ng-stepper-item [step]="1">
-          <button ngStepperTrigger>1</button>
+          <button type="button" ngStepperTrigger>1</button>
 
           <ng-stepper-separator />
         </ng-stepper-item>
 
         <ng-stepper-item [step]="2">
-          <button ngStepperTrigger>2</button>
+          <button type="button" ngStepperTrigger>2</button>
 
           <ng-stepper-separator />
         </ng-stepper-item>
 
         <ng-stepper-item [step]="3">
-          <button ngStepperTrigger>3</button>
+          <button type="button" ngStepperTrigger>3</button>
         </ng-stepper-item>
       </ng-stepper-list>
 
@@ -126,7 +126,7 @@
                 type="submit"
                 size="lg"
                 [disabled]="
-                  (profilePictureGroup.statusChanges | async) !== 'VALID'
+                  (form.statusChanges | async) !== 'VALID'
                 "
               >
                 @if (isLoading) {

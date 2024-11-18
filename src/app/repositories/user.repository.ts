@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { User } from '@app/models';
 import { FirestoreORM } from '@app/utils';
-import { debounceTime, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserRepository {
   constructor(private _firestoreORM: FirestoreORM<User>, private _firestore: Firestore) {}
+
+  async add(user: User): Promise<void> {
+    const docRef = doc(this._firestore, 'users', user.id);
+
+    await setDoc(docRef, user);
+  }
 
   async getRoleById(id: string): Promise<string | null> {
     const user = await this._firestoreORM.collection('users').limit(2).first();

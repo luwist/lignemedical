@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards';
+import { authGuard, isEmailVerifiedGuard } from './guards';
 
 export const routes: Routes = [
   {
@@ -33,6 +33,6 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.routes),
-    canActivate: [authGuard]
+    canActivate: [authGuard, isEmailVerifiedGuard]
   },
 ];
