@@ -26,6 +26,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 })
 export class PersonalInformationComponent {
   @Input() control!: AbstractControl;
+  @Input() role: string = '';
 
   get personalInformationGroup(): FormGroup {
     return this.control as FormGroup;
@@ -47,7 +48,7 @@ export class PersonalInformationComponent {
     return this.control.get('age') as FormControl;
   }
 
-  get healthInsuranceControl(): FormControl {
-    return this.control.get('healthInsurance') as FormControl;
+  get insuranceControl(): FormControl {
+    return this.control.get('insurance') as FormControl;
   }
 }

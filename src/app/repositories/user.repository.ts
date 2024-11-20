@@ -15,6 +15,24 @@ export class UserRepository {
     await setDoc(docRef, user);
   }
 
+  async getUserListByRole(role: string): Promise<User[]> {
+    const users: User[] = [];
+
+    const collRef = collection(this._firestore, 'users');
+
+    const q = query(collRef, where('role', '==', role));
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(doc => {
+      const data = doc.data() as User;
+
+      users.push(data);
+    })
+
+    return users;
+  }
+
   async getRoleById(id: string): Promise<string | null> {
     const user = await this._firestoreORM.collection('users').limit(2).first();
 

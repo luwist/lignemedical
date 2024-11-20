@@ -8,6 +8,7 @@ export interface User {
   email: string | null;
   role: string | null;
   isEnable: boolean | null;
+  emailVerified: boolean | null;
 
   specialist?: string[];
   insurance?: string;

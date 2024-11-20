@@ -9,7 +9,7 @@
       <h3 hlmSheetTitle>Agregar usuario</h3>
     </hlm-sheet-header>
 
-    <form [formGroup]="registerForm" class="mt-10 w-[500px]">
+    <form [formGroup]="registerForm" class="mt-10 w-[500px]" (submit)="onRegister()">
       <ng-stepper #stepper>
         <ng-stepper-list orientation="vertical">
           <ng-stepper-item [step]="1">
@@ -52,7 +52,7 @@
             </div>
 
             <div class="w-full mt-16 flex items-center justify-end">
-              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('account')?.valid">Siguiente</button>
+              <button type="button" hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('account')?.valid">Siguiente</button>
             </div>
           </div>
 
@@ -62,11 +62,21 @@
               description="Por favor, introduce tu información personal. Esto nos ayudará a conocerte mejor y a ofrecerte un mejor servicio."
             />
 
-            <app-personal-information [control]="getFormGroup('personal')"/>
+            <app-personal-information [role]="selectedRole" [control]="getFormGroup('personal')"/>
+
+            @if (selectedRole == 'especialista') {
+              <div class="w-full">
+                <label hlmLabel
+                  >Especialidad
+                </label>
+                
+                <ng-tags-input (getSpecialty)="onSpecialty($event)" />
+              </div>
+            }
 
             <div class="w-full mt-16 flex items-center justify-end">
-              <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('personal')?.valid">Siguiente</button>
+              <button type="button" hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button type="button" hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('personal')?.valid">Siguiente</button>
             </div>
           </div>
 
@@ -79,21 +89,53 @@
             <app-contact-information [control]="getFormGroup('contact')"/>
 
             <div class="w-full mt-16 flex items-center justify-end">
-              <button hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
-              <button hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('contact')?.valid">Siguiente</button>
+              <button type="button" hlmBtn variant="ghost" size="lg" (click)="stepper.prev()">Volver</button>
+              <button type="button" hlmBtn variant="secondary" size="lg" (click)="stepper.next()" [disabled]="!registerForm.get('contact')?.valid">Siguiente</button>
             </div>
           </div>
 
-          <div [ngStepperStepIndex]="4" [stepControl]="getFormGroup('profilePicture')">
+          <div [ngStepperStepIndex]="4" [stepControl]="getFormGroup('profile')">
             <app-header
               title="Fotos de perfil"
-              description="Sube dos fotos para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
+              description="Sube tu foto para completar tu perfil. Esto ayudará a identificarte mejor en nuestra plataforma."
             />
 
-            <!-- <div class="flex justify-between">
-              <app-dropzone (updateFile)="onUpdateFile($event, 'profileImage')" />
-              <app-dropzone (updateFile)="onUpdateFile($event, 'dniImage')" />
-            </div> -->
+            <div class="flex justify-center gap-5">
+              <app-dropzone size="small" (updateFile)="onUpdateFile($event, 'picture')" />
+
+              @if (selectedRole === 'paciente') {
+                <app-dropzone size="small" (updateFile)="onUpdateFile($event, 'dni')" />
+              }
+            </div>
+
+            <div class="w-full mt-16 flex items-center justify-end">
+              <button
+                hlmBtn
+                type="button"
+                variant="ghost"
+                size="lg"
+                (click)="stepper.prev()"
+              >
+                Volver
+              </button>
+              <button
+                hlmBtn
+                type="submit"
+                size="lg"
+                [disabled]="
+                  (registerForm.statusChanges | async) !== 'VALID'
+                "
+              >
+                @if (isLoading) {
+                <hlm-icon
+                  name="lucideLoader2"
+                  size="sm"
+                  class="mr-2 animate-spin"
+                  color="#1f1f1f"
+                />
+                } Crear cuenta
+              </button>
+            </div>
           </div>
         </div>
       </ng-stepper>

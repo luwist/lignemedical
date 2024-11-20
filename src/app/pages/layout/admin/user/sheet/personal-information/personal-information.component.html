@@ -56,11 +56,19 @@
     </div>
   </div>
 
-  <div class="w-full">
-    <label hlmLabel
-      >Especialidad
-    </label>
-    
-    <ng-tags-input />
-  </div>
+  @if (role == 'paciente') {
+    <div class="w-full">
+      <label hlmLabel
+        >Obra social
+        <input
+          class="w-full"
+          hlmInput
+          type="text"
+          formControlName="insurance"
+        />
+      </label>
+
+      <app-input-error [control]="insuranceControl" />
+    </div>
+  }
 </div>

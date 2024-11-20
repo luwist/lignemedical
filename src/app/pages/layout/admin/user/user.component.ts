@@ -5,7 +5,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmSwitchComponent } from '@spartan-ng/ui-switch-helm';
 import { CommonModule } from '@angular/common';
 import { SheetComponent } from './sheet/sheet.component';
-import { PatientRepository } from '@app/repositories';
+import { PatientRepository, UserRepository } from '@app/repositories';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
@@ -18,6 +18,7 @@ import {
   HlmTabsTriggerDirective,
 } from '@spartan-ng/ui-tabs-helm';
 import { FirestoreService } from '@app/services';
+import { User } from '@app/models';
 
 @Component({
   selector: 'app-user',
@@ -46,17 +47,20 @@ import { FirestoreService } from '@app/services';
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit {
-  items: any[] = [];
-  doctors: any[] = [];
+  admins: User[] = [];
+  doctors: User[] = [];
+  patients: User[] = [];
 
   constructor(
     private _patientRepository: PatientRepository,
-    private _firestoreService: FirestoreService
+    private _firestoreService: FirestoreService,
+    private _userRepository: UserRepository
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.items = await this._patientRepository.getPatientList();
-    this.doctors = await this._patientRepository.getUserList();
+    this.admins = await this._userRepository.getUserListByRole('administrador');
+    this.doctors = await this._userRepository.getUserListByRole('doctor');
+    this.patients = await this._userRepository.getUserListByRole('paciente');
   }
 
   onChange(e: any, id: string): void {

@@ -13,6 +13,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 })
 export class DropzoneComponent {
   @Input() control!: FormControl;
+  @Input() size: string = 'large';
   @Output() updateFile = new EventEmitter<string>();
 
   @ViewChild('progress') progressbar!: ElementRef;

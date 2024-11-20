@@ -1,5 +1,5 @@
 <div
-  class="dashed-border rounded-3xl w-[270px] h-[230px]"
+  class="{{ size }} rounded-3xl"
 >
   @if (imageSrc) {
     <div class="show rounded-3xl">
@@ -33,9 +33,9 @@
     </div>
   } @else {
     <div class="w-full h-full p-8 rounded-3xl flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20">
-      <img src="assets/icons/gallery.svg" alt="" class="w-24" />
+      <img src="assets/icons/gallery.svg" alt="" [ngClass]="{'w-24': size === 'large', 'w-12': size == 'small'}" />
     
-      <button hlmBtn size="lg" [variant]="'secondary'" class="relative w-full">
+      <button hlmBtn size="lg" variant="secondary" class="relative w-full">
         <input
           type="file"
           class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
