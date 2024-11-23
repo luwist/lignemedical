@@ -1,87 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppointmentCardComponent } from '@app/components';
+import { InputSearchComponent } from '@app/components/ui/input-search/input-search.component';
+import { AppointmentRepository } from '@app/repositories';
+import { provideIcons } from '@ng-icons/core';
+import { lucideLoader2 } from '@ng-icons/lucide';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
+import { HlmTabsComponent, HlmTabsContentDirective, HlmTabsListComponent, HlmTabsTriggerDirective } from '@spartan-ng/ui-tabs-helm';
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [AppointmentCardComponent, HlmInputDirective],
+  imports: [
+    AppointmentCardComponent,
+    HlmInputDirective,
+    InputSearchComponent,
+
+    HlmIconComponent,
+
+    HlmTabsComponent,
+    HlmTabsListComponent,
+    HlmTabsTriggerDirective,
+    HlmTabsContentDirective
+  ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss',
+  providers: [provideIcons({ lucideLoader2 })],
 })
-export class AppointmentComponent {
-  doctors = [
-    {
-      name: 'Ana López',
-      speciality: 'Cardiología',
-      date: '3 de Julio de 2024',
-      hour: '11:00 - 11:30 am',
-      status: 'pending',
-    },
-    {
-      name: 'María Fernández',
-      speciality: 'Dermatología',
-      date: '3 de Julio de 2024',
-      hour: '12:00 - 12:30 pm',
-      status: 'accepted',
-    },
-    {
-      name: 'Luis Martínez',
-      speciality: 'Neurología',
-      date: '3 de Julio de 2024',
-      hour: '1:00 - 1:30 pm',
-      status: 'rejected',
-    },
-    {
-      name: 'Sofía García',
-      speciality: 'Ginecología',
-      date: '3 de Julio de 2024',
-      hour: '2:00 - 2:30 pm',
-      status: 'finished',
-      message:
-        'Lamento informarle que, debido a una emergencia médica, me veo en la obligación de cancelar su cita programada.',
-    },
-    {
-      name: 'Javier Sánchez',
-      speciality: 'Oftalmología',
-      date: '3 de Julio de 2024',
-      hour: '3:00 - 3:30 pm',
-      status: 'cancelled',
-    },
-    {
-      name: 'Laura Ruiz',
-      speciality: 'Psicología',
-      date: '3 de Julio de 2024',
-      hour: '4:00 - 4:30 pm',
-      status: 'pending',
-    },
-    {
-      name: 'Pablo Torres',
-      speciality: 'Urología',
-      date: '3 de Julio de 2024',
-      hour: '5:00 - 5:30 pm',
-      status: 'accepted',
-    },
-    {
-      name: 'Elena Morales',
-      speciality: 'Endocrinología',
-      date: '3 de Julio de 2024',
-      hour: '6:00 - 6:30 pm',
-      status: 'rejected',
-    },
-    {
-      name: 'Diego Navarro',
-      speciality: 'Neumología',
-      date: '3 de Julio de 2024',
-      hour: '7:00 - 7:30 pm',
-      status: 'finished',
-    },
-    {
-      name: 'Isabel Rojas',
-      speciality: 'Reumatología',
-      date: '3 de Julio de 2024',
-      hour: '8:00 - 8:30 pm',
-      status: 'cancelled',
-    },
-  ];
+export class AppointmentComponent implements OnInit {
+  loading: boolean = true;
+  pendings!: any[];
+  rejects!: any[];
+
+  constructor(private _appointmentRepository: AppointmentRepository) {}
+  
+  async ngOnInit(): Promise<void> {
+    this.pendings = await this._appointmentRepository.getAppointmentByStatus('pending');
+    this.rejects = await this._appointmentRepository.getAppointmentByStatus('rejected');
+
+    console.log(this.pendings);
+    console.log(this.rejects);
+
+    this.loading = false;
+  }
 }

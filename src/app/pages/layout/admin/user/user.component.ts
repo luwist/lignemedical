@@ -17,7 +17,7 @@ import {
   HlmTabsListComponent,
   HlmTabsTriggerDirective,
 } from '@spartan-ng/ui-tabs-helm';
-import { FirestoreService } from '@app/services';
+import { AvatarService, FirestoreService } from '@app/services';
 import { User } from '@app/models';
 
 @Component({
@@ -52,8 +52,9 @@ export class UserComponent implements OnInit {
   patients: User[] = [];
 
   constructor(
-    private _patientRepository: PatientRepository,
+    private _avatarService: AvatarService,
     private _firestoreService: FirestoreService,
+    private _patientRepository: PatientRepository,
     private _userRepository: UserRepository
   ) {}
 
@@ -61,6 +62,16 @@ export class UserComponent implements OnInit {
     this.admins = await this._userRepository.getUserListByRole('administrador');
     this.doctors = await this._userRepository.getUserListByRole('doctor');
     this.patients = await this._userRepository.getUserListByRole('paciente');
+  }
+
+  getFallback(name: any, surname: any): string {
+    const fullName = `${name} ${surname}`;
+
+    return this._avatarService.getFallback(fullName);
+  }
+
+  getBackgroundColor(name: any): string {
+    return this._avatarService.getBackgroundColorByName(name);
   }
 
   onChange(e: any, id: string): void {

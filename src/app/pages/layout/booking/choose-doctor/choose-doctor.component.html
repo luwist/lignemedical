@@ -1,0 +1,56 @@
+<div class="w-full bg-popover rounded-3xl px-8 mt-5">
+  <h2 class="text-muted-foreground font-medium text-base border-b border-border py-6">
+    Eliga al doctor
+  </h2>
+  @if (specialty){
+    @if (!loading) {
+      @if (doctors.length > 0) {
+        <div class="flex flex-wrap gap-6 py-6">
+          @for (doctor of doctors; track $index) {
+            <button
+              type="button"
+              class="w-64 border text-foreground text-sm bg-card rounded-xl font-medium grid grid-cols-[56px_1fr] items-center gap-2.5 justify-center p-4"
+              [ngClass]="
+                itemSelected === doctor.id
+                  ? 'border-primary'
+                  : 'border-transparent'
+              "
+              (click)="onSelected(doctor.id)"
+            >
+              <!-- <hlm-avatar variant="medium" shape="square">
+                <img [src]="doctor.picture" alt="Profile picture" hlmAvatarImage />
+                <span class="w-full h-full bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+              </hlm-avatar> -->
+              <img
+                [src]="doctor.picture"
+                alt=""
+                class="w-14 h-14 rounded-xl object-cover"
+              />
+              <div>
+                <h2 class="text-foreground text-base font-medium text-left">Dr/Dra
+                  {{ doctor.firstName }}
+                  {{ doctor.lastName }}
+                </h2>
+                <p class="w-[156px] text-muted-foreground text-sm font-medium text-start capitalize truncate">
+                  {{ doctor.specialist }}
+                </p>
+              </div>
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="text-center text-sm text-foreground font-medium py-16">
+          No hay doctores para esta especialidad
+        </div>
+      }
+    } @else {
+      <div class="flex justify-center py-12">
+        <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+      </div>
+    }
+  } @else {
+    <div class="text-center text-sm text-foreground font-medium py-16">
+      Elige una categoria
+    </div>
+  }
+</div>

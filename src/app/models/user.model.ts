@@ -11,5 +11,6 @@ export interface User {
   emailVerified: boolean | null;
 
   specialist?: string[];
+  schedules?: any[];
   insurance?: string;
 }

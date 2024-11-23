@@ -27,7 +27,7 @@
               <td class="flex items-center gap-3 px-6 py-4">
                 <hlm-avatar variant="medium" shape="square">
                   <img [src]="admin.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+                  <span class="{{ getBackgroundColor(admin.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(admin.firstName, admin.lastName) }}</span>
                 </hlm-avatar>
                 <div>
                   <p>{{ admin.firstName }} {{ admin.lastName }}</p>
@@ -69,7 +69,7 @@
               <td class="flex items-center gap-3 px-6 py-4">
                 <hlm-avatar variant="medium" shape="square">
                   <img [src]="doctor.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+                  <span class="{{ getBackgroundColor(doctor.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(doctor.firstName, doctor.lastName) }}</span>
                 </hlm-avatar>
                 <div>
                   <p>{{ doctor.firstName }} {{ doctor.lastName }}</p>
@@ -114,7 +114,7 @@
               <td class="flex items-center gap-3 px-6 py-4">
                 <hlm-avatar variant="medium" shape="square">
                   <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
+                  <span class="{{ getBackgroundColor(patient.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(patient.firstName, patient.lastName) }}</span>
                 </hlm-avatar>
                 <div>
                   <p>{{ patient.firstName }} {{ patient.lastName }}</p>

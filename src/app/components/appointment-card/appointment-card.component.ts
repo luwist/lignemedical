@@ -21,6 +21,7 @@ import {
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { CommonModule } from '@angular/common';
+import { AvatarService } from '@app/services';
 
 @Component({
   selector: 'app-appointment-card',
@@ -54,8 +55,8 @@ import { CommonModule } from '@angular/common';
 export class AppointmentCardComponent implements OnInit {
   @Input() name!: string;
   @Input() speciality!: string;
-  @Input() date!: string;
-  @Input() hour!: string;
+  @Input() date!: any;
+  @Input() hour!: any;
   @Input() status!: string;
   @Input() message: string | undefined;
 
@@ -63,7 +64,12 @@ export class AppointmentCardComponent implements OnInit {
 
   fallBack!: string;
 
+  backgroundColor!: string;
+
+  constructor(private _avatarService: AvatarService) {}
+
   ngOnInit(): void {
+    this.backgroundColor = this._avatarService.getBackgroundColorByName(this.name);
     this.fallBack = this.name.split(' ')[0][0] + this.name.split(' ')[1][0];
   }
 

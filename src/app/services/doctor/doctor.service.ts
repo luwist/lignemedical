@@ -42,10 +42,12 @@ export class DoctorService {
     for (let i = 0; i < days; i++) {
       const nextDay = new Date(currentDateInMilliseconds);
 
-      schedules.forEach((schedule) => {
-        if (schedule.isActive && schedule.dayWeek === nextDay.getDay())
-          regularSchedules.push(nextDay);
-      });
+      if (schedules) {
+        schedules.forEach((schedule) => {
+          if (schedule.isActive && schedule.dayWeek === nextDay.getDay())
+            regularSchedules.push(nextDay);
+        });
+      }
 
       currentDateInMilliseconds += dayInMilliseconds;
     }
@@ -54,16 +56,20 @@ export class DoctorService {
   }
 
   async getAppointmentAvailableByDate(id: string, date: Date): Promise<Date[]> {
-    const appointmentsAvailable: Date[] = [];
+    let appointmentsAvailable: Date[] = [];
     const appointments = await this._doctorRepository.getAppointmentsById(id);
     const schedules = await this._doctorRepository.getSchedulesById(id);
 
-    const schedule = schedules.find(
-      (schedule) => schedule.isActive && schedule.dayWeek === date.getDay()
-    ) as Schedule;
+    if (schedules) {
+      const schedule = schedules.find(
+        (schedule) => schedule.isActive && schedule.dayWeek === date.getDay()
+      ) as Schedule;
+    }
 
     appointments.forEach((appointment) => {
-      // const hourInMilliseconds = appointment.hour.getTime();
+      const hourInMilliseconds = appointment.hour;
+
+      appointmentsAvailable.push(hourInMilliseconds);
     });
 
     return appointmentsAvailable;

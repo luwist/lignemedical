@@ -3,13 +3,13 @@
     <div class="flex items-center gap-3">
       <hlm-avatar variant="medium" shape="square">
         <img [src]="" alt="Profile picture" hlmAvatarImage />
-        <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{
+        <span class="{{ backgroundColor }} text-white" hlmAvatarFallback>{{
           fallBack
         }}</span>
       </hlm-avatar>
       <div>
         <p class="text-sm font-medium text-muted-foreground">Doctor/a</p>
-        <p class="text-base font-medium text-foreground">{{ name }}</p>
+        <p class="text-base font-medium text-foreground capitalize">{{ name }}</p>
       </div>
     </div>
 
@@ -19,15 +19,15 @@
   <div class="mt-10 flex flex-col gap-5">
     <p class="flex items-center justify-between text-sm text-muted-foreground">
       Especialidad:
-      <span class="text-foreground">{{ speciality }}</span>
+      <span class="text-foreground capitalize">{{ speciality }}</span>
     </p>
     <p class="flex items-center justify-between text-sm text-muted-foreground">
       Fecha:
-      <span class="text-foreground">{{ date }}</span>
+      <span class="text-foreground">{{ date.toDate() | date:"longDate" }}</span>
     </p>
     <p class="flex items-center justify-between text-sm text-muted-foreground">
       Hora:
-      <span class="text-foreground">{{ hour }}</span>
+      <span class="text-foreground">{{ hour.toDate() | date:"shortTime" }}</span>
     </p>
   </div>
 
