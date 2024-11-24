@@ -3,9 +3,18 @@
     <h1 class="text-[28px] text-foreground mb-7">Reservar turno</h1>
 
     <app-choose-speciality (selected)="onSpecialtySelected($event)" />
-    
-    <app-choose-doctor [specialty]="specialtySelected" (selected)="onDoctorSelected($event)" />
 
-    <app-choose-date [id]="doctorSelected" />
+    <app-choose-doctor
+      [specialty]="appointment.doctor.specialty"
+      (selected)="onDoctorSelected($event)"
+    />
+
+    <app-choose-date
+      [doctorId]="appointment.doctor.id"
+      [appointment]="appointment"
+      (dateSelected)="onDateSelected($event)"
+      (hourSelected)="onHourSelected($event)"
+      (bookSelected)="onBookAppointment()"
+    />
   </div>
 </div>

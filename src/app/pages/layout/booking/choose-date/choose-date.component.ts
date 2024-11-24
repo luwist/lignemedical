@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AppointmentStatus } from '@app/enums/appointment-status.enum';
 import { DoctorRepository } from '@app/repositories';
+import { AppointmentService } from '@app/services/appointment/appointment.service';
 import { DoctorService } from '@app/services/doctor/doctor.service';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
@@ -17,73 +25,69 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
   providers: [provideIcons({ lucideLoader2 })],
 })
 export class ChooseDateComponent implements OnChanges {
-  @Output() qwe!: string;
+  @Output() dateSelected = new EventEmitter();
+  @Output() hourSelected = new EventEmitter();
+  @Output() bookSelected = new EventEmitter();
 
-  @Input() id!: string;
+  @Input() doctorId!: string;
+  @Input() appointment!: any;
 
-  loading!: boolean;
+  loading: boolean = true;
   buttonState: boolean = true;
 
-  dateSelected!: any;
-  hourSelected!: any;
+  dateIndex!: any;
+  hourIndex!: any;
 
   dates: any = [];
   hours: any = [];
 
-  appointment: any = {
-    patient: null,
-    doctor: null,
-    specialty: null,
-    date: null,
-    hour: null,
-    status: AppointmentStatus.Pending,
-  };
-
   constructor(
     private _doctorService: DoctorService,
+    private _appointmentService: AppointmentService,
     private _doctorRepository: DoctorRepository
   ) {}
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (this.id !== undefined) {
-      this.loading = true;
-
+    if (this.doctorId) {
       await this.loadDates();
+    } else {
+      this.buttonState = true;
 
-      this.loading = false;
+      this.dateIndex = -1;
+      this.hourIndex = -1;
     }
   }
 
   async loadDates(): Promise<void> {
-    this.dates = await this._doctorService.getDateAvailableById(this.id);
-    this.hours = await this.getSchedulesByDoctorId(this.id);
+    this.dates = await this._appointmentService.getAvailableDatesById(
+      this.doctorId
+    );
+
+    console.log(this.dates);
+
+    if (this.dates) {
+      this.hours = await this.getSchedulesByDoctorId(this.doctorId);
+    }
+
+    this.loading = false;
   }
 
-  onDateSelected(date: Date): void {
-    this.dateSelected = date;
+  onDateSelected(date: any, index: number): void {
+    this.dateIndex = index;
+
+    this.dateSelected.emit(date);
   }
-  // this.appointment = { ...this.appointment, ...newObj };
 
-  onHourSelected(hour: any): void {
-    this.hourSelected = hour;
+  onHourSelected(hour: any, index: number): void {
+    this.hourIndex = index;
+
+    this.hourSelected.emit(hour);
+
+    this.buttonState = false;
   }
-  // this.buttonState = false;
 
-  // const newObj = {
-  //   hour: hour,
-  // };
-
-  // this.appointment = { ...this.appointment, ...newObj };
-
-  async onBookAppointment(): Promise<void> {
-    // await this._firestoreService.addDocument(
-    //   `users/${this.userId}/appointments`,
-    //   this.appointment
-    // );
-    // await this._firestoreService.addDocument(
-    //   `users/${this.doctorSelected}/appointments`,
-    //   this.appointment
-    // );
+  onBookAppointment(): void {
+    this.bookSelected.emit();
   }
 
   async getSchedulesByDoctorId(id: string): Promise<any> {
@@ -91,9 +95,12 @@ export class ChooseDateComponent implements OnChanges {
     const hour = minute * 30;
     const newHours = [];
 
-    const schedules = await this._doctorRepository.getSchedulesById(id) as any;
+    const schedules = (await this._doctorRepository.getSchedulesById(
+      id
+    )) as any;
 
-    const doctorAppointment: any = await this._doctorRepository.getAppointmentsById(id);
+    const doctorAppointment: any =
+      await this._doctorRepository.getAppointmentsById(id);
 
     let startTime = 0;
     let endTime = 16000000;
@@ -127,8 +134,6 @@ export class ChooseDateComponent implements OnChanges {
 
     while (appointment <= endTime) {
       const date = new Date(appointment);
-
-      console.log(date);      
 
       newHours.push(date);
 

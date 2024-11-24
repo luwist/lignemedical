@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { DoctorRepository } from '@app/repositories';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
@@ -15,7 +22,7 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
   providers: [provideIcons({ lucideLoader2 })],
 })
 export class ChooseDoctorComponent implements OnChanges {
-  @Output() selected = new EventEmitter<string>();
+  @Output() selected = new EventEmitter();
 
   @Input() specialty!: string;
 
@@ -27,25 +34,30 @@ export class ChooseDoctorComponent implements OnChanges {
   constructor(private _doctorRepository: DoctorRepository) {}
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (this.specialty !== undefined) {
+    if (this.specialty) {
       await this.loadDoctors();
-
-      console.log(this.specialty);
-      console.log(this.doctors);
+    } else {
+      this.itemSelected = '';
     }
   }
 
   async loadDoctors(): Promise<void> {
     this.loading = true;
 
-    this.doctors = await this._doctorRepository.getDoctorListBySpecialty(this.specialty);
+    this.doctors = await this._doctorRepository.getDoctorListBySpecialty(
+      this.specialty
+    );
 
     this.loading = false;
   }
 
   async onSelected(value: any): Promise<void> {
-    this.itemSelected = value;
+    this.itemSelected = value.id;
 
-    this.selected.emit(value);
+    this.selected.emit({
+      id: value.id,
+      name: `${value.firstName} ${value.lastName}`,
+      picture: value.picture,
+    });
   }
 }

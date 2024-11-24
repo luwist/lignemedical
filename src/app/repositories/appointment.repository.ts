@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { collection, doc, Firestore, getDocs, query, setDoc, where } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  Firestore,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +24,11 @@ export class AppointmentRepository {
 
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc) => {
       const data = doc.data() as any;
 
       appointments.push(data);
-    })
+    });
 
     return appointments;
   }
