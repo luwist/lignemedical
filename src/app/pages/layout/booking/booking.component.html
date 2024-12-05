@@ -1,3 +1,5 @@
+<hlm-toaster />
+
 <div>
   <div>
     <h1 class="text-[28px] text-foreground mb-7">Reservar turno</h1>
@@ -12,6 +14,7 @@
     <app-choose-date
       [doctorId]="appointment.doctor.id"
       [appointment]="appointment"
+      [buttonLoading]="buttonLoading"
       (dateSelected)="onDateSelected($event)"
       (hourSelected)="onHourSelected($event)"
       (bookSelected)="onBookAppointment()"

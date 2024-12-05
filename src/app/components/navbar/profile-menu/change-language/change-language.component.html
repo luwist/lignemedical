@@ -1,5 +1,14 @@
-<hlm-dialog>
-    <button id="edit-profile" brnDialogTrigger hlmBtn>Edit Profile</button>
+<!-- <hlm-dialog>
+    <button
+      id="change-language"
+      brnDialogTrigger
+      hlmBtn
+      class="flex items-center gap-3"
+    >
+      <span>Cambiar idioma</span>
+      <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />
+    </button>
+
     <hlm-dialog-content class="sm:max-w-[425px]" *brnDialogContent="let ctx">
       <hlm-dialog-header>
         <h3 hlmDialogTitle>Elige el idioma:</h3>
@@ -9,4 +18,31 @@
         </div>
       </div>
     </hlm-dialog-content>
-  </hlm-dialog>
+</hlm-dialog> -->
+
+<button
+  id="change-language"
+  brnDialogTrigger
+  class="flex items-center gap-3"
+>
+  <span>Cambiar idioma</span>
+  <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />
+</button>
+
+<hlm-dialog-content *brnDialogContent="let ctx">
+  <hlm-dialog-header>
+    <h3 hlmDialogTitle>Elige el idioma:</h3>
+  </hlm-dialog-header>
+  <div class="flex items-center gap-5">
+    @for (language of languages; track $index) {
+      <button
+        class="flex items-center gap-2 border rounded-xl px-5 py-3 text-sm capitalize hover:border-white"
+        [ngClass]="currentLanguage === language.code ? 'border-primary' : 'border-border'"
+        (click)="onChangeLanguage(language.code)"
+      >
+        {{ language.name }}
+        <img [src]="language.image" alt="flag" class="w-7" />
+      </button>
+    }
+  </div>
+</hlm-dialog-content>

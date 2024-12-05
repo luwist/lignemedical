@@ -4,7 +4,11 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '@app/components';
 import { User } from '@app/models';
 import { AuthService } from '@app/services';
+import { AppState } from '@app/store/app.state';
+import { selectUser } from '@app/store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -20,20 +24,23 @@ export class LayoutComponent implements OnInit {
     private _authService: AuthService,
     private _router: Router,
     private _firestore: Firestore,
+    private _store: Store<AppState>
   ) {}
 
   ngOnInit() {
-    this._authService.currentUser$.subscribe(async (user) => {
+    this._store.select(selectUser).subscribe(user => {
       if (user) {
-        onSnapshot(doc(this._firestore, 'users', user.uid), (doc) => {
+        const docRef = doc(this._firestore, 'users', user.uid);
+  
+        onSnapshot(docRef, (doc) => {
           const data = doc.data() as User;
-
-          if (data.isEnable) {
+  
+          if (data.isEnable !== null) {
             this.isEnable = data.isEnable;
           }
         });
       }
-    });
+    })
   }
 
   onLogout(): void {

@@ -5,7 +5,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmSwitchComponent } from '@spartan-ng/ui-switch-helm';
 import { CommonModule } from '@angular/common';
 import { SheetComponent } from './sheet/sheet.component';
-import { PatientRepository, UserRepository } from '@app/repositories';
+import { UserRepository } from '@app/repositories';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
@@ -37,10 +37,6 @@ import { User } from '@app/models';
 
     SheetComponent,
 
-    HlmLabelDirective,
-    HlmInputDirective,
-    HlmButtonDirective,
-
     HlmSwitchComponent,
   ],
   templateUrl: './user.component.html',
@@ -54,7 +50,6 @@ export class UserComponent implements OnInit {
   constructor(
     private _avatarService: AvatarService,
     private _firestoreService: FirestoreService,
-    private _patientRepository: PatientRepository,
     private _userRepository: UserRepository
   ) {}
 

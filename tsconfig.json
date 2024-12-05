@@ -71,6 +71,9 @@
       "@spartan-ng/ui-badge-helm": [
         ".\\src/app/components/ui/ui-badge-helm/src/index.ts"
       ],
+      "@spartan-ng/ui-sonner-helm": [
+        ".\\src/app/components/ui/ui-sonner-helm/src/index.ts"
+      ],
       "@*": [
         ".\\src/*"
       ],

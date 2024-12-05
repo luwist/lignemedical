@@ -9,7 +9,7 @@
     @for (doctor of doctors; track $index) {
     <button
       type="button"
-      class="w-64 border text-foreground text-sm bg-card rounded-xl font-medium grid grid-cols-[56px_1fr] items-center gap-2.5 justify-center p-4"
+      class="border text-foreground text-sm bg-card rounded-xl font-medium grid grid-cols-[56px_1fr] items-center gap-2.5 justify-center p-4"
       [ngClass]="
         itemSelected === doctor.id ? 'border-primary' : 'border-transparent'
       "

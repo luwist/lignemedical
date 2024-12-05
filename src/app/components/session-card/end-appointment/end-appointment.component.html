@@ -1,0 +1,172 @@
+<hlm-toaster />
+
+<hlm-sheet side="right">
+  <button id="edit-profile" variant="outline" size="lg" brnSheetTrigger hlmBtn class="w-full bg-input text-muted-foreground">Finalizar</button>
+    
+  <hlm-sheet-content *brnSheetContent="let ctx" class="w-[580px]">
+    <form [formGroup]="form">
+      <hlm-sheet-header>
+        <h3 hlmSheetTitle>Finalizar turno</h3>
+      </hlm-sheet-header>
+  
+      <div class="py-5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img [src]="patient.picture" alt="" class="w-12 h-12 rounded-xl object-cover">
+  
+            <div>
+              <p class="text-sm text-muted-foreground font-medium">Paciente</p>
+              <p class="text-sm text-foreground font-medium">{{ patient.name }}</p>
+            </div>
+          </div>
+  
+          <app-tag [severity]="status" />
+        </div>
+  
+        <div class="flex items-center justify-between py-7 border-b border-border">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-sm bg-input flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2V5" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 2V5" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 13H15" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 17H12" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+  
+            <div>
+              <p class="text-sm text-muted-foreground font-medium">Especialidad</p>
+              <p class="text-sm text-foreground font-medium">{{ doctor.specialty }}</p>
+            </div>
+          </div>
+  
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-sm bg-input flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2V5" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 2V5" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.5 9.09009H20.5" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#808080" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.6947 13.7H15.7037" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.6947 16.7H15.7037" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11.9955 13.7H12.0045" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M11.9955 16.7H12.0045" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.29431 13.7H8.30329" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.29431 16.7H8.30329" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+  
+            <div>
+              <p class="text-sm text-muted-foreground font-medium">Fecha</p>
+              <p class="text-sm text-foreground font-medium">{{ date.toDate() | date:"longDate" }}</p>
+            </div>
+          </div>
+  
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-sm bg-input flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#808080" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.71 15.18L12.61 13.33C12.07 13.01 11.63 12.24 11.63 11.61V7.51001" stroke="#808080" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+  
+            <div>
+              <p class="text-sm text-muted-foreground font-medium">Hora</p>
+              <p class="text-sm text-foreground font-medium">{{ hour.toDate() | date:"shortTime" }}</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="py-4">
+          <h2 class="text-base text-foreground font-medium mb-4">Historial medico</h2>
+  
+          <div class="w-full flex gap-5 mb-5">
+            <div class="w-full">
+              <label hlmLabel
+                >Altura
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="height"
+                />
+              </label>
+        
+              <app-input-error [control]="getFormControl('height')" />
+            </div>
+        
+            <div class="w-full">
+              <label hlmLabel
+                >Peso
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="weight"
+                />
+              </label>
+        
+              <app-input-error [control]="getFormControl('weight')" />
+            </div>
+          </div>
+  
+          <div class="w-full flex gap-5 mb-5">
+            <div class="w-full">
+              <label hlmLabel
+                >Temperatura
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="temperature"
+                />
+              </label>
+        
+              <app-input-error [control]="getFormControl('temperature')" />
+            </div>
+        
+            <div class="w-full">
+              <label hlmLabel
+                >Presion
+                <input
+                  class="w-full"
+                  hlmInput
+                  type="text"
+                  formControlName="pressure"
+                />
+              </label>
+        
+              <app-input-error [control]="getFormControl('pressure')" />
+            </div>
+          </div>
+          
+          <div class="w-full">
+            <label hlmLabel>Comentario</label>
+            <textarea hlmInput class="w-full h-36" formControlName="comment"></textarea>
+      
+            <app-input-error [control]="getFormControl('comment')" />
+          </div>
+        </div>
+      </div>
+  
+      <hlm-sheet-footer>
+        <button
+          hlmBtn
+          variant="outline"
+          size="lg"
+          type="button"
+          class="w-full bg-input text-muted-foreground"
+          [disabled]="(form.statusChanges | async) !== 'VALID'"
+          (click)="onEndAppointment(ctx)"
+          >
+          @if (isLoading) {
+            <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" color="#fff" />
+          }
+          
+          Finalizar
+        </button>
+      </hlm-sheet-footer>
+    </form>
+  </hlm-sheet-content>
+</hlm-sheet>

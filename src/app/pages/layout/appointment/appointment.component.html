@@ -1,65 +1,32 @@
 <div class="flex items-center justify-between mb-6">
-  <h1 class="text-[28px] text-foreground">Mis turnos</h1>
+  <h1 class="text-[28px] text-foreground">Citas</h1>
 
-  <app-input-search />
+  <ng-search-input placeholder="Buscar por especialidad o especialista" (valueSearch)="onValueSearch($event)" />
 </div>
 
-<div>
-  <hlm-tabs tab="pending" class="w-full">
-    <hlm-tabs-list class="w-full" aria-label="tabs example">
-      <button hlmTabsTrigger="pending">Pendientes</button>
-      <button hlmTabsTrigger="rejected">Rechazados</button>
-      <button hlmTabsTrigger="accepted">Aceptados</button>
-      <button hlmTabsTrigger="cancelled">Cancelados</button>
-      <button hlmTabsTrigger="finished">Finalizados</button>
-    </hlm-tabs-list>
-    <div hlmTabsContent="pending">
-      @if (loading) {
-        <div class="flex justify-center py-64">
-          <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
-        </div>
-      } @else {
-        @if (pendings.length > 0) {
-          <div class="flex gap-8 flex-wrap">
-            @for (doctor of pendings; track $index) {
-              <app-appointment-card
-                [name]="doctor.name"
-                [speciality]="doctor.specialty"
-                [date]="doctor.date"
-                [hour]="doctor.hour"
-                [status]="doctor.status"
-                [message]="doctor.message"
-              />
-            }
-          </div>
-        } @else {
-          <div class="text-center text-sm text-foreground font-medium py-64">Empieza a reservar tus primeros turnos medicos.</div>
-        }
+@if (loading) {
+  <div class="flex justify-center py-64">
+    <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+  </div>
+} @else {
+  @if (filteredAppointments.length > 0) {
+    <div class="flex gap-10 flex-wrap">
+      @for (appointment of filteredAppointments; track $index) {
+        <app-appointment-card
+          [id]="appointment.id"
+          [name]="appointment.doctor.name"
+          [speciality]="appointment.doctor.specialty"
+          [picture]="appointment.doctor.picture"
+          [date]="appointment.date"
+          [hour]="appointment.hour"
+          [status]="appointment.status"
+          [message]="appointment.message"
+        />
       }
     </div>
-    <div hlmTabsContent="rejected">
-      @for (doctor of rejects; track $index) {
-        <app-appointment-card
-          [name]="doctor.name"
-          [speciality]="doctor.specialty"
-          [date]="doctor.date"
-          [hour]="doctor.hour"
-          [status]="doctor.status"
-          [message]="doctor.message"
-        />
-        }
+  } @else {
+    <div class="text-center text-sm text-foreground font-medium py-64">
+      No tienes turnos medicos.
     </div>
-    <div hlmTabsContent="accepted">
-      <!-- @for (doctor of doctors; track $index) {
-        <app-appointment-card
-          [name]="doctor.name"
-          [speciality]="doctor.speciality"
-          [date]="doctor.date"
-          [hour]="doctor.hour"
-          [status]="doctor.status"
-          [message]="doctor.message"
-        />
-        } -->
-    </div>
-  </hlm-tabs>
-</div>
+  }
+}

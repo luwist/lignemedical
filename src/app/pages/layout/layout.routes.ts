@@ -31,6 +31,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'session',
+        title: 'Mis citas',
+        loadComponent: () =>
+          import('./session/session.component').then(
+            (m) => m.SessionComponent
+          ),
+      },
+      {
         path: 'settings',
         title: 'Configuraciones',
         loadComponent: () =>

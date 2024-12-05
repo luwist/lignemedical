@@ -11,6 +11,9 @@ import { AppState } from '@app/store/app.state';
 import { Observable } from 'rxjs';
 import { User } from '@app/store/auth/auth.state';
 import { selectUser } from '@app/store/auth/auth.selectors';
+import { AppointmentRepository } from '@app/repositories';
+import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-booking',
@@ -21,6 +24,8 @@ import { selectUser } from '@app/store/auth/auth.selectors';
     ChooseDoctorComponent,
     ChooseSpecialityComponent,
     ChooseDateComponent,
+
+    HlmToasterComponent
   ],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.scss',
@@ -28,6 +33,7 @@ import { selectUser } from '@app/store/auth/auth.selectors';
 })
 export class BookingComponent implements OnInit {
   currentUser$!: Observable<User | null>;
+  buttonLoading!: boolean;
 
   appointment: any = {
     date: null,
@@ -37,15 +43,17 @@ export class BookingComponent implements OnInit {
     patient: {
       id: null,
       name: null,
+      picture: null,
     },
     doctor: {
       id: null,
       name: null,
       specialty: null,
+      picture: null,
     },
   };
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(private _store: Store<AppState>, private _appointmentRepository: AppointmentRepository) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._store.select(selectUser);
@@ -57,6 +65,7 @@ export class BookingComponent implements OnInit {
           ...this.appointment.patient,
           id: data?.uid,
           name: data?.displayName,
+          picture: data?.photoURL,
         },
       };
     });
@@ -79,6 +88,7 @@ export class BookingComponent implements OnInit {
         ...this.appointment.doctor,
         id: doctor.id,
         name: doctor.name,
+        picture: doctor.picture
       },
     };
   }
@@ -98,7 +108,15 @@ export class BookingComponent implements OnInit {
   }
 
   async onBookAppointment(): Promise<void> {
-    console.log(this.appointment);
+    this.buttonLoading = true;
+    
+    await this._appointmentRepository.add(this.appointment);
+
+    toast('Turno reservado', {
+      description: 'Se ha reservado el turno correctamente'
+    })
+
+    this.buttonLoading = false;
 
     this.appointment = {
       date: null,

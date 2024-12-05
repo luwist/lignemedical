@@ -31,8 +31,9 @@ export class ChooseDateComponent implements OnChanges {
 
   @Input() doctorId!: string;
   @Input() appointment!: any;
+  @Input() buttonLoading!: any;
 
-  loading: boolean = true;
+  loading!: boolean;
   buttonState: boolean = true;
 
   dateIndex!: any;
@@ -40,6 +41,8 @@ export class ChooseDateComponent implements OnChanges {
 
   dates: any = [];
   hours: any = [];
+  availableDates: any = [];
+  selectedDay: number = -1;
 
   constructor(
     private _doctorService: DoctorService,
@@ -59,21 +62,27 @@ export class ChooseDateComponent implements OnChanges {
   }
 
   async loadDates(): Promise<void> {
-    this.dates = await this._appointmentService.getAvailableDatesById(
-      this.doctorId
+    this.availableDates = await this._appointmentService.getAvailableDatesById(
+      this.doctorId,
+      this.appointment.doctor.specialty
     );
 
-    console.log(this.dates);
-
-    if (this.dates) {
-      this.hours = await this.getSchedulesByDoctorId(this.doctorId);
-    }
+    console.log(this.availableDates);
 
     this.loading = false;
   }
 
+  isReserved(date: string, time: string): boolean {
+    const specialty = this.appointment.doctor.specialty;
+    const schedules = this.availableDates.find((x: any) => x.name === specialty);
+
+    return schedules.some(
+      (reservation: any) => reservation.date === date && reservation.time === time
+    );
+  }
+
   onDateSelected(date: any, index: number): void {
-    this.dateIndex = index;
+    this.selectedDay = index;
 
     this.dateSelected.emit(date);
   }
@@ -88,58 +97,5 @@ export class ChooseDateComponent implements OnChanges {
 
   onBookAppointment(): void {
     this.bookSelected.emit();
-  }
-
-  async getSchedulesByDoctorId(id: string): Promise<any> {
-    const minute = 60;
-    const hour = minute * 30;
-    const newHours = [];
-
-    const schedules = (await this._doctorRepository.getSchedulesById(
-      id
-    )) as any;
-
-    const doctorAppointment: any =
-      await this._doctorRepository.getAppointmentsById(id);
-
-    let startTime = 0;
-    let endTime = 16000000;
-
-    doctorAppointment.forEach((appointment: any) => {
-      const dateInMilliseconds = appointment.date.seconds * 1000;
-      const hourInMilliseconds = appointment.hour.seconds * 1000;
-
-      const dateAppointment = new Date(dateInMilliseconds);
-      const hourAppointment = new Date(hourInMilliseconds);
-
-      schedules.forEach((schedule: any) => {
-        const startTimeInMilliseconds = schedule.startTime.seconds * 1000;
-        const endTimeInMilliseconds = schedule.endTime.seconds * 1000;
-
-        const startTimeSchedule = new Date(startTimeInMilliseconds);
-        const endTimeSchedule = new Date(startTimeInMilliseconds);
-
-        // if (
-        //   schedule.dayWeek !== 0 &&
-        //   schedule.dayWeek === dateSelected.getDay() &&
-        //   hourAppointment.getTime()
-        // ) {
-        //   startTime = schedule.startTime.seconds * 1000;
-        //   endTime = schedule.endTime.seconds * 1000;
-        // }
-      });
-    });
-
-    let appointment = startTime + hour * 1000;
-
-    while (appointment <= endTime) {
-      const date = new Date(appointment);
-
-      newHours.push(date);
-
-      appointment += hour * 1000;
-    }
-
-    return newHours;
   }
 }

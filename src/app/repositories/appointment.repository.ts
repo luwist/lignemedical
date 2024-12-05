@@ -6,6 +6,7 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 
@@ -15,12 +16,38 @@ import {
 export class AppointmentRepository {
   constructor(private _firestore: Firestore) {}
 
-  async getAppointmentByStatus(status: string) {
+  async add(appointment: any): Promise<void> {
+    const collRef = collection(this._firestore, 'appointments');
+    const docRef = doc(collRef);
+
+    await setDoc(docRef, {
+      ...appointment,
+      id: docRef.id
+    });
+  }
+
+  async changeStatusById(id: string, status: string) {
+    const docRef = doc(this._firestore, "appointments", id);
+
+    await updateDoc(docRef, {
+      status: status
+    });
+  }
+
+  async addMessageById(id: string, message: string) {
+    const docRef = doc(this._firestore, "appointments", id);
+
+    await updateDoc(docRef, {
+      message: message
+    });
+  }
+
+  async getAppointmentByStatus(patientId: string, status: string) {
     const appointments: any[] = [];
 
     const collRef = collection(this._firestore, 'appointments');
 
-    const q = query(collRef, where('status', '==', status));
+    const q = query(collRef, where('patient.id', '==', patientId), where('status', '==', status));
 
     const querySnapshot = await getDocs(q);
 
@@ -28,6 +55,56 @@ export class AppointmentRepository {
       const data = doc.data() as any;
 
       appointments.push(data);
+    });
+
+    return appointments;
+  }
+
+  async getAppointmentByDoctorId(doctorId: string) {
+    const appointments: any[] = [];
+
+    const collRef = collection(this._firestore, 'appointments');
+
+    const q = query(collRef, where('doctor.id', '==', doctorId));
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as any;
+
+      appointments.push(data);
+    });
+
+    return appointments;
+  }
+
+  async getAppointmentByPatientId(patientId: string) {
+    const appointments: any[] = [];
+
+    const collRef = collection(this._firestore, 'appointments');
+
+    const q = query(collRef, where('patient.id', '==', patientId));
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as any;
+
+      appointments.push(data);
+    });
+
+    return appointments;
+  }
+
+  async getAppointmentList() {
+    const appointments: any[] = [];
+
+    const collRef = collection(this._firestore, 'appointments');
+    
+    const querySnapshot = await getDocs(collRef);
+
+    querySnapshot.forEach((doc) => {
+      appointments.push(doc.data());
     });
 
     return appointments;

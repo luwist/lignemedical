@@ -1,8 +1,8 @@
-<article class="w-96 rounded-3xl p-6 bg-popover">
-  <div class="flex items-start justify-between">
+<article class="w-96 rounded-3xl bg-popover border border-border">
+  <header class="p-6 flex items-center justify-between border-b border-border">
     <div class="flex items-center gap-3">
-      <hlm-avatar variant="medium" shape="square">
-        <img [src]="" alt="Profile picture" hlmAvatarImage />
+      <hlm-avatar variant="small" shape="square">
+        <img [src]="picture" alt="Profile picture" hlmAvatarImage />
         <span class="{{ backgroundColor }} text-white" hlmAvatarFallback>{{
           fallBack
         }}</span>
@@ -12,11 +12,11 @@
         <p class="text-base font-medium text-foreground capitalize">{{ name }}</p>
       </div>
     </div>
-
+  
     <app-tag [severity]="status" />
-  </div>
+  </header>
 
-  <div class="mt-10 flex flex-col gap-5">
+  <div class="flex flex-col gap-5 px-6 py-4">
     <p class="flex items-center justify-between text-sm text-muted-foreground">
       Especialidad:
       <span class="text-foreground capitalize">{{ speciality }}</span>
@@ -31,96 +31,17 @@
     </p>
   </div>
 
-  <div class="mt-10 flex justify-end">
-    @switch (status) { @case ('pending') {
-    <hlm-dialog class="w-full">
-      <button
-        id="cancel-appointment"
-        brnDialogTrigger
-        hlmBtn
-        variant="destructive"
-        size="lg"
-        class="w-full"
-      >
-        Cancelar turno
-      </button>
-      <hlm-dialog-content class="w-[500px]" *brnDialogContent="let ctx">
-        <hlm-dialog-header>
-          <h3 hlmDialogTitle class="text-foreground text-xl">
-            ¿Desea cancelar el turno?
-          </h3>
-          <p hlmDialogDescription class="text-base">
-            Escribe la razón por la que cancela el turno
-          </p>
-        </hlm-dialog-header>
-
-        <div class="py-5">
-          <textarea
-            class="min-h-[180px] w-full"
-            hlmInput
-            placeholder="Escribe algo..."
-          ></textarea>
-        </div>
-
-        <hlm-dialog-footer>
-          <button hlmBtn type="submit" variant="destructive" size="lg">
-            Cancelar turno
-          </button>
-        </hlm-dialog-footer>
-      </hlm-dialog-content>
-    </hlm-dialog>
-    } @case ('finished') {
-    <div
-      class="bg-[#353535]"
-      [ngClass]="
-        !showMessage ? 'w-12 h-12 rounded-full' : 'w-full min-h-48 rounded-xl'
-      "
-    >
-      <div class="flex items-center justify-between mb-2">
-        <h3
-          class="text-sm text-muted-foreground pl-[14px]"
-          [ngClass]="!showMessage ? 'hidden' : 'block'"
-        >
-          Comentario / Reseña
-        </h3>
-
-        <button
-          class="w-12 h-12 flex items-center justify-center cursor-pointer"
-          (click)="onShowMessage()"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.083 15.833h-.416c-3.334 0-5-.833-5-5V6.667q0-5 5-5h6.666q5 0 5 5v4.166q0 5-5 5h-.416a.85.85 0 0 0-.667.334L11 17.833c-.55.734-1.45.734-2 0l-1.25-1.666c-.133-.184-.442-.334-.667-.334"
-              stroke="gray"
-              stroke-width="1.5"
-              stroke-miterlimit="10"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M5.833 6.667h8.334m-8.334 4.166h5"
-              stroke="gray"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <p
-        class="text-sm text-foreground leading-6 px-[14px]"
-        [ngClass]="!showMessage ? 'hidden' : 'block'"
-      >
-        {{ message }}
-      </p>
-    </div>
-    } }
-  </div>
+  <footer class="border-t border-border px-6 py-4 flex items-center justify-end">
+    @if (status == 'pending') {
+      <app-cancel-appointment [id]="id" />
+    } @else if (status == 'accepted') {
+      @if (showReason) {
+        <app-reason [id]="id" status="cancelled" buttonText="cancelar" />
+      } @else {
+        <button hlmBtn type="button" variant="secondary" size="lg" class="w-full bg-input text-muted-foreground" (click)="onChangeVisibility()">Cancelar</button>
+      }
+    } @else if (status == 'finished' || status == 'cancelled' || status == 'rejected') {
+      <app-comment [message]="message" />
+    }
+  </footer>
 </article>

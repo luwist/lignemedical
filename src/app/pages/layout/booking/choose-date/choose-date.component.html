@@ -7,19 +7,19 @@
 
   @if (doctorId) { @if (!loading) {
   <div class="flex justify-center gap-3 pt-6">
-    @for (date of dates; track $index) {
+    @for (avaliableDate of availableDates; track $index) {
     <button
       type="button"
       class="p-[14px] w-14 text-sm border text-foreground bg-card rounded-xl font-semibold disabled:opacity-50"
-      (click)="onDateSelected(date, $index)"
-      [ngClass]="dateIndex === $index ? 'border-primary' : 'border-transparent'"
+      (click)="onDateSelected(avaliableDate.date, $index)"
+      [ngClass]="selectedDay === $index ? 'border-primary' : 'border-transparent'"
     >
       <div class="flex flex-col items-center justify-center">
         <span class="text-muted-foreground text-sm">{{
-          date | date : "E"
+          avaliableDate.date | date : "E"
         }}</span>
         <span class="text-foreground text-xl font-semibold">{{
-          date | date : "dd"
+          avaliableDate.date | date : "dd"
         }}</span>
       </div>
     </button>
@@ -27,14 +27,14 @@
   </div>
 
   <div class="flex justify-center gap-3 my-8">
-    @for (hour of hours; track $index) {
+    @for (time of availableDates[selectedDay]?.timeSlots; track $index) {
     <button
       type="button"
       class="px-4 py-3 text-sm border text-foreground bg-card rounded-full font-medium flex flex-col items-center justify-center gap-2 disabled:opacity-50"
-      (click)="onHourSelected(hour, $index)"
+      (click)="onHourSelected(time, $index)"
       [ngClass]="hourIndex === $index ? 'border-primary' : 'border-transparent'"
     >
-      {{ hour | date : "h:mm aa" }}
+      {{ time | date : "h:mm aa" }}
     </button>
     }
   </div>
@@ -62,9 +62,13 @@
       type="button"
       hlmBtn
       class="rounded-xl px-6"
-      [disabled]="buttonState"
+      [disabled]="buttonState || buttonLoading"
       (click)="onBookAppointment()"
     >
+      @if (buttonLoading) {
+        <hlm-icon name="lucideLoader2" size="sm" class="mr-2 animate-spin" color="#1f1f1f" />
+      }
+
       Reservar
     </button>
   </div>

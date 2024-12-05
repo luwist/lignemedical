@@ -3,7 +3,7 @@
     @if (currentUser$ | async; as currentUser) {
     <hlm-avatar>
       <img [src]="currentUser.photoURL" alt="Profile picture" hlmAvatarImage />
-      <span class="bg-[#FD005B] text-white" hlmAvatarFallback>{{ label }}</span>
+      <span class="{{ getBackgroundColor(currentUser.displayName) }} text-white" hlmAvatarFallback>{{ getFallback(currentUser.displayName) }}</span>
     </hlm-avatar>
     } @else {
       <hlm-skeleton class="w-11 h-11 rounded-full" />
@@ -67,6 +67,7 @@
         </button>
 
         <button hlmMenuItem>
+          <!-- <app-change-language /> -->
           <button
             id="change-language"
             brnDialogTrigger
@@ -74,31 +75,24 @@
             class="flex items-center gap-3"
           >
             <span>Cambiar idioma</span>
-            <img src="assets/flags/es-ES.png" alt="flag" class="w-5" />
+            <img [src]="currentLanguage.image" alt="flag" class="w-5" />
           </button>
+          
           <hlm-dialog-content *brnDialogContent="let ctx">
             <hlm-dialog-header>
               <h3 hlmDialogTitle>Elige el idioma:</h3>
             </hlm-dialog-header>
             <div class="flex items-center gap-5">
-              <button
-                class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm"
-              >
-                English
-                <img src="assets/flags/en-US.png" alt="flag" class="w-7" />
-              </button>
-              <button
-                class="flex items-center gap-2 border border-border rounded-xl px-5 py-3 text-sm"
-              >
-                Português
-                <img src="assets/flags/pt-BR.png" alt="flag" class="w-7" />
-              </button>
-              <button
-                class="flex items-center gap-2 border border-primary rounded-xl px-5 py-3 text-sm"
-              >
-                Español
-                <img src="assets/flags/es-ES.png" alt="flag" class="w-7" />
-              </button>
+              @for (language of languages; track $index) {
+                <button
+                  class="flex items-center gap-2 border rounded-xl px-5 py-3 text-sm capitalize hover:border-[#999]"
+                  [ngClass]="currentLanguage.code === language.code ? 'border-primary' : 'border-border'"
+                  (click)="onChangeLanguage(ctx, language.code, language.image)"
+                >
+                  {{ language.name }}
+                  <img [src]="language.image" alt="flag" class="w-7" />
+                </button>
+              }
             </div>
           </hlm-dialog-content>
         </button>

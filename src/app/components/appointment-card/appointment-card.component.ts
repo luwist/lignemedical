@@ -6,22 +6,12 @@ import {
   HlmAvatarImageDirective,
 } from '@spartan-ng/ui-avatar-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import {
-  BrnDialogContentDirective,
-  BrnDialogTriggerDirective,
-} from '@spartan-ng/ui-dialog-brain';
-import {
-  HlmDialogComponent,
-  HlmDialogContentComponent,
-  HlmDialogDescriptionDirective,
-  HlmDialogFooterComponent,
-  HlmDialogHeaderComponent,
-  HlmDialogTitleDirective,
-} from '@spartan-ng/ui-dialog-helm';
-import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
-import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { CommonModule } from '@angular/common';
 import { AvatarService } from '@app/services';
+import { AppointmentRepository } from '@app/repositories';
+import { CancelAppointmentComponent } from './cancel-appointment/cancel-appointment.component';
+import { ReasonComponent } from './reason/reason.component';
+import { CommentComponent } from './comment/comment.component';
 
 @Component({
   selector: 'app-appointment-card',
@@ -33,19 +23,11 @@ import { AvatarService } from '@app/services';
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
 
-    BrnDialogTriggerDirective,
-    BrnDialogContentDirective,
-
-    HlmDialogComponent,
-    HlmDialogContentComponent,
-    HlmDialogHeaderComponent,
-    HlmDialogFooterComponent,
-    HlmDialogTitleDirective,
-    HlmDialogDescriptionDirective,
-
-    HlmLabelDirective,
-    HlmInputDirective,
     HlmButtonDirective,
+
+    CancelAppointmentComponent,
+    ReasonComponent,
+    CommentComponent,
 
     TagComponent,
   ],
@@ -53,20 +35,23 @@ import { AvatarService } from '@app/services';
   styleUrl: './appointment-card.component.scss',
 })
 export class AppointmentCardComponent implements OnInit {
+  @Input() id!: string;
   @Input() name!: string;
+  @Input() picture!: string;
   @Input() speciality!: string;
   @Input() date!: any;
   @Input() hour!: any;
   @Input() status!: string;
-  @Input() message: string | undefined;
+  @Input() message!: string;
 
   showMessage: boolean = false;
+  showReason: boolean = false;
 
   fallBack!: string;
 
   backgroundColor!: string;
 
-  constructor(private _avatarService: AvatarService) {}
+  constructor(private _avatarService: AvatarService, private _appointmentRepository: AppointmentRepository) {}
 
   ngOnInit(): void {
     this.backgroundColor = this._avatarService.getBackgroundColorByName(this.name);
@@ -75,5 +60,13 @@ export class AppointmentCardComponent implements OnInit {
 
   onShowMessage(): void {
     this.showMessage = !this.showMessage;
+  }
+
+  onChangeVisibility() {
+    this.showReason = true;
+  }
+
+  async onChangeStatus(status: string) {
+    await this._appointmentRepository.changeStatusById(this.id, status);
   }
 }

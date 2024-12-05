@@ -1,0 +1,32 @@
+<div class="flex items-center justify-between mb-6">
+    <h1 class="text-[28px] text-foreground">Citas</h1>
+  
+    <ng-search-input placeholder="Buscar por especialidad o paciente" (valueSearch)="onValueSearch($event)" />
+  </div>
+
+@if (loading) {
+    <div class="flex justify-center py-64">
+        <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+    </div>
+} @else {
+    @if (filteredAppointments.length > 0) {
+        <div class="flex flex-wrap items-start gap-10">
+            @for (appointment of filteredAppointments; track $index) {
+                <app-session-card
+                    [id]="appointment.id"
+                    [patient]="appointment.patient"
+                    [doctor]="appointment.doctor"
+                    [date]="appointment.date"
+                    [hour]="appointment.hour"
+                    [status]="appointment.status"
+                    [message]="appointment.message"
+                />
+            }
+        </div>
+    } @else {
+        <div class="text-center text-sm text-foreground font-medium py-64">
+            No tienes turnos
+        </div>
+    }
+}
+  

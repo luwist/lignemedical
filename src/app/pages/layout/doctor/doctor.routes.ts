@@ -7,12 +7,4 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./patient/patient.component').then((m) => m.PatientComponent),
   },
-  // {
-  //   path: 'appointment',
-  //   title: 'Mis citas',
-  //   loadComponent: () =>
-  //     import('./appointment/appointment.component').then(
-  //       (m) => m.AppointmentComponent
-  //     ),
-  // },
 ];

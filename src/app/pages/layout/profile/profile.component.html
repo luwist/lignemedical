@@ -37,14 +37,17 @@
           </div>
         </div>
       </div>
-
     }
   </div>
 
   @if (user$ | async; as user) {
     @if (user.role === 'doctor') {
-      <div class="py-7">
-        <h1 class="font-medium text-xl">Horarios</h1>
+      <div class="w-full">
+        <div class="py-7">
+          <h1 class="font-medium text-xl">Horarios</h1>
+        </div>
+  
+        <app-schedules [id]="user.id" />
       </div>
     }
   }

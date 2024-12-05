@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit {
             this.items = [
               {
                 label: 'Citas',
-                path: '/appointment',
+                path: '/session',
               },
               {
                 label: 'Pacientes',
@@ -84,7 +84,7 @@ export class NavbarComponent implements OnInit {
           case 'paciente':
             this.items = [
               {
-                label: 'Turnos',
+                label: 'Citas',
                 path: '/appointment',
               },
               {

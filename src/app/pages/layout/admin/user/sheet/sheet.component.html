@@ -1,3 +1,5 @@
+<hlm-toaster />
+
 <hlm-sheet side="right" (closed)="onClosed()">
   <button id="edit-profile" brnSheetTrigger hlmBtn size="lg" class="gap-2">
     <img src="assets/icons/add.png" alt="" />
@@ -9,7 +11,7 @@
       <h3 hlmSheetTitle>Agregar usuario</h3>
     </hlm-sheet-header>
 
-    <form [formGroup]="registerForm" class="mt-10 w-[500px]" (submit)="onRegister()">
+    <form [formGroup]="registerForm" class="mt-10 w-[500px]">
       <ng-stepper #stepper>
         <ng-stepper-list orientation="vertical">
           <ng-stepper-item [step]="1">
@@ -120,7 +122,8 @@
               </button>
               <button
                 hlmBtn
-                type="submit"
+                type="button"
+                (click)="onRegister(ctx)"
                 size="lg"
                 [disabled]="
                   (registerForm.statusChanges | async) !== 'VALID'

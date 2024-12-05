@@ -43,17 +43,23 @@ export class DropzoneComponent {
     const storageRef = ref(this._storage, file.name);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
+    console.log(storageRef);
+    console.log(uploadTask);
+
     uploadTask.on('state_changed',
       (snapshot) => {
         this.isUploading = true;
 
         this.progressUpload = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(this.progressUpload);
       },
       (error) => {
         console.log(error);
       },
       async () => {
         const url = await getDownloadURL(storageRef);
+        console.log(url);
+        
         const progressElement = this.progressbar;
 
         progressElement.nativeElement.style.width = `${this.progressUpload}%`;

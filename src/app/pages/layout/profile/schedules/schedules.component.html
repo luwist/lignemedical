@@ -1,0 +1,67 @@
+<hlm-tabs tab="cardiologia" class="w-full flex gap-20" orientation="vertical">
+    <hlm-tabs-list aria-label="tabs example" orientation="vertical">
+      @for (specialty of specialties; track $index) {
+        <button [hlmTabsTrigger]="specialty.name" class="capitalize">{{ specialty.name }}</button>
+      }
+    </hlm-tabs-list>
+    @for (specialty of specialties; track $index) {
+      <div [hlmTabsContent]="specialty.name" class="w-full">
+        <table class="w-full text-sm text-left text-foreground">
+          <thead class="text-xs text-foreground uppercase">
+            <tr>
+              <th class="px-6 py-3">Dia</th>
+              <th class="px-6 py-3">Desde</th>
+              <th class="px-6 py-3">Hasta</th>
+              <th class="px-6 py-3">Esta habilitado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (schedule of specialty.schedules; track $index) {
+              <tr class="border-b border-b-card">
+                <td class="px-6 py-4">
+                  @switch (schedule.dayWeek) {
+                    @case (1) {
+                      Lunes
+                    }
+                    @case (2) {
+                      Martes
+                    }
+                    @case (3) {
+                      Miercoles
+                    }
+                    @case (4) {
+                      Jueves
+                    }
+                    @case (5) {
+                      Viernes
+                    }
+                    @case (6) {
+                      Sabado
+                    }
+                    @case (0) {
+                      Domingo
+                    }
+                  }
+                </td>
+                @if (!schedule.isActive) {
+                  <td class="px-6 py-4 text-destructive text-center" colspan="2">
+                    No disponible
+                  </td>
+                } @else {
+                  <td class="px-6 py-4">
+                    <input type="time" class="bg-input p-2 rounded-sm text-white border-0 outline-0 focus-visible:outline-1 focus-visible:outline-primary" [value]="schedule.startTime.toDate() | date:'HH:mm'">
+                  </td>
+                  <td class="px-6 py-4">
+                    <input type="time" class="bg-input p-2 rounded-sm text-white border-0 outline-0 focus-visible:outline-1 focus-visible:outline-primary" [value]="schedule.endTime.toDate() | date:'HH:mm'">
+                  </td>
+                }
+                <td class="px-6 py-4">
+                  <hlm-switch (changed)="onChange($event, $index)" [checked]="schedule.isActive" />
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+</hlm-tabs>

@@ -6,11 +6,11 @@ export const tagVariant = cva(
   {
     variants: {
       variant: {
-        rejected: 'bg-[#FFE4E6] text-[#FF9595]',
-        accepted: 'bg-[#F0FDF4] text-[#34D399]',
-        pending: 'bg-[#FEFCE8] text-[#FACC15]',
-        cancelled: 'bg-[#FFEDD5] text-[#FFA667]',
-        finished: 'bg-[#E0F2FE] text-[#0EA5E9]',
+        rejected: 'text-[#FF9595]',
+        accepted: 'text-[#34D399]',
+        pending: 'text-[#F9D065]',
+        cancelled: 'text-[#FFA667]',
+        finished: 'text-[#0EA5E9]',
       },
     },
   }
@@ -22,7 +22,7 @@ export const tagVariant = cva(
   imports: [],
   template: `
     <span
-      class="px-4 py-2 text-xs font-medium rounded-full capitalize {{ style }}"
+      class="text-xs font-medium uppercase {{ style }}"
       >{{ value }}</span
     >
   `,
@@ -36,23 +36,23 @@ export class TagComponent implements OnInit {
   variants: any = {
     rejected: {
       value: 'rechazado',
-      style: 'bg-[#FFE4E6] text-[#FF9595]',
+      style: 'text-[#FF9595]',
     },
     accepted: {
       value: 'aceptado',
-      style: 'bg-[#F0FDF4] text-[#34D399]',
+      style: 'text-[#34D399]',
     },
     pending: {
       value: 'pendiente',
-      style: 'bg-[#FEFCE8] text-[#FACC15]',
+      style: 'text-[#FACC15]',
     },
     cancelled: {
       value: 'cancelado',
-      style: 'bg-[#FFEDD5] text-[#FFA667]',
+      style: 'text-[#FFA667]',
     },
     finished: {
       value: 'finalizado',
-      style: 'bg-[#E0F2FE] text-[#0EA5E9]',
+      style: 'text-[#0EA5E9]',
     },
   };
 

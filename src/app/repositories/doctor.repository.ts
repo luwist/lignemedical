@@ -60,16 +60,14 @@ export class DoctorRepository {
     return users;
   }
 
-  async getSchedulesById(id: string): Promise<Schedule[] | null> {
-    const users: Schedule[] = [];
-
+  async getSchedulesById(id: string): Promise<any[] | null> {
     const docRef = doc(this._firestore, "users", id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const user = docSnap.data() as User;
 
-      return user.schedules as Schedule[];
+      return user.specialties as any[];
     }
 
     return null;

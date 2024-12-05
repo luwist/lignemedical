@@ -1,16 +1,26 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '@app/services';
+import { getUser } from '@app/store/auth/auth.actions';
+import { selectIsUserLogged, selectUser } from '@app/store/auth/auth.selectors';
+import { select, Store } from '@ngrx/store';
+import { map } from 'rxjs';
 
 export const isEmailVerifiedGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+  const store = inject(Store);
   const router = inject(Router);
 
-  authService.currentUser$.subscribe((user) => {
-    if (user !== null && !user?.emailVerified) {
-      router.navigateByUrl('/verify-email');
-    }
-  });
+  store.dispatch(getUser());
 
-  return true;
+  return store.pipe(
+    select(selectUser),
+    map(user => {
+      if (user !== null && !user?.emailVerified) {        
+        router.navigateByUrl('/verify-email');
+
+        return false;
+      }
+      
+      return true;
+    })
+  );
 };

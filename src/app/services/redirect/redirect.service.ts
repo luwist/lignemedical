@@ -13,10 +13,11 @@ export class RedirectService {
         url = '/dashboard';
         break;
       case Role.Doctor:
-        url = '/patients';
+      case 'doctora':
+        url = '/session';
         break;
       case Role.Patient:
-        url = '/booking';
+        url = '/appointment';
         break;
     }
 

@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { User } from '@angular/fire/auth';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '@app/services';
+import { AuthService, AvatarService } from '@app/services';
+import { AppState } from '@app/store/app.state';
+import { selectUser } from '@app/store/auth/auth.selectors';
+import { User } from '@app/store/auth/auth.state';
+import { Store } from '@ngrx/store';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
@@ -31,6 +34,7 @@ import {
 } from '@spartan-ng/ui-menu-helm';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 import { Observable } from 'rxjs';
+import { ChangeLanguageComponent } from './change-language/change-language.component';
 
 @Component({
   selector: 'app-profile-menu',
@@ -61,7 +65,9 @@ import { Observable } from 'rxjs';
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
 
-    HlmSkeletonComponent
+    HlmSkeletonComponent,
+
+    ChangeLanguageComponent
   ],
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.scss',
@@ -70,30 +76,52 @@ export class ProfileMenuComponent implements OnInit {
   label!: string;
   currentUser$!: Observable<User | null>;
 
-  constructor(private _router: Router, private _authService: AuthService) {}
+  languages: any = [
+    {
+      code: "en",
+      name: "english",
+      image: "assets/flags/en-US.png",
+    },
+    {
+      code: "pt",
+      name: "português",
+      image: "assets/flags/pt-BR.png",
+    },
+    {
+      code: "es",
+      name: "español",
+      image: "assets/flags/es-ES.png",
+    },
+  ]
+
+  currentLanguage: any = {
+    code: "es",
+    image: "assets/flags/es-ES.png",
+  };
+
+  constructor(private _router: Router, private _store: Store<AppState>, private _authService: AuthService, private _avatarService: AvatarService) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this._authService.currentUser$;
-
-    this.getLabel();
+    this.currentUser$ = this._store.select(selectUser);
   }
 
-  getLabel() {
-    this.currentUser$.subscribe((user) => {
-      if (user !== null && user.displayName !== null) {
-        this.label = user.displayName
-          .split(' ')
-          .map((letter: string) => letter[0])
-          .join('');
-      } else {
-        this.label = '';
-      }
-    });
+  getFallback(name: any): string {
+    return this._avatarService.getFallback(name);
+  }
+
+  getBackgroundColor(name: any): string {
+    return this._avatarService.getBackgroundColorByName(name);
   }
 
   onLogout(): void {
     this._authService.logout();
 
     this._router.navigateByUrl('/login');
+  }
+
+  onChangeLanguage(ctx: any, code: string, image: string) {
+    this.currentLanguage = {...this.currentLanguage, code, image}
+
+    ctx.close();
   }
 }

@@ -1,0 +1,53 @@
+<article class="w-96 rounded-3xl bg-popover border border-border">
+    <header class="flex items-center justify-between p-6 border-b border-border">
+        <h2 class="text-foreground text-base font-semibold">#{{ id }}</h2>
+
+        <app-tag [severity]="status" />
+    </header>
+
+    <div class="grid grid-cols-2 gap-7 px-6 py-4">
+        <div>
+            <p class="text-sm text-muted-foreground">Paciente</p>
+            <p class="text-sm text-foreground">{{ patient.name }}</p>
+        </div>
+        <div>
+            <p class="text-sm text-muted-foreground">Especialidad</p>
+            <p class="text-sm text-foreground capitalize">{{ doctor.specialty }}</p>
+        </div>
+        <div>
+            <p class="text-sm text-muted-foreground">Fecha</p>
+            <p class="text-sm text-foreground">{{ date.toDate() | date:"longDate" }}</p>
+        </div>
+        <div>
+            <p class="text-sm text-muted-foreground">Hora</p>
+            <p class="text-sm text-foreground">{{ hour.toDate() | date:"shortTime" }}</p>
+        </div>
+    </div>
+
+    <footer class="border-t border-border px-6 py-4 flex items-center justify-end">
+        @if (status === 'pending') {
+            @if (showReason) {
+                <app-reason [id]="id" status="rejected" buttonText="rechazar" />
+            } @else {
+                <button hlmBtn type="button" variant="ghost" size="lg" class="w-full" (click)="onChangeVisibility()">Rechazar</button>
+                <button hlmBtn type="button" variant="secondary" size="lg" class="w-full bg-input text-muted-foreground" (click)="onChangeStatus('accepted')">Aceptar</button>
+            }
+        } @else if(status === 'accepted') {
+            @if (showReason) {
+                <app-reason [id]="id" status="cancelled" buttonText="cancelar" />
+            } @else {
+                <button hlmBtn type="button" variant="ghost" size="lg" class="w-full" (click)="onChangeVisibility()">Cancelar</button>
+                <app-end-appointment
+                    [id]="id"
+                    [status]="status"
+                    [hour]="hour"
+                    [date]="date"
+                    [patient]="patient"
+                    [doctor]="doctor"
+                />
+            }
+        } @else if(status === 'finished' || status === 'rejected' || status === 'cancelled') {
+            <app-comment [message]="message" />
+        }
+    </footer>
+</article>

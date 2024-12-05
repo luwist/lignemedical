@@ -1,14 +1,16 @@
 <div class="w-[932px] mx-auto">
     <div class="flex items-center gap-3 mb-10 w-">
-        <hlm-avatar variant="medium">
-            <img [src]="(currentUser$ | async)?.photoURL" alt="Profile picture" hlmAvatarImage />
+        @if(user$ | async; as user) {
+          <hlm-avatar variant="medium">
+            <img [src]="user.picture" alt="Profile picture" hlmAvatarImage />
             <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
           </hlm-avatar>
-
+  
           <div>
-            <p class="text-lg font-medium">{{ (currentUser$ | async)?.displayName }}</p>
+            <p class="text-lg font-medium">{{ user.firstName }} {{ user.lastName }}</p>
             <p class="text-sm text-muted-foreground font-medium">Cuenta personal</p>
           </div>
+        }
     </div>
     <div class="flex justify-between">
         <div>
@@ -23,69 +25,77 @@
         </div>
         <div class="w-[655px]">
             <section>
-                <h2 class="text-xl mb-2">Informacion personal</h2>
-            <p class="text-muted-foreground text-sm leading-6 mb-6">Revisa y actualiza tus datos personales. Los cambios se guardan automáticamente para mantener tu perfil siempre al día.</p>
+              <h2 class="text-xl mb-2">Informacion personal</h2>
+              <p class="text-muted-foreground text-sm leading-6 mb-6">Revisa y actualiza tus datos personales. Los cambios se guardan automáticamente para mantener tu perfil siempre al día.</p>
 
-            <div class="w-full flex gap-5 mb-5">
-                <div class="w-full">
-                  <label hlmLabel
-                    >Nombre
-                    <input
-                      class="w-full"
-                      hlmInput
-                      type="text" disabled value="Nombre"
-                    />
-                  </label>
-            
-                </div>
-            
-                <div class="w-full">
-                  <label hlmLabel
-                    >Apellido
-                    <input class="w-full" hlmInput type="text" disabled value="Apellido" />
-                  </label>
-            
-                </div>
-              </div>
-            
-              <div class="w-full flex gap-5 mb-5">
-                <div class="w-full">
-                  <label hlmLabel
-                    >Edad
-                    <input
-                      class="w-full"
-                      hlmInput
-                      type="text"
-                      [maxLength]="8" disabled value=""
-                    />
-                  </label>
-            
-                </div>
-            
-                <div class="w-full">
-                  <label hlmLabel
-                    >DNI
-                    <input
-                      class="w-full"
-                      hlmInput
-                      type="text"
-                      [maxLength]="8" disabled value=""
-                    />
-                  </label>
-            
-                </div>
-            
-                <div class="w-full">
-                    <label hlmLabel
-                      >Especialidad
-                      <input
-                        class="w-full"
-                        hlmInput
-                        type="text" disabled value=""
-                      />
-                    </label>
-                </div>
-              </div>
+              @if(user$ | async; as user) {
+                <div class="w-full flex gap-5 mb-5">
+                    <div class="w-full">
+                      <label hlmLabel
+                        >Nombre
+                        <input
+                          class="w-full"
+                          hlmInput
+                          type="text"
+                          disabled
+                          [value]="user.firstName"
+                        />
+                      </label>
+                
+                    </div>
+                
+                    <div class="w-full">
+                      <label hlmLabel
+                        >Apellido
+                        <input class="w-full" hlmInput type="text"
+                        disabled disabled
+                        [value]="user.lastName" />
+                      </label>
+                
+                    </div>
+                  </div>
+                
+                  <div class="w-full flex gap-5 mb-5">
+                    <div class="w-full">
+                      <label hlmLabel
+                        >Edad
+                        <input
+                          class="w-full"
+                          hlmInput
+                          type="text"
+                          disabled
+                          [value]="user.age"
+                        />
+                      </label>
+                
+                    </div>
+                
+                    <div class="w-full">
+                      <label hlmLabel
+                        >DNI
+                        <input
+                          class="w-full"
+                          hlmInput
+                          type="text"
+                          disabled
+                          [value]="user.dni"
+                        />
+                      </label>
+                
+                    </div>
+                
+                    <div class="w-full">
+                        <label hlmLabel
+                          >Especialidad
+                          <input
+                            class="w-full"
+                            hlmInput
+                            type="text" disabled value=""
+                          />
+                        </label>
+                    </div>
+                  </div>
+              }
             </section>
 
             <brn-separator hlmSeparator class="my-5" />

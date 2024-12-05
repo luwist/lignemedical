@@ -34,6 +34,8 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import { AuthService } from '@app/services';
+import { toast } from 'ngx-sonner';
+import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
 
 @Component({
   selector: 'app-sheet',
@@ -76,7 +78,9 @@ import { AuthService } from '@app/services';
 
     DropzoneComponent,
 
-    NgTagsInputComponent
+    NgTagsInputComponent,
+
+    HlmToasterComponent
   ],
   templateUrl: './sheet.component.html',
   styleUrl: './sheet.component.scss',
@@ -196,6 +200,8 @@ export class SheetComponent {
   onUpdateFile(url: string, name: string): void {
     const formGroup = this.getFormGroup('profile');
 
+    console.log(url);
+
     formGroup.patchValue({
       picture: url,
     });
@@ -221,14 +227,20 @@ export class SheetComponent {
     return this.registerForm.get(group)?.get(control) as FormControl;
   }
 
-  async onRegister(): Promise<void> {
+  async onRegister(ctx: any): Promise<void> {
     try {
       const credentials = this.registerForm.getRawValue();
 
       this.registerForm.markAsPending();
       this.isLoading = true;
 
-      await this._authService.register(credentials, this.selectedRole);
+      await this._authService.register(credentials, this.selectedRole, false);
+
+      ctx.close();
+
+      toast('Usuario agregado', {
+        description: 'Se ha enviado un correo electronico para que valide su cuenta.'
+      })
     } catch (error) {
       this._messageService.add({
         description:

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { User } from '@angular/fire/auth';
-import { AuthService } from '@app/services';
+import { User } from '@app/models';
+import { UserRepository } from '@app/repositories';
+import { AppState } from '@app/store/app.state';
+import { selectUser } from '@app/store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
@@ -11,7 +14,7 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
-import { Observable } from 'rxjs';
+import { from, Observable, of, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-configuration',
@@ -33,9 +36,21 @@ import { Observable } from 'rxjs';
   styleUrl: './configuration.component.scss',
 })
 export class ConfigurationComponent {
-  currentUser$!: Observable<User | null>;
+  user$!: Observable<User | null>;
 
-  constructor(private _authService: AuthService) {
-    this.currentUser$ = this._authService.currentUser$;
+  constructor(
+    private _userRepository: UserRepository,
+    private _store: Store<AppState>
+  ) {}
+
+  ngOnInit(): void {
+    this.user$ = this._store.select(selectUser).pipe(
+      take(1),
+      switchMap(user => {
+        if (user) return from(this._userRepository.getUserById(user.uid));
+
+        return of(null);
+      })
+    );
   }
 }
