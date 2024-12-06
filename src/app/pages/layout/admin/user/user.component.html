@@ -22,33 +22,57 @@
           </tr>
         </thead>
         <tbody>
-          @for (admin of admins; track $index) {
-            <tr class="border-b border-b-card">
-              <td class="flex items-center gap-3 px-6 py-4">
-                <hlm-avatar variant="medium" shape="square">
-                  <img [src]="admin.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="{{ getBackgroundColor(admin.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(admin.firstName, admin.lastName) }}</span>
-                </hlm-avatar>
-                <div>
-                  <p>{{ admin.firstName }} {{ admin.lastName }}</p>
-                  <p class="text-[#808080]">{{ admin.age }} años</p>
-                </div>
-              </td>
-              <td class="px-6 py-4">{{ admin.dni }}</td>
-              <td class="px-6 py-4">{{ admin.email }}</td>
-              <td class="px-6 py-4">
-                @if (admin.emailVerified) {
-                  <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
-                    Verificado
-                  </span>
-                } @else {
-                  <span class="p-[10px] rounded-xl text-[#F43F5E] bg-[#F43F5E] bg-opacity-15 text-xs font-medium">
-                    No Verificado
-                  </span>
-                }
-              </td>
-            </tr>
+          @if (isLoading) {
+            @for (item of [1, 2, 3, 4 ,5]; track $index) {
+              <tr>
+                <td class="grid grid-cols-[48px_1fr] gap-3 px-6 py-4">
+                  <hlm-skeleton class="w-12 h-12 rounded-xl" />
+          
+                  <div class="w-full">
+                    <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+                    <hlm-skeleton class="w-12 h-5 rounded-sm" />
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <hlm-skeleton class="w-16 h-5 rounded-sm" />
+                </td>
+                <td class="px-6 py-4">
+                  <hlm-skeleton class="w-48 h-5 rounded-sm" />
+                </td>
+                <td class="px-6 py-4">
+                  <hlm-skeleton class="w-20 h-8 rounded-xl" />
+                </td>
+              </tr>
+              }
+          } @else {
+            @for (admin of admins; track $index) {
+              <tr class="border-b border-b-card">
+                <td class="flex items-center gap-3 px-6 py-4">
+                  <hlm-avatar variant="medium" shape="square">
+                    <img [src]="admin.picture" alt="Profile picture" hlmAvatarImage />
+                    <span class="{{ getBackgroundColor(admin.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(admin.firstName, admin.lastName) }}</span>
+                  </hlm-avatar>
+                  <div>
+                    <p>{{ admin.firstName }} {{ admin.lastName }}</p>
+                    <p class="text-[#808080]">{{ admin.age }} años</p>
+                  </div>
+                </td>
+                <td class="px-6 py-4">{{ admin.dni }}</td>
+                <td class="px-6 py-4">{{ admin.email }}</td>
+                <td class="px-6 py-4">
+                  @if (admin.emailVerified) {
+                    <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
+                      Verificado
+                    </span>
+                  } @else {
+                    <span class="p-[10px] rounded-xl text-[#F43F5E] bg-[#F43F5E] bg-opacity-15 text-xs font-medium">
+                      No Verificado
+                    </span>
+                  }
+                </td>
+              </tr>
             }
+          }
         </tbody>
       </table>
     </div>

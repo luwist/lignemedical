@@ -22,9 +22,10 @@ import { HlmTabsComponent, HlmTabsContentDirective, HlmTabsListComponent, HlmTab
   styleUrl: './schedules.component.scss'
 })
 export class SchedulesComponent implements OnInit {
-  specialties: any[] = [];
-
   @Input() id!: string;
+
+  specialties: any[] = [];
+  currentSpecialty!: string;
 
   constructor(private _userRepository: UserRepository) {}
 
@@ -32,15 +33,18 @@ export class SchedulesComponent implements OnInit {
     const user = await this._userRepository.getUserById(this.id);
 
     this.specialties = user?.specialties as any[];
+    this.currentSpecialty = this.specialties[0].name;
   }
 
-  onChange(state: any, index: number): void {
-    // this.specialties[0][index].isActive = state;
+  onChangeState(state: any, index: number): void {
+    const specialties = this.specialties.find(x => x.name === this.currentSpecialty);
 
-    console.log(this.specialties);
-    // console.log(index);
-    // this._firestoreService.updateDocumentById('users', id, {
-    //   isEnable: state,
-    // });
+    specialties.schedules[index].isActive = state;
+
+    this.specialties = [this.specialties, ...specialties];
+  }
+
+  onChangeSpecialty(specialty: string) {
+    this.currentSpecialty = specialty;
   }
 }

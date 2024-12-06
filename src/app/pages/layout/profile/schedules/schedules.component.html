@@ -1,7 +1,7 @@
 <hlm-tabs tab="cardiologia" class="w-full flex gap-20" orientation="vertical">
     <hlm-tabs-list aria-label="tabs example" orientation="vertical">
       @for (specialty of specialties; track $index) {
-        <button [hlmTabsTrigger]="specialty.name" class="capitalize">{{ specialty.name }}</button>
+        <button [hlmTabsTrigger]="specialty.name" class="capitalize" (click)="onChangeSpecialty(specialty.name)">{{ specialty.name }}</button>
       }
     </hlm-tabs-list>
     @for (specialty of specialties; track $index) {
@@ -56,7 +56,7 @@
                   </td>
                 }
                 <td class="px-6 py-4">
-                  <hlm-switch (changed)="onChange($event, $index)" [checked]="schedule.isActive" />
+                  <hlm-switch (changed)="onChangeState($event, $index)" [checked]="schedule.isActive" />
                 </td>
               </tr>
             }

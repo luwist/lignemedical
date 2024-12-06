@@ -10,16 +10,12 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { User } from '@app/models';
-import { FirestoreORM } from '@app/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserRepository {
-  constructor(
-    private _firestoreORM: FirestoreORM<User>,
-    private _firestore: Firestore
-  ) {}
+  constructor(private _firestore: Firestore) {}
 
   async add(user: User): Promise<void> {
     const docRef = doc(this._firestore, 'users', user.id);

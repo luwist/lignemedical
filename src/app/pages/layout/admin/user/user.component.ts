@@ -19,6 +19,7 @@ import {
 } from '@spartan-ng/ui-tabs-helm';
 import { AvatarService, FirestoreService } from '@app/services';
 import { User } from '@app/models';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 
 @Component({
   selector: 'app-user',
@@ -35,6 +36,8 @@ import { User } from '@app/models';
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
 
+    HlmSkeletonComponent,
+
     SheetComponent,
 
     HlmSwitchComponent,
@@ -43,6 +46,8 @@ import { User } from '@app/models';
   styleUrl: './user.component.scss',
 })
 export class UserComponent implements OnInit {
+  isLoading: boolean = true;
+
   admins: User[] = [];
   doctors: User[] = [];
   patients: User[] = [];
@@ -57,6 +62,8 @@ export class UserComponent implements OnInit {
     this.admins = await this._userRepository.getUserListByRole('administrador');
     this.doctors = await this._userRepository.getUserListByRole('doctor');
     this.patients = await this._userRepository.getUserListByRole('paciente');
+
+    this.isLoading = false;
   }
 
   getFallback(name: any, surname: any): string {
