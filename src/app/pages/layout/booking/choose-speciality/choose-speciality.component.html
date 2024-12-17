@@ -15,12 +15,13 @@
           <button
             type="button"
             [title]="specialty.name"
-            class="border text-foreground text-sm bg-card rounded-xl font-medium capitalize flex items-center gap-2.5 justify-center px-6 py-2.5"
+            class="card"
             [ngClass]="
               itemSelected === specialty.name
-                ? 'border-primary'
-                : 'border-transparent'
+                ? 'card-active'
+                : 'card-disabled'
             "
+            [disabled]="itemSelected === specialty.name"
             (click)="onSelected(specialty.name)"
           >
             <img [src]="specialty.imageUrl" alt="" class="w-8 h-8" />

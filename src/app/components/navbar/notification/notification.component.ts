@@ -1,15 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import {
-  BrnPopoverCloseDirective,
   BrnPopoverComponent,
   BrnPopoverContentDirective,
   BrnPopoverTriggerDirective,
 } from '@spartan-ng/ui-popover-brain';
-import {
-  HlmPopoverCloseDirective,
-  HlmPopoverContentDirective,
-} from '@spartan-ng/ui-popover-helm';
+import { HlmPopoverContentDirective } from '@spartan-ng/ui-popover-helm';
 
 import { NotificationMessageComponent } from './notification-message/notification-message.component';
 import { collection, Firestore, onSnapshot, query, Unsubscribe, where } from '@angular/fire/firestore';
@@ -18,18 +13,18 @@ import { selectUser } from '@app/store/auth/auth.selectors';
 import { AppState } from '@app/store/app.state';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
   imports: [
+    TranslateModule,
+
     BrnPopoverComponent,
     BrnPopoverTriggerDirective,
     BrnPopoverContentDirective,
-    BrnPopoverCloseDirective,
     HlmPopoverContentDirective,
-    HlmPopoverCloseDirective,
-    HlmButtonDirective,
     NotificationMessageComponent,
   ],
   templateUrl: './notification.component.html',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InputSearchComponent } from '@app/components/ui/input-search/input-search.component';
 import { UserRepository } from '@app/repositories';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   HlmAvatarComponent,
   HlmAvatarFallbackDirective,
@@ -17,6 +18,8 @@ import { HlmTableModule } from '@spartan-ng/ui-table-helm';
   selector: 'app-patient',
   standalone: true,
   imports: [
+    TranslateModule,
+
     HlmAvatarImageDirective,
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,

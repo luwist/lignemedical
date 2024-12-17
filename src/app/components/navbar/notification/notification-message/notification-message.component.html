@@ -1,10 +1,10 @@
 <div>
     <div class="grid grid-cols-[40px_1fr] gap-[14px]">
         <div class="w-10 h-10 rounded-full bg-[#F43F5E]"></div>
-        <p class="text-sm"><span class="font-semibold">{{ name }}</span> se ha registrado como medico. ¿Que quieres hacer?</p>
+        <p class="text-sm"><span class="font-semibold">{{ name }}</span> {{ 'notifications.newDoctor' | translate }}</p>
     </div>
     <div class="m-3 flex">
-        <button type="button" hlmBtn class="w-full" variant="ghost" size="lg" (click)="onReject()">Rechazar</button>
-        <button type="button" hlmBtn class="w-full" variant="secondary" size="lg" (click)="onApproved()">Aceptar</button>
+        <button type="button" hlmBtn class="w-full" variant="ghost" size="lg" (click)="onReject()">{{ 'notifications.reject' | translate }}</button>
+        <button type="button" hlmBtn class="w-full bg-[#353535]" variant="secondary" size="lg" (click)="onApproved()">{{ 'notifications.accept' | translate }}</button>
     </div>
 </div>

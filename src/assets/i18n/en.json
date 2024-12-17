@@ -1,0 +1,42 @@
+{
+    "profile": {
+        "myProfile": "My profile",
+        "settings": "Settings",
+        "changeLanguage": "Change language",
+        "logout": "Logout",
+        "chooseLanguage": "Choose your language"
+    },
+    "menu": {
+        "dashboard": "Dashboard",
+        "users": "Users",
+        "appointments": "Appointments",
+        "patients": "Patients",
+        "bookAppointment": "Book appointment"
+    },
+    "notifications": {
+        "title": "Notifications",
+        "empty": "You have no notifications",
+        "newDoctor": "has registered as a doctor. What do you want to do?",
+        "reject": "Reject",
+        "accept": "Accept"
+    },
+    "patients": {
+        "title": "Patients",
+        "name": "Name",
+        "age": "Age",
+        "dni": "DNI",
+        "email": "Email",
+        "medicalHistory": "Medical history"
+    },
+    "users": {
+        "title": "Patients",
+        "name": "Name",
+        "age": "Age",
+        "dni": "DNI",
+        "email": "Email",
+        "medicalHistory": "Medical history"
+    },
+    "dashboard": {
+        "title": "Dashboard"
+    }
+}

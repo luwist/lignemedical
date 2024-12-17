@@ -36,13 +36,13 @@
   </button>
 
   <div hlmPopoverContent *brnPopoverContent="let ctx">
-    <h4 class="text-base font-semibold p-5">Notificaciones</h4>
+    <h4 class="text-base font-semibold p-5">{{ 'notifications.title' | translate }}</h4>
 
     <div class="border-t border-[#575757] p-5 flex flex-col gap-5">
       @for (notification of notifications; track $index) {
         <app-notification-message [id]="notification.id" name="{{ notification.doctor.firstName }} {{ notification.doctor.lastName }}" />
       } @empty {
-        <div class="py-6 text-sm text-center">No tienes ninguna notificación</div>
+        <div class="py-6 text-sm text-center">{{ 'notifications.empty' | translate }}</div>
       }
     </div>
   </div>

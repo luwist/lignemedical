@@ -15,7 +15,7 @@ export class AppointmentService {
     const specialties = doctor?.specialties?.find(x => x.name === specialty);
     const appointments = await this._appointmentRepository.getAppointmentList();
 
-    return doctor?.schedules ? this.getAvailableDates(specialties.schedules, appointments) : null;
+    return this.getAvailableDates(specialties.schedules, appointments);
   }
 
   getAvailableDates(schedules: any[], appointments: any[]): any[] {

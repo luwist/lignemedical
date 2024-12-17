@@ -9,6 +9,7 @@ import { selectUser } from '@app/store/auth/auth.selectors';
 import { User } from '@app/store/auth/auth.state';
 import { CommonModule } from '@angular/common';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,9 @@ import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
   imports: [
     CommonModule,
     RouterLink,
+
+    TranslateModule,
+
     NotificationComponent,
     ProfileMenuComponent,
 
@@ -29,12 +33,16 @@ export class NavbarComponent implements OnInit {
 
   currentUser$!: Observable<User | null>;
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(private _store: Store<AppState>, private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._store.select(selectUser);
 
     this.initMenu();
+
+    this.translate.onLangChange.subscribe(() => {
+      this.initMenu();
+    });
   }
 
   initMenu(): void {
@@ -48,23 +56,23 @@ export class NavbarComponent implements OnInit {
           case 'administrador':
             this.items = [
               {
-                label: 'Dashboard',
+                label: this.translate.instant('menu.dashboard'),
                 path: '/dashboard',
               },
               {
-                label: 'Usuarios',
+                label: this.translate.instant('menu.users'),
                 path: '/users',
               },
               {
-                label: 'Citas',
+                label: this.translate.instant('menu.appointments'),
                 path: '/appointment',
               },
               {
-                label: 'Pacientes',
+                label: this.translate.instant('menu.patients'),
                 path: '/patients',
               },
               {
-                label: 'Reservar cita',
+                label: this.translate.instant('menu.bookAppointment'),
                 path: '/booking',
               },
             ];
@@ -72,11 +80,11 @@ export class NavbarComponent implements OnInit {
           case 'doctor':
             this.items = [
               {
-                label: 'Citas',
+                label: this.translate.instant('menu.appointments'),
                 path: '/session',
               },
               {
-                label: 'Pacientes',
+                label: this.translate.instant('menu.patients'),
                 path: '/patients',
               },
             ];
@@ -84,11 +92,11 @@ export class NavbarComponent implements OnInit {
           case 'paciente':
             this.items = [
               {
-                label: 'Citas',
+                label: this.translate.instant('menu.appointments'),
                 path: '/appointment',
               },
               {
-                label: 'Reservar cita',
+                label: this.translate.instant('menu.bookAppointment'),
                 path: '/booking',
               },
             ];

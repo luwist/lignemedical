@@ -52,9 +52,7 @@ export class DoctorRepository {
     querySnapshot.forEach(doc => {
       const data = doc.data() as User;
 
-      if (data.specialist?.includes(specialty)) {
-        users.push(data);
-      }
+      if (data.specialties?.some(x => x.name === specialty)) users.push(data);
     })
 
     return users;

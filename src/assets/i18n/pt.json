@@ -1,0 +1,34 @@
+{
+    "profile": {
+        "myProfile": "Meu perfil",
+        "settings": "Configurações",
+        "changeLanguage": "Alterar idioma",
+        "logout": "Sair",
+        "chooseLanguage": "Selecione um idioma"
+    },
+    "menu": {
+        "dashboard": "Painel de controle",
+        "users": "Usuários",
+        "appointments": "Consultas",
+        "patients": "Pacientes",
+        "bookAppointment": "Marcar consulta"
+    },
+    "notifications": {
+        "title": "Notificações",
+        "empty": "Você não tem notificações",
+        "newDoctor": "se registrou como médico. O que você quer fazer?",
+        "reject": "Rejeitar",
+        "accept": "Aceitar"
+    },
+    "patients": {
+        "title": "Pacientes",
+        "name": "Nome",
+        "age": "Idade",
+        "dni": "DNI",
+        "email": "E-mail",
+        "medicalHistory": "Histórico médico"
+    },
+    "dashboard": {
+        "title": "Painel de controle"
+    }
+}

@@ -10,8 +10,6 @@ export interface User {
   isEnable: boolean | null;
   emailVerified: boolean | null;
 
-  specialist?: string[];
   specialties?: any[];
-  schedules?: any[];
   insurance?: string;
 }

@@ -4,6 +4,8 @@
   <div>
     <h1 class="text-[28px] text-foreground mb-7">Reservar turno</h1>
 
+    <app-choose-patient />
+
     <app-choose-speciality (selected)="onSpecialtySelected($event)" />
 
     <app-choose-doctor

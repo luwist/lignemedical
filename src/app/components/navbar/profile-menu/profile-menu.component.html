@@ -53,7 +53,7 @@
             routerLink="/account"
             class="flex items-center w-full h-full text-start"
           >
-            <span>Mi perfil</span>
+            <span>{{ 'profile.myProfile' | translate }}</span>
           </a>
         </button>
 
@@ -62,7 +62,7 @@
             routerLink="/settings"
             class="flex items-center w-full h-full text-start"
           >
-            <span>Configuración</span>
+            <span>{{ 'profile.settings' | translate }}</span>
           </a>
         </button>
 
@@ -74,13 +74,13 @@
             hlmBtn
             class="flex items-center gap-3"
           >
-            <span>Cambiar idioma</span>
+            <span>{{ 'profile.changeLanguage' | translate }}</span>
             <img [src]="currentLanguage.image" alt="flag" class="w-5" />
           </button>
           
           <hlm-dialog-content *brnDialogContent="let ctx">
             <hlm-dialog-header>
-              <h3 hlmDialogTitle>Elige el idioma:</h3>
+              <h3 hlmDialogTitle>{{ 'profile.chooseLanguage' | translate }}:</h3>
             </hlm-dialog-header>
             <div class="flex items-center gap-5">
               @for (language of languages; track $index) {
@@ -102,7 +102,7 @@
 
       <hlm-menu-group>
         <button hlmMenuItem (click)="onLogout()">
-          <span>Cerrar sesion</span>
+          <span>{{ 'profile.logout' | translate }}</span>
         </button>
       </hlm-menu-group>
     </hlm-menu>

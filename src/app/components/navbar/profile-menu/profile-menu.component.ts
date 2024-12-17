@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, AvatarService } from '@app/services';
+import { AuthService, AvatarService, LanguageService } from '@app/services';
 import { AppState } from '@app/store/app.state';
 import { selectUser } from '@app/store/auth/auth.selectors';
 import { User } from '@app/store/auth/auth.state';
@@ -18,8 +18,6 @@ import {
 import {
   HlmDialogComponent,
   HlmDialogContentComponent,
-  HlmDialogDescriptionDirective,
-  HlmDialogFooterComponent,
   HlmDialogHeaderComponent,
   HlmDialogTitleDirective,
 } from '@spartan-ng/ui-dialog-helm';
@@ -28,13 +26,12 @@ import {
   HlmMenuComponent,
   HlmMenuGroupComponent,
   HlmMenuItemDirective,
-  HlmMenuItemIconDirective,
   HlmMenuLabelComponent,
   HlmMenuSeparatorComponent,
 } from '@spartan-ng/ui-menu-helm';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
 import { Observable } from 'rxjs';
-import { ChangeLanguageComponent } from './change-language/change-language.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-menu',
@@ -42,12 +39,14 @@ import { ChangeLanguageComponent } from './change-language/change-language.compo
   imports: [
     CommonModule,
     RouterLink,
+
+    TranslateModule,
+
     BrnMenuTriggerDirective,
 
     HlmMenuComponent,
     HlmMenuItemDirective,
     HlmMenuLabelComponent,
-    HlmMenuItemIconDirective,
     HlmMenuSeparatorComponent,
     HlmMenuGroupComponent,
 
@@ -57,17 +56,13 @@ import { ChangeLanguageComponent } from './change-language/change-language.compo
     HlmDialogComponent,
     HlmDialogContentComponent,
     HlmDialogHeaderComponent,
-    HlmDialogFooterComponent,
     HlmDialogTitleDirective,
-    HlmDialogDescriptionDirective,
 
     HlmAvatarImageDirective,
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
 
-    HlmSkeletonComponent,
-
-    ChangeLanguageComponent
+    HlmSkeletonComponent
   ],
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.scss',
@@ -99,7 +94,13 @@ export class ProfileMenuComponent implements OnInit {
     image: "assets/flags/es-ES.png",
   };
 
-  constructor(private _router: Router, private _store: Store<AppState>, private _authService: AuthService, private _avatarService: AvatarService) {}
+  constructor(
+    private _router: Router,
+    private _store: Store<AppState>,
+    private _authService: AuthService,
+    private _avatarService: AvatarService,
+    private _languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._store.select(selectUser);
@@ -121,6 +122,8 @@ export class ProfileMenuComponent implements OnInit {
 
   onChangeLanguage(ctx: any, code: string, image: string) {
     this.currentLanguage = {...this.currentLanguage, code, image}
+
+    this._languageService.changeLanguage(code);
 
     ctx.close();
   }

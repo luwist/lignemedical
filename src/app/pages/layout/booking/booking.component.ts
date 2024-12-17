@@ -11,9 +11,10 @@ import { AppState } from '@app/store/app.state';
 import { Observable } from 'rxjs';
 import { User } from '@app/store/auth/auth.state';
 import { selectUser } from '@app/store/auth/auth.selectors';
-import { AppointmentRepository } from '@app/repositories';
+import { AppointmentRepository, UserRepository } from '@app/repositories';
 import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
 import { toast } from 'ngx-sonner';
+import { ChoosePatientComponent } from './choose-patient/choose-patient.component';
 
 @Component({
   selector: 'app-booking',
@@ -21,6 +22,7 @@ import { toast } from 'ngx-sonner';
   imports: [
     CommonModule,
 
+    ChoosePatientComponent,
     ChooseDoctorComponent,
     ChooseSpecialityComponent,
     ChooseDateComponent,
@@ -53,7 +55,7 @@ export class BookingComponent implements OnInit {
     },
   };
 
-  constructor(private _store: Store<AppState>, private _appointmentRepository: AppointmentRepository) {}
+  constructor(private _store: Store<AppState>, private _appointmentRepository: AppointmentRepository, private _userRepository: UserRepository) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._store.select(selectUser);

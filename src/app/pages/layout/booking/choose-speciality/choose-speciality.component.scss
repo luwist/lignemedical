@@ -1,0 +1,26 @@
+.card {
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    color: hsl(var(--foreground));
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+
+    &:not(:disabled):hover {
+        border: 1px solid #404040;
+    }
+
+    &.card-active {
+        border: 1px solid hsl(var(--primary));
+    }
+
+    &.card-disabled {
+        border: 1px solid transparent;
+    }
+}
