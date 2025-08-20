@@ -1,0 +1,27 @@
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  top: calc(50% - (38px / 2));
+  left: calc(100% + 6px);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 10px;
+  color: #8C8C8C;
+  background-color: #242424;
+  border-radius: 12px;
+  white-space: nowrap;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 9999;
+    top: calc(50% - (12px / 2));
+    left: 0%;
+    border-top: 6px solid transparent;
+    border-right: 6px solid #242424;
+    border-bottom: 6px solid transparent;
+    width: 0;
+    height: 0;
+    margin-left: -6px;
+  }
+}

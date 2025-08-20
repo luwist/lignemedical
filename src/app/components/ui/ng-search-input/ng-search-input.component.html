@@ -1,10 +1,12 @@
 <div
-  class="w-[400px] h-[58px] border-2 rounded-full pl-6 pr-2 bg-[#353535] grid grid-cols-[1fr_40px] items-center"
-  [ngClass]="isFocused ? 'border-primary/50 bg-transparent': 'border-transparent'"
+  class="w-[400px] h-[56px] border rounded-full pl-6 pr-2 bg-[#242424] grid grid-cols-[1fr_40px] items-center"
+  [ngClass]="
+    isFocused ? 'border-2 border-primary/50 bg-transparent' : 'border-[#303030]'
+  "
 >
   <input
     type="text"
-    class="block w-full h-full bg-transparent outline-none text-white placeholder:text-[#808080] text-sm"
+    class="block w-full h-full bg-transparent outline-none text-white placeholder:text-[#fff] text-sm"
     [placeholder]="placeholder"
     [(ngModel)]="value"
     (focus)="onFocus()"

@@ -24,7 +24,7 @@ export class HlmTabsTriggerDirective {
   public readonly userClass = input<ClassValue>('', { alias: 'class' });
   protected _computedClass = computed(() =>
     hlm(
-      'inline-flex items-center justify-center whitespace-nowrap px-5 h-10 rounded-full text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-[#353535] data-[state=active]:text-foreground',
+      'inline-flex items-center justify-center whitespace-nowrap border-b-2 border-transparent px-[14px] h-10 text-sm font-semibold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-b-primary data-[state=active]:text-primary',
       this.userClass()
     )
   );

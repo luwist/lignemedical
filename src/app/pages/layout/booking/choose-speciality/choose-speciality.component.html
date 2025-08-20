@@ -1,38 +1,30 @@
-<div class="w-full bg-popover rounded-3xl px-8">
-  <h2
-    class="text-muted-foreground font-medium text-base border-b border-border py-6"
-  >
-    Eliga la especialidad
-  </h2>
+<div class="card">
+  <h2 class="title">Eliga la especialidad</h2>
   @if (loading) {
-    <div class="flex justify-center py-12">
-      <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
-    </div>
-  } @else {
-    @if (specialties.length > 0) {
-      <div class="flex flex-wrap gap-6 py-6">
-        @for (specialty of specialties; track $index) {
-          <button
-            type="button"
-            [title]="specialty.name"
-            class="card"
-            [ngClass]="
-              itemSelected === specialty.name
-                ? 'card-active'
-                : 'card-disabled'
-            "
-            [disabled]="itemSelected === specialty.name"
-            (click)="onSelected(specialty.name)"
-          >
-            <img [src]="specialty.imageUrl" alt="" class="w-8 h-8" />
-            {{ specialty.name }}
-          </button>
-        }
-      </div>
-    } @else {
-      <div class="text-center text-sm text-foreground font-medium py-12">
-        No hay especialidades medicas
-      </div>
+  <div class="flex justify-center py-12">
+    <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+  </div>
+  } @else { @if (specialties.length > 0) {
+  <div class="flex flex-wrap gap-6 p-7">
+    @for (specialty of specialties; track $index) {
+    <button
+      type="button"
+      [title]="specialty.name"
+      class="item"
+      [ngClass]="
+        itemSelected === specialty.name ? 'card-active' : 'card-disabled'
+      "
+      [disabled]="itemSelected === specialty.name"
+      (click)="onSelected(specialty.name)"
+    >
+      <img [src]="specialty.imageUrl" alt="" class="w-8 h-8" />
+      {{ specialty.name }}
+    </button>
     }
-  }
+  </div>
+  } @else {
+  <div class="text-center text-sm text-foreground font-medium py-12">
+    No hay especialidades medicas
+  </div>
+  } }
 </div>

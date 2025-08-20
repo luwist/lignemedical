@@ -28,6 +28,14 @@
         "email": "Correo electrónico",
         "medicalHistory": "Historial médico"
     },
+    "users": {
+        "title": "Usuarios",
+        "name": "Nombre",
+        "age": "Edad",
+        "dni": "DNI",
+        "email": "Correo electrónico",
+        "emailStatus": "Estado del correo"
+    },
     "dashboard": {
         "title": "Panel de control"
     }

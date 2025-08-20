@@ -1,128 +1,385 @@
 <main class="">
-  <div class="flex items-center justify-between mb-6">
-    <h2 class="text-[28px]">Usuarios</h2>
+  <div class="section-header">
+    <h2 class="section-title">{{ "users.title" | translate }}</h2>
 
     <app-sheet />
   </div>
 
   <hlm-tabs tab="administrators" class="w-full">
-    <hlm-tabs-list class="w-full" aria-label="tabs example">
+    <hlm-tabs-list
+      class="border-border w-full h-10 border-b bg-transparent p-0"
+      aria-label="tabs example"
+    >
       <button hlmTabsTrigger="administrators">Administradores</button>
       <button hlmTabsTrigger="doctors">Doctores</button>
       <button hlmTabsTrigger="patients">Pacientes</button>
     </hlm-tabs-list>
     <div hlmTabsContent="administrators">
-      <table class="w-full text-sm text-left text-foreground">
-        <thead class="text-xs text-foreground uppercase">
+      <ng-table [value]="admins" [loading]="isLoading">
+        <ng-template #header>
           <tr>
-            <th class="px-6 py-3">Nombre</th>
-            <th class="px-6 py-3">DNI</th>
-            <th class="px-6 py-3">Correo electronico</th>
-            <th class="px-6 py-3">Estado del correo</th>
+            <th>{{ "users.name" | translate }}</th>
+            <th>{{ "users.dni" | translate }}</th>
+            <th>{{ "users.email" | translate }}</th>
+            <th>{{ "users.emailStatus" | translate }}</th>
           </tr>
-        </thead>
-        <tbody>
-          @if (isLoading) {
-            @for (item of [1, 2, 3, 4 ,5]; track $index) {
-              <tr>
-                <td class="grid grid-cols-[48px_1fr] gap-3 px-6 py-4">
-                  <hlm-skeleton class="w-12 h-12 rounded-xl" />
-          
-                  <div class="w-full">
-                    <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
-                    <hlm-skeleton class="w-12 h-5 rounded-sm" />
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <hlm-skeleton class="w-16 h-5 rounded-sm" />
-                </td>
-                <td class="px-6 py-4">
-                  <hlm-skeleton class="w-48 h-5 rounded-sm" />
-                </td>
-                <td class="px-6 py-4">
-                  <hlm-skeleton class="w-20 h-8 rounded-xl" />
-                </td>
-              </tr>
+        </ng-template>
+
+        <ng-template #body let-users let-expanded="expanded">
+          <tr [ngClass]="expanded && 'bg-[#353535] bg-opacity-35'">
+            <td class="flex items-center gap-3 py-4 rounded-s-xl">
+              <hlm-avatar variant="medium" shape="square">
+                <img
+                  [src]="users.picture"
+                  alt="Profile picture"
+                  hlmAvatarImage
+                />
+                <span class="bg-[#FD005B] text-white" hlmAvatarFallback
+                  >LL</span
+                >
+              </hlm-avatar>
+              <div>
+                <p>{{ users.firstName }} {{ users.lastName }}</p>
+                <p class="text-[#808080]">{{ users.age }} años</p>
+              </div>
+            </td>
+            <td>{{ users.dni }}</td>
+            <td>{{ users.email }}</td>
+            <td>
+              @if (users.emailVerified) {
+              <span
+                class="p-[10px] rounded-xl text-[#8DCA85] bg-[#222E28] text-xs font-medium"
+              >
+                Verificado
+              </span>
+              } @else {
+              <span
+                class="p-[10px] rounded-xl text-[#C7838C] bg-[#2F272C] text-xs font-medium"
+              >
+                No Verificado
+              </span>
               }
-          } @else {
-            @for (admin of admins; track $index) {
-              <tr class="border-b border-b-card">
-                <td class="flex items-center gap-3 px-6 py-4">
-                  <hlm-avatar variant="medium" shape="square">
-                    <img [src]="admin.picture" alt="Profile picture" hlmAvatarImage />
-                    <span class="{{ getBackgroundColor(admin.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(admin.firstName, admin.lastName) }}</span>
-                  </hlm-avatar>
-                  <div>
-                    <p>{{ admin.firstName }} {{ admin.lastName }}</p>
-                    <p class="text-[#808080]">{{ admin.age }} años</p>
-                  </div>
-                </td>
-                <td class="px-6 py-4">{{ admin.dni }}</td>
-                <td class="px-6 py-4">{{ admin.email }}</td>
-                <td class="px-6 py-4">
-                  @if (admin.emailVerified) {
-                    <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
-                      Verificado
-                    </span>
-                  } @else {
-                    <span class="p-[10px] rounded-xl text-[#F43F5E] bg-[#F43F5E] bg-opacity-15 text-xs font-medium">
-                      No Verificado
-                    </span>
-                  }
-                </td>
-              </tr>
-            }
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+          @for (column of [0, 1, 2, 3, 4]; track $index) {
+          <tr>
+            <td class="grid grid-cols-[48px_1fr] gap-3">
+              <hlm-skeleton class="w-12 h-12 rounded-xl" />
+
+              <div class="w-full">
+                <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+                <hlm-skeleton class="w-12 h-5 rounded-sm" />
+              </div>
+            </td>
+            <td>
+              <hlm-skeleton class="w-16 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-48 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-12 h-12 rounded-full" />
+            </td>
+          </tr>
           }
-        </tbody>
-      </table>
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="4" class="h-[405px] text-center align-middle">
+              <div class="w-full flex items-center justify-center">
+                <div class="w-[312px]">
+                  <h2 class="text-base font-semibold text-white mb-2">
+                    There are no registered users yet.
+                  </h2>
+                  <p class="text-sm font-medium text-[#808080] leading-[22px]">
+                    It looks like no one has joined yet. When they do, you'll be
+                    able to see them in this list.
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-table>
     </div>
     <div hlmTabsContent="doctors">
-      <table class="w-full text-sm text-left text-foreground">
-        <thead class="text-xs text-foreground uppercase">
+      <ng-table [value]="doctors" [loading]="isLoading">
+        <ng-template #header>
           <tr>
-            <th class="px-6 py-3">Nombre</th>
-            <th class="px-6 py-3">DNI</th>
-            <th class="px-6 py-3">Correo electronico</th>
-            <th class="px-6 py-3">Estado del correo</th>
-            <th class="px-6 py-3">Esta habilitado</th>
+            <th>{{ "users.name" | translate }}</th>
+            <th>{{ "users.dni" | translate }}</th>
+            <th>{{ "users.email" | translate }}</th>
+            <th>{{ "users.emailStatus" | translate }}</th>
+            <th>Esta habilitado</th>
           </tr>
-        </thead>
-        <tbody>
-          @for (doctor of doctors; track $index) {
-            <tr class="border-b border-b-card">
-              <td class="flex items-center gap-3 px-6 py-4">
-                <hlm-avatar variant="medium" shape="square">
-                  <img [src]="doctor.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="{{ getBackgroundColor(doctor.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(doctor.firstName, doctor.lastName) }}</span>
-                </hlm-avatar>
-                <div>
-                  <p>{{ doctor.firstName }} {{ doctor.lastName }}</p>
-                  <p class="text-[#808080]">{{ doctor.age }} años</p>
+        </ng-template>
+
+        <ng-template #body let-users let-expanded="expanded">
+          <tr [ngClass]="expanded && 'bg-[#353535] bg-opacity-35'">
+            <td class="flex items-center gap-3 py-4 rounded-s-xl">
+              <hlm-avatar variant="medium" shape="square">
+                <img
+                  [src]="users.picture"
+                  alt="Profile picture"
+                  hlmAvatarImage
+                />
+                <span class="bg-[#FD005B] text-white" hlmAvatarFallback
+                  >LL</span
+                >
+              </hlm-avatar>
+              <div>
+                <p>{{ users.firstName }} {{ users.lastName }}</p>
+                <p class="text-[#808080]">{{ users.age }} años</p>
+              </div>
+            </td>
+            <td>{{ users.dni }}</td>
+            <td>{{ users.email }}</td>
+            <td>
+              @if (users.emailVerified) {
+              <span
+                class="p-[10px] rounded-xl text-[#8DCA85] bg-[#222E28] text-xs font-medium"
+              >
+                Verificado
+              </span>
+              } @else {
+              <span
+                class="p-[10px] rounded-xl text-[#C7838C] bg-[#2F272C] text-xs font-medium"
+              >
+                No Verificado
+              </span>
+              }
+            </td>
+            <td>
+              <hlm-switch
+                (changed)="onChange($event, users.id)"
+                [checked]="users.isEnable"
+              />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+          @for (column of [0, 1, 2, 3, 4]; track $index) {
+          <tr>
+            <td class="grid grid-cols-[48px_1fr] gap-3">
+              <hlm-skeleton class="w-12 h-12 rounded-xl" />
+
+              <div class="w-full">
+                <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+                <hlm-skeleton class="w-12 h-5 rounded-sm" />
+              </div>
+            </td>
+            <td>
+              <hlm-skeleton class="w-16 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-48 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-12 h-12 rounded-full" />
+            </td>
+          </tr>
+          }
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="5" class="h-[405px] text-center align-middle">
+              <div class="w-full flex items-center justify-center">
+                <div class="w-[312px]">
+                  <h2 class="text-base font-semibold text-white mb-2">
+                    There are no registered users yet.
+                  </h2>
+                  <p class="text-sm font-medium text-[#808080] leading-[22px]">
+                    It looks like no one has joined yet. When they do, you'll be
+                    able to see them in this list.
+                  </p>
                 </div>
-              </td>
-              <td class="px-6 py-4">{{ doctor.dni }}</td>
-              <td class="px-6 py-4">{{ doctor.email }}</td>
-              <td class="px-6 py-4">
-                @if (doctor.emailVerified) {
-                  <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
-                    Verificado
-                  </span>
-                } @else {
-                  <span class="p-[10px] rounded-xl text-[#F43F5E] bg-[#F43F5E] bg-opacity-15 text-xs font-medium">
-                    No Verificado
-                  </span>
-                }
-              </td>
-              <td class="px-6 py-4">
-                <hlm-switch (changed)="onChange($event, doctor.id)" [checked]="doctor.isEnable" />
-              </td>
-            </tr>
-            }
-        </tbody>
-      </table>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-table>
     </div>
     <div hlmTabsContent="patients">
-      <table class="w-full text-sm text-left text-foreground">
+      <ng-table [value]="patients" [loading]="isLoading">
+        <ng-template #header>
+          <tr>
+            <th>{{ "users.name" | translate }}</th>
+            <th>{{ "users.dni" | translate }}</th>
+            <th>{{ "users.email" | translate }}</th>
+            <th>{{ "users.emailStatus" | translate }}</th>
+            <th>Historial Medico</th>
+            <th class=""></th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-users let-expanded="expanded">
+          <tr [ngClass]="expanded && 'bg-[#353535] bg-opacity-35'">
+            <td class="flex items-center gap-3 py-4 rounded-s-xl">
+              <hlm-avatar variant="medium" shape="square">
+                <img
+                  [src]="users.picture"
+                  alt="Profile picture"
+                  hlmAvatarImage
+                />
+                <span class="bg-[#FD005B] text-white" hlmAvatarFallback
+                  >LL</span
+                >
+              </hlm-avatar>
+              <div>
+                <p>{{ users.firstName }} {{ users.lastName }}</p>
+                <p class="text-[#808080]">{{ users.age }} años</p>
+              </div>
+            </td>
+            <td>{{ users.dni }}</td>
+            <td>{{ users.email }}</td>
+            <td>
+              @if (users.emailVerified) {
+              <span
+                class="p-[10px] rounded-xl text-[#8DCA85] bg-[#222E28] text-xs font-medium"
+              >
+                Verificado
+              </span>
+              } @else {
+              <span
+                class="p-[10px] rounded-xl text-[#C7838C] bg-[#2F272C] text-xs font-medium"
+              >
+                No Verificado
+              </span>
+              }
+            </td>
+            <td>
+              <button
+                class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="#808080"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td>
+              <div class="relative inline-block" appNgTooltip="Descargar">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16.6097 19.9999C17.9497 20.0099 19.2397 19.5099 20.2297 18.6099C23.4997 15.7499 21.7497 10.0099 17.4397 9.46995C15.8997 0.129949 2.42973 3.66995 5.61973 12.5599"
+                    stroke="#808080"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.27938 12.9701C6.74938 12.7001 6.15938 12.5601 5.56938 12.5701C0.909376 12.9001 0.919376 19.6801 5.56938 20.0101"
+                    stroke="#808080"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8203 9.88998C16.3403 9.62998 16.9003 9.48998 17.4803 9.47998"
+                    stroke="#808080"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12.8566 20.5718L11.4283 22.0001L10 20.5718"
+                    stroke="#808080"
+                    stroke-width="1.0527"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M11.4297 18V21.9601"
+                    stroke="#808080"
+                    stroke-width="1.0527"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #loadingbody>
+          @for (column of [0, 1, 2, 3, 4]; track $index) {
+          <tr>
+            <td class="grid grid-cols-[48px_1fr] gap-3">
+              <hlm-skeleton class="w-12 h-12 rounded-xl" />
+
+              <div class="w-full">
+                <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+                <hlm-skeleton class="w-12 h-5 rounded-sm" />
+              </div>
+            </td>
+            <td>
+              <hlm-skeleton class="w-16 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-48 h-5 rounded-sm" />
+            </td>
+            <td>
+              <hlm-skeleton class="w-12 h-12 rounded-full" />
+            </td>
+          </tr>
+          }
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="5" class="h-[405px] text-center align-middle">
+              <div class="w-full flex items-center justify-center">
+                <div class="w-[312px]">
+                  <h2 class="text-base font-semibold text-white mb-2">
+                    There are no registered users yet.
+                  </h2>
+                  <p class="text-sm font-medium text-[#808080] leading-[22px]">
+                    It looks like no one has joined yet. When they do, you'll be
+                    able to see them in this list.
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-table>
+      <!-- <table class="w-full text-sm text-left text-foreground">
         <thead class="text-xs text-foreground uppercase">
           <tr>
             <th class="px-6 py-3">Nombre</th>
@@ -134,63 +391,75 @@
         </thead>
         <tbody>
           @for (patient of patients; track $index) {
-            <tr class="border-b border-b-card">
-              <td class="flex items-center gap-3 px-6 py-4">
-                <hlm-avatar variant="medium" shape="square">
-                  <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
-                  <span class="{{ getBackgroundColor(patient.firstName) }} text-white" hlmAvatarFallback>{{ getFallback(patient.firstName, patient.lastName) }}</span>
-                </hlm-avatar>
-                <div>
-                  <p>{{ patient.firstName }} {{ patient.lastName }}</p>
-                  <p class="text-[#808080]">{{ patient.age }} años</p>
-                </div>
-              </td>
-              <td class="px-6 py-4">{{ patient.dni }}</td>
-              <td class="px-6 py-4">{{ patient.email }}</td>
-              <td class="px-6 py-4">
-                @if (patient.emailVerified) {
-                  <span class="p-[10px] rounded-xl text-[#34D399] bg-[#34D399] bg-opacity-15 text-xs font-medium">
-                    Verificado
-                  </span>
-                } @else {
-                  <span class="p-[10px] rounded-xl text-[#F43F5E] bg-[#F43F5E] bg-opacity-15 text-xs font-medium">
-                    No Verificado
-                  </span>
-                }
-              </td>
-              <td class="px-6 py-4">
-                <button
-            class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              stroke="#808080"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
-                stroke-width="1.5"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-              </td>
-            </tr>
-            }
+          <tr class="border-b border-b-card">
+            <td class="flex items-center gap-3 px-6 py-4">
+              <hlm-avatar variant="medium" shape="square">
+                <img
+                  [src]="patient.picture"
+                  alt="Profile picture"
+                  hlmAvatarImage
+                />
+                <span
+                  class="{{ getBackgroundColor(patient.firstName) }} text-white"
+                  hlmAvatarFallback
+                  >{{ getFallback(patient.firstName, patient.lastName) }}</span
+                >
+              </hlm-avatar>
+              <div>
+                <p>{{ patient.firstName }} {{ patient.lastName }}</p>
+                <p class="text-[#808080]">{{ patient.age }} años</p>
+              </div>
+            </td>
+            <td class="px-6 py-4">{{ patient.dni }}</td>
+            <td class="px-6 py-4">{{ patient.email }}</td>
+            <td class="px-6 py-4">
+              @if (patient.emailVerified) {
+              <span
+                class="p-[10px] rounded-xl text-[#8DCA85] bg-[#222E28] text-xs font-medium"
+              >
+                Verificado
+              </span>
+              } @else {
+              <span
+                class="p-[10px] rounded-xl text-[#C7838C] bg-[#2F272C] text-xs font-medium"
+              >
+                No Verificado
+              </span>
+              }
+            </td>
+            <td class="px-6 py-4">
+              <button
+                class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="#808080"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 9.15h5.25m-5.25 3h3.285M7.5 4.5h3C12 4.5 12 3.75 12 3c0-1.5-.75-1.5-1.5-1.5h-3C6.75 1.5 6 1.5 6 3s.75 1.5 1.5 1.5"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 3.015c2.498.135 3.75 1.057 3.75 4.485V12c0 3-.75 4.5-4.5 4.5h-4.5C3 16.5 2.25 15 2.25 12V7.5c0-3.42 1.253-4.35 3.75-4.485"
+                    stroke-width="1.5"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          }
         </tbody>
-      </table>
+      </table> -->
     </div>
   </hlm-tabs>
 </main>

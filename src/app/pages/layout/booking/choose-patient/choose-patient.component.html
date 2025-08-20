@@ -1,52 +1,41 @@
-<div class="w-full bg-popover rounded-3xl px-8 mb-5">
-    <h2
-      class="text-muted-foreground font-medium text-base border-b border-border py-6"
+<div class="card">
+  <h2 class="title">Eliga al paciente</h2>
+  @if (loading) {
+  <div class="flex justify-center py-12">
+    <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+  </div>
+  } @else { @if (patients.length > 0) {
+  <div class="flex flex-wrap gap-6 py-6">
+    @for (patient of patients; track $index) {
+    <button
+      type="button"
+      class="item"
+      [ngClass]="itemSelected === patient.id ? 'card-active' : 'card-disabled'"
+      [disabled]="itemSelected === patient.id"
+      (click)="onSelected(patient.id)"
     >
-      Eliga al paciente
-    </h2>
-    @if (loading) {
-      <div class="flex justify-center py-12">
-        <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+      <img
+        [src]="patient.picture"
+        alt=""
+        class="w-14 h-14 rounded-xl object-cover"
+      />
+      <div>
+        <h2 class="text-foreground text-base font-medium text-left">
+          {{ patient.firstName }}
+          {{ patient.lastName }}
+        </h2>
+        <p
+          class="w-[156px] text-muted-foreground text-sm font-medium text-start capitalize truncate"
+        >
+          {{ patient.age }} años
+        </p>
       </div>
-    } @else {
-      @if (patients.length > 0) {
-        <div class="flex flex-wrap gap-6 py-6">
-          @for (patient of patients; track $index) {
-            <button
-              type="button"
-              class="card"
-              [ngClass]="
-                itemSelected === patient.id
-                  ? 'card-active'
-                  : 'card-disabled'
-              "
-              [disabled]="itemSelected === patient.id"
-              (click)="onSelected(patient.id)"
-            >
-            <img
-            [src]="patient.picture"
-            alt=""
-            class="w-14 h-14 rounded-xl object-cover"
-          />
-          <div>
-            <h2 class="text-foreground text-base font-medium text-left">
-              {{ patient.firstName }}
-              {{ patient.lastName }}
-            </h2>
-            <p
-              class="w-[156px] text-muted-foreground text-sm font-medium text-start capitalize truncate"
-            >
-              {{ patient.age }} años
-            </p>
-          </div>
-            </button>
-          }
-        </div>
-      } @else {
-        <div class="text-center text-sm text-foreground font-medium py-12">
-          No hay pacientes
-        </div>
-      }
+    </button>
     }
   </div>
-  
+  } @else {
+  <div class="text-center text-sm text-foreground font-medium py-12">
+    No hay pacientes
+  </div>
+  } }
+</div>

@@ -1,0 +1,63 @@
+<aside
+  class="fixed top-0 left-0 py-8 px-6 min-h-screen border-r border-[#303030] flex flex-col justify-between"
+>
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="48" height="48" rx="12" fill="#F0FCA0" />
+    <circle
+      cx="24"
+      cy="20.188"
+      r="6.195"
+      stroke="#151515"
+      stroke-width="2.859"
+    />
+    <path
+      d="M30.1 30.1a4.8 4.8 0 0 1-.464 2.043 5.4 5.4 0 0 1-1.322 1.731 6.2 6.2 0 0 1-1.98 1.157 6.9 6.9 0 0 1-2.334.407 6.9 6.9 0 0 1-2.334-.407 6.2 6.2 0 0 1-1.979-1.157 5.4 5.4 0 0 1-1.322-1.731A4.8 4.8 0 0 1 17.9 30.1"
+      stroke="#151515"
+      stroke-width="2.859"
+      stroke-linecap="round"
+    />
+  </svg>
+
+  <div class="flex flex-col gap-3">
+    @for (item of items; track $index) {
+    <a
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [appNgTooltip]="item.label"
+      class="relative w-12 h-12 rounded-xl bg-[#242424] flex items-center justify-center border border-[#242424] hover:border-[#303030]"
+    >
+      <app-svg-icon [name]="item.icon" />
+    </a>
+    } @empty { @for (item of [1, 2, 3, 4]; track $index) {
+    <hlm-skeleton class="w-12 h-12 rounded-xl" />
+    } }
+  </div>
+
+  <button
+    (click)="onLogout()"
+    class="w-12 h-12 rounded-xl bg-[#242424] flex items-center justify-center border border-[#242424] hover:border-[#303030]"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m14.533 12.183 2.133-2.133-2.133-2.133m-6.4 2.133h8.475M9.8 16.667c-3.684 0-6.667-2.5-6.667-6.667s2.983-6.667 6.666-6.667"
+        stroke="#8C8C8C"
+        stroke-width="1.25"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</aside>

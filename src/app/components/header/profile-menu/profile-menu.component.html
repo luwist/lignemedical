@@ -1,0 +1,14 @@
+@if (currentUser$ | async; as currentUser) {
+<a routerLink="/account">
+  <hlm-avatar>
+    <img [src]="currentUser.photoURL" alt="Profile picture" hlmAvatarImage />
+    <span
+      class="{{ getBackgroundColor(currentUser.displayName) }} text-white"
+      hlmAvatarFallback
+      >{{ getFallback(currentUser.displayName) }}</span
+    >
+  </hlm-avatar>
+</a>
+} @else {
+<hlm-skeleton class="w-11 h-11 rounded-full" />
+}

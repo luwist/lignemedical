@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { getUser } from '@app/store/auth/auth.actions';
-import { selectIsUserLogged } from '@app/store/auth/auth.selectors';
+import { selectIsUserLogged, selectUser } from '@app/store/auth/auth.selectors';
 import { select, Store } from '@ngrx/store';
-import { map, } from 'rxjs';
+import { map } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const store = inject(Store);
@@ -12,14 +12,17 @@ export const authGuard: CanActivateFn = (route, state) => {
   store.dispatch(getUser());
 
   return store.pipe(
-    select(selectIsUserLogged),
-    map(isLogged => {      
-      if (!isLogged) {        
+    select(selectUser),
+    map((user) => {
+      console.log(user);
+
+      if (!user) {
+        console.log('Redireccionar al login');
         router.navigate(['/login']);
 
         return false;
       }
-      
+
       return true;
     })
   );

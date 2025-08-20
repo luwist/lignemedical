@@ -9,12 +9,18 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
+import { Repository } from './repository';
+import { FirestoreORM } from '@app/utils';
+import { Appointment } from '@app/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppointmentRepository {
-  constructor(private _firestore: Firestore) {}
+  constructor(
+    private _firestore: Firestore,
+    private _firestoreOrm: FirestoreORM<Appointment>
+  ) {}
 
   async add(appointment: any): Promise<void> {
     const collRef = collection(this._firestore, 'appointments');
@@ -22,23 +28,26 @@ export class AppointmentRepository {
 
     await setDoc(docRef, {
       ...appointment,
-      id: docRef.id
+      id: docRef.id,
     });
   }
 
   async changeStatusById(id: string, status: string) {
-    const docRef = doc(this._firestore, "appointments", id);
-
-    await updateDoc(docRef, {
-      status: status
+    this._firestoreOrm.collection('appointments').where('id', '==', id).update({
+      status: status,
     });
+    // const docRef = doc(this._firestore, 'appointments', id);
+
+    // await updateDoc(docRef, {
+    //   status: status,
+    // });
   }
 
   async addMessageById(id: string, message: string) {
-    const docRef = doc(this._firestore, "appointments", id);
+    const docRef = doc(this._firestore, 'appointments', id);
 
     await updateDoc(docRef, {
-      message: message
+      message: message,
     });
   }
 
@@ -47,7 +56,11 @@ export class AppointmentRepository {
 
     const collRef = collection(this._firestore, 'appointments');
 
-    const q = query(collRef, where('patient.id', '==', patientId), where('status', '==', status));
+    const q = query(
+      collRef,
+      where('patient.id', '==', patientId),
+      where('status', '==', status)
+    );
 
     const querySnapshot = await getDocs(q);
 
@@ -100,7 +113,7 @@ export class AppointmentRepository {
     const appointments: any[] = [];
 
     const collRef = collection(this._firestore, 'appointments');
-    
+
     const querySnapshot = await getDocs(collRef);
 
     querySnapshot.forEach((doc) => {

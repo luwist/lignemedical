@@ -1,0 +1,13 @@
+a.active {
+  background-color: #F0FCA0;
+    
+  app-svg-icon span svg {
+    stroke: #151515;
+  }
+}
+
+a:not(.active) {
+  app-svg-icon span svg {
+    stroke: #8C8C8C;
+  }
+}

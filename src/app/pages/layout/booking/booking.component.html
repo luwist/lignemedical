@@ -2,24 +2,28 @@
 
 <div>
   <div>
-    <h1 class="text-[28px] text-foreground mb-7">Reservar turno</h1>
+    <div class="section-header">
+      <h1 class="section-title">Reservar turno</h1>
+    </div>
 
-    <app-choose-patient />
+    <!-- <app-choose-patient /> -->
 
-    <app-choose-speciality (selected)="onSpecialtySelected($event)" />
+    <div class="flex flex-col gap-7">
+      <app-choose-speciality (selected)="onSpecialtySelected($event)" />
 
-    <app-choose-doctor
-      [specialty]="appointment.doctor.specialty"
-      (selected)="onDoctorSelected($event)"
-    />
+      <app-choose-doctor
+        [specialty]="appointment.doctor.specialty"
+        (selected)="onDoctorSelected($event)"
+      />
 
-    <app-choose-date
-      [doctorId]="appointment.doctor.id"
-      [appointment]="appointment"
-      [buttonLoading]="buttonLoading"
-      (dateSelected)="onDateSelected($event)"
-      (hourSelected)="onHourSelected($event)"
-      (bookSelected)="onBookAppointment()"
-    />
+      <app-choose-date
+        [doctorId]="appointment.doctor.id"
+        [appointment]="appointment"
+        [buttonLoading]="buttonLoading"
+        (dateSelected)="onDateSelected($event)"
+        (hourSelected)="onHourSelected($event)"
+        (bookSelected)="onBookAppointment()"
+      />
+    </div>
   </div>
 </div>

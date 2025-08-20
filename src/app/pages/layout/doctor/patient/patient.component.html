@@ -1,43 +1,21 @@
-<div class="flex items-center justify-between mb-7">
-  <h1 class="text-[28px]">{{ 'patients.title' | translate }}</h1>
+<div class="section-header">
+  <h1 class="section-title">{{ "patients.title" | translate }}</h1>
 
   <app-input-search />
 </div>
-
-<table class="w-full text-sm text-left text-foreground">
-  <thead class="text-xs text-foreground uppercase">
+<ng-table [value]="patients">
+  <ng-template #header>
     <tr>
-      <th class="px-6 py-3">{{ 'patients.name' | translate }}</th>
-      <th class="px-6 py-3">{{ 'patients.dni' | translate }}</th>
-      <th class="px-6 py-3">{{ 'patients.email' | translate }}</th>
-      <th class="px-6 py-3">{{ 'patients.medicalHistory' | translate }}</th>
+      <th class="px-6 py-3">{{ "patients.name" | translate }}</th>
+      <th class="px-6 py-3">{{ "patients.dni" | translate }}</th>
+      <th class="px-6 py-3">{{ "patients.email" | translate }}</th>
+      <th class="px-6 py-3">{{ "patients.medicalHistory" | translate }}</th>
     </tr>
-  </thead>
-  <tbody>
-    @if(isLoading) { @for (item of [1, 2, 3, 4 ,5]; track $index) {
-    <tr>
-      <td class="grid grid-cols-[48px_1fr] gap-3 px-6 py-4">
-        <hlm-skeleton class="w-12 h-12 rounded-xl" />
+  </ng-template>
 
-        <div class="w-full">
-          <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
-          <hlm-skeleton class="w-12 h-5 rounded-sm" />
-        </div>
-      </td>
-      <td class="px-6 py-4">
-        <hlm-skeleton class="w-16 h-5 rounded-sm" />
-      </td>
-      <td class="px-6 py-4">
-        <hlm-skeleton class="w-48 h-5 rounded-sm" />
-      </td>
-      <td class="px-6 py-4">
-        <hlm-skeleton class="w-12 h-12 rounded-full" />
-      </td>
-    </tr>
-    } } @else { @if (patients.length > 0) { @for (patient of patients; track
-    $index) {
-    <tr class="border-b border-b-card">
-      <td class="flex items-center gap-3 px-6 py-4">
+  <ng-template #body let-patient let-expanded="expanded">
+    <tr [ngClass]="expanded && 'bg-[#353535] bg-opacity-35'">
+      <td class="flex items-center gap-3 px-6 py-4 rounded-s-xl">
         <hlm-avatar variant="medium" shape="square">
           <img [src]="patient.picture" alt="Profile picture" hlmAvatarImage />
           <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LL</span>
@@ -79,21 +57,107 @@
         </button>
       </td>
       <td class="px-6 py-4">
-        <button class="bg-card w-12 h-12 rounded-full flex items-center justify-center">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2.38 5.19751L6.18333 9.00084C6.6325 9.45001 7.3675 9.45001 7.81666 9.00084L11.62 5.19751" stroke="#F4F4F4" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <button
+          [ngRowToggler]="patient"
+          class="bg-card w-12 h-12 rounded-full flex items-center justify-center"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.38 5.19751L6.18333 9.00084C6.6325 9.45001 7.3675 9.45001 7.81666 9.00084L11.62 5.19751"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </button>
       </td>
     </tr>
-    } } @else {
+  </ng-template>
+
+  <ng-template #expandedrow let-product>
+    <tr class="bg-[#353535] bg-opacity-35">
+      <td [attr.colspan]="5">
+        <div class="flex justify-center p-6 gap-40">
+          <div>
+            <div class="text-2xl font-medium text-white">
+              {{ product.height }}
+              <span class="text-muted-foreground font-medium text-sm">cm</span>
+            </div>
+            <p class="text-muted-foreground font-medium text-sm mt-1">Altura</p>
+          </div>
+
+          <div>
+            <div class="text-2xl font-medium text-white">
+              {{ product.weight }}
+              <span class="text-muted-foreground font-medium text-sm">kg</span>
+            </div>
+            <p class="text-muted-foreground font-medium text-sm mt-1">Peso</p>
+          </div>
+
+          <div>
+            <div class="text-2xl font-medium text-white">
+              {{ product.temperature }}
+            </div>
+            <p class="text-muted-foreground font-medium text-sm mt-1">
+              Temperatura
+            </p>
+          </div>
+
+          <div>
+            <div class="text-2xl font-medium text-white">
+              {{ product.pressure }}
+            </div>
+            <p class="text-muted-foreground font-medium text-sm mt-1">
+              Presion
+            </p>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #loadingbody>
+    @for (column of [0, 1, 2, 3, 4]; track $index) {
     <tr>
-      <td [attr.colspan]="4" class="h-[405px] text-center align-middle">
+      <td class="grid grid-cols-[48px_1fr] gap-3 px-6 py-4">
+        <hlm-skeleton class="w-12 h-12 rounded-xl" />
+
+        <div class="w-full">
+          <hlm-skeleton class="w-48 h-5 rounded-sm mb-2" />
+          <hlm-skeleton class="w-12 h-5 rounded-sm" />
+        </div>
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-16 h-5 rounded-sm" />
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-48 h-5 rounded-sm" />
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-12 h-12 rounded-full" />
+      </td>
+      <td class="px-6 py-4">
+        <hlm-skeleton class="w-12 h-12 rounded-full" />
+      </td>
+    </tr>
+    }
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5" class="h-[405px] text-center align-middle">
         <p class="text-sm font-medium">
           No tenes pacientes. Empieza a aceptar los turnos.
         </p>
       </td>
     </tr>
-    } }
-  </tbody>
-</table>
+  </ng-template>
+</ng-table>

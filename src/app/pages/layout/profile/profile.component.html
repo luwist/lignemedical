@@ -1,54 +1,62 @@
-<div class="w-[932px] mx-auto">
-  <div class="flex items-center gap-6">
+<div class="">
+  <div class="flex items-center justify-between border-b border-[#303030] p-6">
     @if (user$ | async; as user) {
-      <hlm-avatar variant="large" shape="square">
+    <div class="flex items-center gap-4">
+      <hlm-avatar variant="large">
         <img [src]="user.picture" alt="Profile picture" hlmAvatarImage />
         <span class="bg-[#FD005B] text-white" hlmAvatarFallback>LM</span>
       </hlm-avatar>
-  
-      <div class="w-full">
-        <h2 class="text-xl mb-6">{{ user.firstName }} {{ user.lastName }}</h2>
-  
-        <div class="flex justify-between">
-          <div>
-            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-              Nombre: <span class="text-foreground">{{ user.firstName }}</span>
-            </p>
-            <p class="text-sm text-muted-foreground font-medium capitalize">
-              Rol: <span class="text-foreground">{{ user.role }}</span>
-            </p>
-          </div>
-          <div>
-            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-              Apellido: <span class="text-foreground">{{ user.lastName }}</span>
-            </p>
-            <p class="text-sm text-muted-foreground font-medium">
-              DNI: <span class="text-foreground">{{ user.dni }}</span>
-            </p>
-          </div>
-          <div>
-            <p class="text-sm text-muted-foreground font-medium mb-[14px]">
-              Edad: <span class="text-foreground">{{ user.age }}</span>
-            </p>
-            <p class="text-sm text-muted-foreground font-medium">
-              Correo electronico:
-              <span class="text-foreground">{{ user.email }}</span>
-            </p>
-          </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="text-xl font-semibold">
+          {{ user.firstName }} {{ user.lastName }}
+        </h2>
+        <div class="flex items-center gap-10">
+          <p class="text-muted-foreground font-medium text-sm">
+            ID: <span class="text-white font-semibold">{{ user.id }}</span>
+          </p>
+          <span class="text-[#808080]">|</span>
+          <p class="text-muted-foreground font-medium text-sm">
+            Join Date: <span class="text-white font-semibold">Jan 2025</span>
+          </p>
+          <span class="text-[#808080]">|</span>
+          <p
+            class="text-[#34D399] font-semibold text-sm flex items-center gap-2"
+          >
+            <span class="block w-1 h-1 rounded-full bg-[#34D399]"></span>
+            Active
+          </p>
         </div>
       </div>
+    </div>
+
+    <a routerLink="/settings" hlmBtn variant="outline" size="sm">Edit</a>
+    } @else {
+    <div class="flex items-center gap-4">
+      <hlm-skeleton class="h-16 w-16 rounded-full" />
+
+      <div class="flex flex-col gap-3">
+        <hlm-skeleton class="h-6 w-20 rounded-full" />
+        <div class="flex items-center gap-10">
+          <hlm-skeleton class="h-4 w-36 rounded-full" />
+          <span class="text-[#808080]">|</span>
+          <hlm-skeleton class="h-4 w-36 rounded-full" />
+          <span class="text-[#808080]">|</span>
+          <hlm-skeleton class="h-4 w-36 rounded-full" />
+        </div>
+      </div>
+    </div>
+    <a routerLink="/settings" hlmBtn variant="outline" size="sm">Edit</a>
     }
   </div>
 
-  @if (user$ | async; as user) {
-    @if (user.role === 'doctor') {
-      <div class="w-full">
-        <div class="py-7">
-          <h1 class="font-medium text-xl">Horarios</h1>
-        </div>
-  
-        <app-schedules [id]="user.id" />
-      </div>
-    }
-  }
+  @if (user$ | async; as user) { @if (user.role === 'doctor') {
+  <div class="w-full">
+    <div class="py-7">
+      <h1 class="font-medium text-xl">Horarios</h1>
+    </div>
+
+    <app-schedules [id]="user.id" />
+  </div>
+  } }
 </div>

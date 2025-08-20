@@ -3,6 +3,7 @@ import {
   collection,
   doc,
   Firestore,
+  getDocs,
   setDoc,
 } from '@angular/fire/firestore';
 
@@ -18,7 +19,21 @@ export class MedicalHistoryRepository {
 
     await setDoc(docRef, {
       ...history,
-      id: docRef.id
+      id: docRef.id,
     });
+  }
+
+  async getMedicalHistoryList() {
+    const appointments: any[] = [];
+
+    const collRef = collection(this._firestore, 'medical_history');
+
+    const querySnapshot = await getDocs(collRef);
+
+    querySnapshot.forEach((doc) => {
+      appointments.push(doc.data());
+    });
+
+    return appointments;
   }
 }

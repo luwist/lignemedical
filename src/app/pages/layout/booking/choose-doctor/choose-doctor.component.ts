@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DoctorRepository } from '@app/repositories';
+import { AvatarService } from '@app/services';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmAvatarComponent } from '@spartan-ng/ui-avatar-helm';
@@ -31,7 +32,10 @@ export class ChooseDoctorComponent implements OnChanges {
 
   doctors: any = [];
 
-  constructor(private _doctorRepository: DoctorRepository) {}
+  constructor(
+    private _doctorRepository: DoctorRepository,
+    private _avatarService: AvatarService
+  ) {}
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (this.specialty) {
@@ -39,6 +43,16 @@ export class ChooseDoctorComponent implements OnChanges {
     } else {
       this.itemSelected = '';
     }
+  }
+
+  getBackgroundColorByName(name: string): string {
+    return this._avatarService.getBackgroundColorByName(name);
+  }
+
+  getFallback(firstName: string, lastName: string): string {
+    const name = `${firstName} ${lastName}`;
+
+    return this._avatarService.getFallback(name);
   }
 
   async loadDoctors(): Promise<void> {

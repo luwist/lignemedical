@@ -27,7 +27,7 @@ import { ChoosePatientComponent } from './choose-patient/choose-patient.componen
     ChooseSpecialityComponent,
     ChooseDateComponent,
 
-    HlmToasterComponent
+    HlmToasterComponent,
   ],
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.scss',
@@ -55,7 +55,11 @@ export class BookingComponent implements OnInit {
     },
   };
 
-  constructor(private _store: Store<AppState>, private _appointmentRepository: AppointmentRepository, private _userRepository: UserRepository) {}
+  constructor(
+    private _store: Store<AppState>,
+    private _appointmentRepository: AppointmentRepository,
+    private _userRepository: UserRepository
+  ) {}
 
   ngOnInit(): void {
     this.currentUser$ = this._store.select(selectUser);
@@ -90,7 +94,7 @@ export class BookingComponent implements OnInit {
         ...this.appointment.doctor,
         id: doctor.id,
         name: doctor.name,
-        picture: doctor.picture
+        picture: doctor.picture,
       },
     };
   }
@@ -111,12 +115,12 @@ export class BookingComponent implements OnInit {
 
   async onBookAppointment(): Promise<void> {
     this.buttonLoading = true;
-    
+
     await this._appointmentRepository.add(this.appointment);
 
     toast('Turno reservado', {
-      description: 'Se ha reservado el turno correctamente'
-    })
+      description: 'Se ha reservado el turno correctamente',
+    });
 
     this.buttonLoading = false;
 

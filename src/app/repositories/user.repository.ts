@@ -6,25 +6,26 @@ import {
   getDoc,
   getDocs,
   query,
-  setDoc,
   where,
 } from '@angular/fire/firestore';
 import { User } from '@app/models';
+import { FirestoreORM } from '@app/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserRepository {
-  constructor(private _firestore: Firestore) {}
+  constructor(
+    private _firestoreOrm: FirestoreORM<User>,
+    private _firestore: Firestore
+  ) {}
 
   async add(user: User): Promise<void> {
-    const docRef = doc(this._firestore, 'users', user.id);
-
-    await setDoc(docRef, user);
+    await this._firestoreOrm.collection('users').create(user);
   }
 
   async getUserListByRole(role: string): Promise<User[]> {
-    const users: User[] = [];
+    const list: any[] = [];
 
     const collRef = collection(this._firestore, 'users');
 
@@ -33,31 +34,22 @@ export class UserRepository {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      const data = doc.data() as User;
+      const data = doc.data() as any;
 
-      users.push(data);
+      list.push(data);
     });
 
-    return users;
+    return list;
   }
 
   async checkEmail(email: string) {
-    const collRef = collection(this._firestore, 'users');
-    const q = query(collRef, where('email', '==', email));
-    const querySnapshot = await getDocs(q);
-
-    let emailAvailable = true;
-
-    querySnapshot.forEach((doc) => {
-      const data = doc.data() as User;
-
-      if (data.email === email) emailAvailable = false;
-    });
-
-    return emailAvailable;
+    return this._firestoreOrm
+      .collection('users')
+      .where('email', '==', email)
+      .first();
   }
 
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: string) {
     const docRef = doc(this._firestore, 'users', id);
     const docSnap = await getDoc(docRef);
 

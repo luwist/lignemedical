@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Input } from '@angular/core';
 import {
   AbstractControl,
@@ -5,7 +6,8 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { InputErrorComponent } from '@app/components';
+import { DropzoneComponent, InputErrorComponent } from '@app/components';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
@@ -13,10 +15,15 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
   selector: 'app-personal-information',
   standalone: true,
   imports: [
+    CommonModule,
+
     HlmInputDirective,
+    HlmButtonDirective,
     HlmLabelDirective,
     InputErrorComponent,
     ReactiveFormsModule,
+
+    DropzoneComponent,
   ],
   templateUrl: './personal-information.component.html',
   styleUrl: './personal-information.component.scss',

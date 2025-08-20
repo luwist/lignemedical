@@ -1,16 +1,16 @@
 @if (showMessage) {
-  <div class="bg-[#353535] p-4 rounded-xl h-36 mb-4">
-    <h3 class="text-sm text-muted-foreground mb-2">Comentario</h3>
-    <p class="text-sm text-foreground">
-      {{ message }}
-    </p>
-  </div>
+<div class="bg-[#2E2E2E] p-4 rounded-xl h-36 mb-4">
+  <h3 class="text-sm text-muted-foreground mb-2">Comentario</h3>
+  <p class="text-sm text-foreground">
+    {{ message }}
+  </p>
+</div>
 }
 
 <div class="w-full flex justify-end">
   <button
-  class="w-12 h-12 flex items-center justify-center cursor-pointer bg-input rounded-full"
-  (click)="onShowMessage()"
+    class="w-12 h-12 flex items-center justify-center cursor-pointer bg-[#2E2E2E] rounded-full"
+    (click)="onShowMessage()"
   >
     <svg
       width="20"
@@ -21,7 +21,7 @@
     >
       <path
         d="M7.083 15.833h-.416c-3.334 0-5-.833-5-5V6.667q0-5 5-5h6.666q5 0 5 5v4.166q0 5-5 5h-.416a.85.85 0 0 0-.667.334L11 17.833c-.55.734-1.45.734-2 0l-1.25-1.666c-.133-.184-.442-.334-.667-.334"
-        stroke="gray"
+        stroke="white"
         stroke-width="1.5"
         stroke-miterlimit="10"
         stroke-linecap="round"
@@ -29,7 +29,7 @@
       />
       <path
         d="M5.833 6.667h8.334m-8.334 4.166h5"
-        stroke="gray"
+        stroke="white"
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"

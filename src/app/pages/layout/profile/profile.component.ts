@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '@app/models';
 import { UserRepository } from '@app/repositories';
 import { AuthService, FirestoreService } from '@app/services';
@@ -14,6 +14,8 @@ import {
 } from '@spartan-ng/ui-avatar-helm';
 import { exhaustMap, from, Observable, of, switchMap, take } from 'rxjs';
 import { SchedulesComponent } from './schedules/schedules.component';
+import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({
   selector: 'app-profile',
@@ -24,8 +26,11 @@ import { SchedulesComponent } from './schedules/schedules.component';
     HlmAvatarImageDirective,
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
+    RouterLink,
 
-    SchedulesComponent
+    SchedulesComponent,
+    HlmSkeletonComponent,
+    HlmButtonDirective,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -41,7 +46,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user$ = this._store.select(selectUser).pipe(
       take(1),
-      switchMap(user => {
+      switchMap((user) => {
         if (user) return from(this._userRepository.getUserById(user.uid));
 
         return of(null);

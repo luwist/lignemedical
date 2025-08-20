@@ -1,6 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { getDownloadURL, ref, Storage, uploadBytesResumable } from '@angular/fire/storage';
+import {
+  AfterContentInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
+  getDownloadURL,
+  ref,
+  Storage,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 import { FormControl } from '@angular/forms';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
@@ -8,21 +23,127 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
   selector: 'app-dropzone',
   standalone: true,
   imports: [CommonModule, HlmButtonDirective],
-  templateUrl: './dropzone.component.html',
+  template: `
+    <ng-container [ngTemplateOutlet]="emptyTemplate"></ng-container>
+    <!-- <div class="{{ size }} rounded-3xl">
+      @if (imageSrc) {
+      <div class="show rounded-3xl">
+        <img
+          [src]="imageSrc"
+          alt=""
+          class="w-full h-full object-cover rounded-3xl"
+        />
+
+        @if (isUploading) {
+        <div class="upload rounded-3xl">
+          <div class="flex items-center gap-3 mx-4 mb-4">
+            <div class="relative w-full h-2 bg-input rounded-full">
+              <div
+                class="absolute top-0 left-0 h-full rounded-full bg-primary"
+                #progress
+              ></div>
+            </div>
+
+            <span class="text-sm font-medium">{{ this.progressUpload }}%</span>
+          </div>
+        </div>
+        } @else {
+        <div class="trash rounded-3xl" (click)="onRemoveImage()">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M28 7.97331C23.56 7.53331 19.0933 7.30664 14.64 7.30664C12 7.30664 9.36 7.43997 6.72 7.70664L4 7.97331"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M11.333 6.62663L11.6263 4.87996C11.8397 3.61329 11.9997 2.66663 14.253 2.66663H17.7463C19.9997 2.66663 20.173 3.66663 20.373 4.89329L20.6663 6.62663"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M25.1329 12.1866L24.2662 25.6133C24.1195 27.7066 23.9995 29.3333 20.2795 29.3333H11.7195C7.99954 29.3333 7.87954 27.7066 7.73288 25.6133L6.86621 12.1866"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M13.7734 22H18.2134"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12.667 16.6666H19.3337"
+              stroke="#F4F4F4"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        }
+      </div>
+      } @else {
+      <div
+        class="w-full h-full p-8 rounded-3xl flex flex-col items-center justify-between bg-[#91A3FD] bg-opacity-20"
+      >
+        <img
+          src="assets/icons/gallery.svg"
+          alt=""
+          [ngClass]="{ 'w-24': size === 'large', 'w-12': size == 'small' }"
+        />
+
+        <button hlmBtn size="lg" variant="secondary" class="relative w-full">
+          <input
+            type="file"
+            class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+            accept=".jpg, .jpeg, .png"
+            (change)="onFileSelected($event)"
+          />
+          Elegir foto
+        </button>
+      </div>
+      }
+    </div> -->
+  `,
   styleUrl: './dropzone.component.scss',
 })
-export class DropzoneComponent {
+export class DropzoneComponent implements AfterContentInit {
   @Input() control!: FormControl;
   @Input() size: string = 'large';
   @Output() updateFile = new EventEmitter<string>();
 
   @ViewChild('progress') progressbar!: ElementRef;
 
+  @ContentChild('file') private _fileTemplate!: TemplateRef<any>;
+
+  fileTemplate: TemplateRef<any> | undefined;
+
+  @ContentChild('empty') private _emptyTemplate!: TemplateRef<any>;
+
+  emptyTemplate!: TemplateRef<any>;
+
   imageSrc!: string | ArrayBuffer | null;
   progressUpload: number = 0;
   isUploading: boolean = false;
 
   constructor(private _storage: Storage) {}
+
+  ngAfterContentInit(): void {
+    this.emptyTemplate = this._emptyTemplate;
+  }
 
   onFileSelected(e: any): void {
     const file = e.target.files[0] as File;
@@ -46,11 +167,13 @@ export class DropzoneComponent {
     console.log(storageRef);
     console.log(uploadTask);
 
-    uploadTask.on('state_changed',
+    uploadTask.on(
+      'state_changed',
       (snapshot) => {
         this.isUploading = true;
 
-        this.progressUpload = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        this.progressUpload =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(this.progressUpload);
       },
       (error) => {
@@ -59,7 +182,7 @@ export class DropzoneComponent {
       async () => {
         const url = await getDownloadURL(storageRef);
         console.log(url);
-        
+
         const progressElement = this.progressbar;
 
         progressElement.nativeElement.style.width = `${this.progressUpload}%`;

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, isEmailVerifiedGuard } from './guards';
+import { accountGuard } from './guards/account/account.guard';
 
 export const routes: Routes = [
   {
@@ -7,6 +8,7 @@ export const routes: Routes = [
     title: 'Iniciar sesion',
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginComponent),
+    // canActivate: [accountGuard],
   },
   {
     path: 'onboarding',
@@ -15,6 +17,7 @@ export const routes: Routes = [
       import('./pages/onboarding/onboarding.component').then(
         (m) => m.OnboardingComponent
       ),
+    // canActivate: [accountGuard],
   },
   {
     path: 'verify-email',
@@ -33,6 +36,6 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/layout/layout.routes').then((m) => m.routes),
-    canActivate: [authGuard, isEmailVerifiedGuard]
+    canActivate: [isEmailVerifiedGuard],
   },
 ];

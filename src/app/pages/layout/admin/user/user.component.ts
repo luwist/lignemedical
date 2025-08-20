@@ -20,27 +20,28 @@ import {
 import { AvatarService, FirestoreService } from '@app/services';
 import { User } from '@app/models';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
+import { NgTableComponent } from '@app/components/ui/ng-table/ng-table.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgTooltipDirective } from '@app/components/ui/ng-tooltip';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
     CommonModule,
-
+    TranslateModule,
     HlmTabsComponent,
     HlmTabsListComponent,
     HlmTabsTriggerDirective,
     HlmTabsContentDirective,
-
     HlmAvatarImageDirective,
     HlmAvatarComponent,
     HlmAvatarFallbackDirective,
-
+    NgTableComponent,
     HlmSkeletonComponent,
-
     SheetComponent,
-
     HlmSwitchComponent,
+    NgTooltipDirective,
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
@@ -59,11 +60,13 @@ export class UserComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    // this.admins = [];
     this.admins = await this._userRepository.getUserListByRole('administrador');
-    this.doctors = await this._userRepository.getUserListByRole('doctor');
-    this.patients = await this._userRepository.getUserListByRole('paciente');
-
     this.isLoading = false;
+    this.doctors = await this._userRepository.getUserListByRole('doctor');
+    console.log('DOCTORS');
+    console.log(this.doctors);
+    this.patients = await this._userRepository.getUserListByRole('paciente');
   }
 
   getFallback(name: any, surname: any): string {

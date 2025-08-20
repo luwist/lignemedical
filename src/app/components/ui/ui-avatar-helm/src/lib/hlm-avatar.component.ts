@@ -18,7 +18,7 @@ export const avatarVariants = cva('relative flex shrink-0 overflow-hidden', {
       tiny: 'h-11 w-11',
       small: 'h-12 w-12 text-base',
       medium: 'h-14 w-14 text-xl',
-      large: 'h-28 w-28 text-3xl',
+      large: 'h-16 w-16 text-3xl',
     },
     shape: {
       circle: 'rounded-full',

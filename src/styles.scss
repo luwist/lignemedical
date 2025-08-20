@@ -57,3 +57,8 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
 }
+
+@import './app/components/ui/_components';
+
+@import './app/pages/layout/layout.component.scss';
+@import './app/pages/layout/booking/booking.component.scss';

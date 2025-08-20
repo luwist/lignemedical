@@ -1,32 +1,33 @@
-<div class="flex items-center justify-between mb-6">
-  <h1 class="text-[28px] text-foreground">Citas</h1>
+<div class="section-header">
+  <h1 class="section-title">Citas</h1>
 
-  <ng-search-input placeholder="Buscar por especialidad o especialista" (valueSearch)="onValueSearch($event)" />
+  <ng-search-input
+    placeholder="Buscar..."
+    (valueSearch)="onValueSearch($event)"
+  />
 </div>
 
 @if (loading) {
-  <div class="flex justify-center py-64">
-    <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
-  </div>
-} @else {
-  @if (filteredAppointments.length > 0) {
-    <div class="flex gap-10 flex-wrap">
-      @for (appointment of filteredAppointments; track $index) {
-        <app-appointment-card
-          [id]="appointment.id"
-          [name]="appointment.doctor.name"
-          [speciality]="appointment.doctor.specialty"
-          [picture]="appointment.doctor.picture"
-          [date]="appointment.date"
-          [hour]="appointment.hour"
-          [status]="appointment.status"
-          [message]="appointment.message"
-        />
-      }
-    </div>
-  } @else {
-    <div class="text-center text-sm text-foreground font-medium py-64">
-      No tienes turnos medicos.
-    </div>
+<div class="flex justify-center py-64">
+  <hlm-icon size="base" name="lucideLoader2" class="animate-spin" />
+</div>
+} @else { @if (filteredAppointments.length > 0) {
+<div class="flex gap-10 flex-wrap">
+  @for (appointment of filteredAppointments; track $index) {
+  <app-appointment-card
+    [id]="appointment.id"
+    [name]="appointment.doctor.name"
+    [speciality]="appointment.doctor.specialty"
+    [picture]="appointment.doctor.picture"
+    [date]="appointment.date"
+    [hour]="appointment.hour"
+    [status]="appointment.status"
+    [message]="appointment.message"
+  />
   }
-}
+</div>
+} @else {
+<div class="text-center text-sm text-foreground font-medium py-64">
+  No tienes turnos medicos.
+</div>
+} }

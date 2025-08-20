@@ -29,12 +29,13 @@
         "medicalHistory": "Medical history"
     },
     "users": {
-        "title": "Patients",
+        "title": "Users",
         "name": "Name",
         "age": "Age",
         "dni": "DNI",
         "email": "Email",
-        "medicalHistory": "Medical history"
+        "medicalHistory": "Medical history",
+        "emailStatus": "Email status"
     },
     "dashboard": {
         "title": "Dashboard"

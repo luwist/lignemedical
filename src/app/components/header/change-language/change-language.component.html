@@ -1,0 +1,36 @@
+<hlm-dialog>
+  <button
+    id="change-language"
+    brnDialogTrigger
+    hlmBtn
+    class="flex items-center gap-3"
+  >
+    <img [src]="currentLanguage.image" alt="flag" class="w-7" />
+    <span class="text-sm font-semibold uppercase">{{
+      currentLanguage.code
+    }}</span>
+  </button>
+
+  <hlm-dialog-content *brnDialogContent="let ctx">
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>{{ "profile.chooseLanguage" | translate }}:</h3>
+    </hlm-dialog-header>
+
+    <div class="flex items-center gap-5">
+      @for (language of languages; track $index) {
+      <button
+        class="flex items-center gap-2 border rounded-xl px-5 py-3 text-sm capitalize hover:border-[#999]"
+        [ngClass]="
+          currentLanguage.code === language.code
+            ? 'border-primary'
+            : 'border-border'
+        "
+        (click)="onChangeLanguage(ctx, language.code, language.image)"
+      >
+        <img [src]="language.image" alt="flag" class="w-7" />
+        {{ language.name }}
+      </button>
+      }
+    </div>
+  </hlm-dialog-content>
+</hlm-dialog>

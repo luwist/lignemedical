@@ -1,16 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputErrorComponent } from '@app/components/input-error';
 import { TagComponent } from '@app/components/ui/tag';
-import { AppointmentRepository, MedicalHistoryRepository } from '@app/repositories';
+import {
+  AppointmentRepository,
+  MedicalHistoryRepository,
+} from '@app/repositories';
 import { provideIcons } from '@ng-icons/core';
 import { lucideLoader2 } from '@ng-icons/lucide';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
-import { BrnSheetContentDirective, BrnSheetTriggerDirective } from '@spartan-ng/ui-sheet-brain';
+import {
+  BrnSheetContentDirective,
+  BrnSheetTriggerDirective,
+} from '@spartan-ng/ui-sheet-brain';
 import {
   HlmSheetComponent,
   HlmSheetContentComponent,
@@ -72,7 +83,10 @@ export class EndAppointmentComponent {
     comment: new FormControl('', Validators.required),
   });
 
-  constructor(private _appointmentRepository: AppointmentRepository, private _medicalHistoryRepository: MedicalHistoryRepository) {}
+  constructor(
+    private _appointmentRepository: AppointmentRepository,
+    private _medicalHistoryRepository: MedicalHistoryRepository
+  ) {}
 
   getFormControl(name: string): FormControl {
     return this.form.get(name) as FormControl;
@@ -84,13 +98,19 @@ export class EndAppointmentComponent {
     this.form.markAsPending();
     this.isLoading = true;
 
-    await this._medicalHistoryRepository.add(data);
-    await this._appointmentRepository.addMessageById(this.id, data.comment as string);
+    await this._medicalHistoryRepository.add({
+      ...data,
+      patientId: this.patient.id,
+    });
+    await this._appointmentRepository.addMessageById(
+      this.id,
+      data.comment as string
+    );
     await this._appointmentRepository.changeStatusById(this.id, 'finished');
 
     toast('Turno finalizado', {
-      description: 'El turno medico se ha sido finalizado correctamente'
-    })
+      description: 'El turno medico se ha sido finalizado correctamente',
+    });
 
     ctx.close();
   }

@@ -1,6 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InputSearchComponent } from '@app/components/ui/input-search/input-search.component';
-import { UserRepository } from '@app/repositories';
+import { NgRowTogglerDirective } from '@app/components/ui/ng-table/ng-row-toggler/ng-row-toggler.directive';
+import { NgTableComponent } from '@app/components/ui/ng-table/ng-table.component';
+import { MedicalHistoryRepository, UserRepository } from '@app/repositories';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   HlmAvatarComponent,
@@ -9,15 +12,14 @@ import {
 } from '@spartan-ng/ui-avatar-helm';
 import { HlmButtonModule } from '@spartan-ng/ui-button-helm';
 import { HlmSkeletonComponent } from '@spartan-ng/ui-skeleton-helm';
-import {
-  BrnTableModule
-} from '@spartan-ng/ui-table-brain';
+import { BrnTableModule } from '@spartan-ng/ui-table-brain';
 import { HlmTableModule } from '@spartan-ng/ui-table-helm';
 
 @Component({
   selector: 'app-patient',
   standalone: true,
   imports: [
+    CommonModule,
     TranslateModule,
 
     HlmAvatarImageDirective,
@@ -32,23 +34,40 @@ import { HlmTableModule } from '@spartan-ng/ui-table-helm';
     HlmButtonModule,
 
     InputSearchComponent,
+
+    NgTableComponent,
+    NgRowTogglerDirective,
   ],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
 })
 export class PatientComponent implements OnInit {
-  isLoading: boolean = true;
   patients: any[] = [];
 
   getFallback(name: any) {
     return name.split(' ')[0][0] + name.split(' ')[1][0];
   }
 
-  constructor(private _userRepository: UserRepository) {}
+  constructor(
+    private _medicalHistoryRepository: MedicalHistoryRepository,
+    private _userRepository: UserRepository
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    this.patients = await this._userRepository.getUserListByRole('paciente');
+    await this.getPatientList();
+  }
 
-    this.isLoading = false;
+  async getPatientList() {
+    const medicalHistory =
+      await this._medicalHistoryRepository.getMedicalHistoryList();
+
+    medicalHistory.forEach(async (x) => {
+      const user = await this._userRepository.getUserById(x.patientId);
+
+      this.patients.push({
+        ...x,
+        ...user,
+      });
+    });
   }
 }

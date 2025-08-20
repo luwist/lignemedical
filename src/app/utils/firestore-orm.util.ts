@@ -4,7 +4,6 @@ import {
   Firestore,
   limit,
   orderBy,
-  QueryConstraint,
   QueryFieldFilterConstraint,
   QueryLimitConstraint,
   QueryOrderByConstraint,
@@ -13,10 +12,10 @@ import {
   collection,
   doc,
   FieldPath,
-  getDoc,
   getDocs,
   query,
   Query,
+  updateDoc,
   where,
   WhereFilterOp,
 } from '@firebase/firestore';
@@ -51,13 +50,19 @@ export class FirestoreORM<T> {
 
   async create(data: any) {
     const querySnapshot = await getDocs(this._query);
-    let result;
+    let result: any[] = [];
 
     querySnapshot.forEach((doc) => {
       result.push(doc.data());
     });
 
     return result;
+  }
+
+  async update(data: any) {
+    const docRef = doc(this._firestore, this._collRef.path, data.id);
+
+    await updateDoc(docRef, data);
   }
 
   limit(value: number) {
@@ -73,15 +78,19 @@ export class FirestoreORM<T> {
   }
 
   async get() {
-    const q = query(this._collRef, ...this._wheres, this._orderBy, this._limit);
-
-    console.log(q);
+    console.log(this._collRef);
+    console.log(this._wheres);
+    console.log(this._wheres);
+    const q = query(this._collRef, ...this._wheres);
+    // const q = query(this._collRef, ...this._wheres, this._orderBy, this._limit);
 
     const querySnapshot = q ? await getDocs(q) : await getDocs(this._collRef);
     let result: T[] = [];
 
     querySnapshot.forEach((doc) => {
       const data = doc.data() as T;
+
+      console.log(data);
 
       result.push(data);
     });
